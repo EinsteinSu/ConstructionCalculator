@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ConstructionCalculator.DataAccess
 {
     public class BusinessValue
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Display(Name = "业态编号")]
         public int Id { get; set; }
 
