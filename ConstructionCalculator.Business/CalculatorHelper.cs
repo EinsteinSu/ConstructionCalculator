@@ -32,6 +32,7 @@ namespace ConstructionCalculator.Business
                         row++;
                     }
                     sheet.Cells.Calculate();
+                    context.Database.ExecuteSqlCommand("Delete from Constructions");
                 }
                 excel.SaveAs(new FileInfo(savingFileName));
             }
