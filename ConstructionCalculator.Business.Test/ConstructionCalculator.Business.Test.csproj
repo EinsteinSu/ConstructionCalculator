@@ -60,13 +60,21 @@
   <ItemGroup>
     <Compile Include="ConstructionFormulaTest.cs" />
     <Compile Include="ExcelFormulaTest.cs" />
+    <Compile Include="ImportsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="TestResource\CellMapping.xlsx" />
+    <EmbeddedResource Include="TestResource\Construction.xlsx" />
+    <EmbeddedResource Include="TestResource\ConstructionValue.xlsx" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConstructionCalculator.Business\ConstructionCalculator.Business.csproj">
+      <Project>{15DD6342-F95E-4D93-891A-995E1715D2C3}</Project>
+      <Name>ConstructionCalculator.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ConstructionCalculator.DataAccess\ConstructionCalculator.DataAccess.csproj">
       <Project>{99565F1D-AB22-420A-A734-884F18679378}</Project>
       <Name>ConstructionCalculator.DataAccess</Name>

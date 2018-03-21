@@ -16,39 +16,47 @@ namespace ConstructionCalculator.Business.Imports
             Context = new ConstructionDataContext();
         }
 
+        public ExcelDataImportBase(Stream stream)
+        {
+            Excel = new ExcelPackage(stream);
+            Context = new ConstructionDataContext();
+        }
+
         //is it include header
         protected abstract bool IncludeHeader { get; }
 
         //which worksheet can be import
         protected abstract int SheetNumber { get; }
 
+        public int RowCount => GetRowCount();
+
         protected int GetRowCount()
         {
             var sheet = Excel.Workbook.Worksheets[SheetNumber];
             if (sheet == null)
                 return 0;
-            int count = 0;
+            int rowCount = 1;
             while (true)
             {
-                if (string.IsNullOrEmpty(sheet.Cells[count, 1].Text.Trim()))
+                if (string.IsNullOrEmpty(sheet.Cells[rowCount, 1].Text.Trim()))
                 {
                     break;
                 }
-                count++;
+                rowCount++;
             }
 
             if (IncludeHeader)
             {
-                count = count - 1;
+                rowCount = rowCount - 2;
             }
-            return count;
+            return rowCount - 1;
         }
 
         public void Import()
         {
-            var count = GetRowCount();
+            var count = RowCount;
             var cells = Excel.Workbook.Worksheets[SheetNumber].Cells;
-            for (int i = 0; i < count; i++)
+            for (int i = 1; i < count + 1; i++)
             {
                 ImportRow(cells, i);
                 ShowPercentage?.Invoke((double)i / count * 100.00);

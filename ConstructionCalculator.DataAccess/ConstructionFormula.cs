@@ -2,6 +2,8 @@
 {
     public class ConstructionFormula
     {
+        public int Id { get; set; }
+
         public CalculatGroup Group { get; set; }
 
         public string ColumnId { get; set; }

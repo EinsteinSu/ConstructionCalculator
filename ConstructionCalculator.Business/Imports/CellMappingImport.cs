@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,10 @@ namespace ConstructionCalculator.Business.Imports
         {
         }
 
+        public CellMappingImport(Stream file) : base(file)
+        {
+        }
+
         protected override bool IncludeHeader => false;
 
         protected override int SheetNumber => 1;
@@ -21,7 +26,7 @@ namespace ConstructionCalculator.Business.Imports
         public override void ImportRow(ExcelRange cells, int row)
         {
             var cell = new CellMapping();
-            cell.ColumnNumber = (int)cells[row, 1].Value;
+            cell.ColumnNumber = cells[row, 1].Text.ConvertData(0);
             cell.ColumnExcelNumber = cells[row, 2].Text;
             cell.ColumnName = cells[row, 3].Text;
             Context.CellMappings.Add(cell);

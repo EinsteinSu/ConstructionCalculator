@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConstructionCalculator.DataAccess
 {
@@ -11,7 +7,6 @@ namespace ConstructionCalculator.DataAccess
     {
         public ConstructionDataContext() : base("Constraction")
         {
-
         }
 
         public DbSet<CellMapping> CellMappings { get; set; }
