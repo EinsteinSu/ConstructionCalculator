@@ -9,6 +9,7 @@ namespace ConstructionCalculator.DataAccess
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
+        [MaxLength(100)]
         public string Name { get; set; }
 
         public ConstructionDesignRequirement DesignRequirement { get; set; }

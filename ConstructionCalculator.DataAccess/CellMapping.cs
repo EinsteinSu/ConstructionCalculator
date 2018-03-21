@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ConstructionCalculator.DataAccess
 {
@@ -12,8 +8,21 @@ namespace ConstructionCalculator.DataAccess
 
         public int ColumnNumber { get; set; }
 
-        public string ColumnExcelNumber { get; set; }
+        [MaxLength(10)] public string ColumnExcelNumber { get; set; }
 
-        public string ColumnName { get; set; }
+        [MaxLength(100)] public string ColumnName { get; set; }
+
+        public CalculatGroup Group { get; set; }
+
+
+        [MaxLength(500)] public string Formula { get; set; }
+    }
+
+    public enum CalculatGroup
+    {
+        潜在风险,
+        接受水准,
+        防火水准,
+        火灾风险
     }
 }
