@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using ConstructionCalculator.DataAccess;
 using OfficeOpenXml;
 
@@ -25,10 +20,14 @@ namespace ConstructionCalculator.Business.Imports
 
         public override void ImportRow(ExcelRange cells, int row)
         {
-            var cell = new CellMapping();
-            cell.ColumnNumber = cells[row, 1].Text.ConvertData(0);
-            cell.ColumnExcelNumber = cells[row, 2].Text;
-            cell.ColumnName = cells[row, 3].Text;
+            var cell = new CellMapping
+            {
+                ColumnNumber = cells[row, 1].Text.ConvertData(0),
+                ColumnExcelNumber = cells[row, 2].Text,
+                ColumnName = cells[row, 3].Text,
+                Group = (DataAccess.CalculatGroup) cells[row, 4].Text.ConvertData(0),
+                Formula = cells[row, 5].Text
+            };
             Context.CellMappings.Add(cell);
         }
     }

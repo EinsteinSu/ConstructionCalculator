@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,16 +15,25 @@ namespace ConstructionCalculator.DataAccess
         [Display(Name = "业态名称")]
         public string Name { get; set; }
 
-        [Required]
-        [Display(Name = "业态特征编号")]
-        public int FeatureId { get; set; }
+    }
+
+    public class BusinessFeature
+    {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+
 
         [Display(Name = "业态特征")]
-        public string FeatureName { get; set; }
+        public string Name { get; set; }
+
+        [ForeignKey("BusinessValue")]
+        public int BusinessValueId { get; set; }
+
+        public virtual BusinessValue BusinessValue { get; set; }
 
         [Display(Name = "固定,Qi")]
         public double GdQi { get; set; }
-        
+
         [Display(Name = "移动,Qm")]
         public double YdQm { get; set; }
 
@@ -44,5 +54,8 @@ namespace ConstructionCalculator.DataAccess
 
         [Display(Name = "价值因子")]
         public double Jzyz { get; set; }
+
+        public virtual ObservableCollection<Construction> Constructions { get; set; }
+
     }
 }

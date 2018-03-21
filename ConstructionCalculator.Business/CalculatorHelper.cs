@@ -40,7 +40,7 @@ namespace ConstructionCalculator.Business
 
         public static void SetFormular(ConstructionDataContext context, ExcelWorksheet sheet, int row, IList<CellMapping> mappings, Construction construction)
         {
-            construction.BusinessValue = FindBusinessValue(context, construction);
+            //load business value
             //find the column at the end of the raw data e.g 11, 11 is a constant value
             for (int i = 11; i < mappings.Count + 1; i++)
             {
@@ -52,21 +52,10 @@ namespace ConstructionCalculator.Business
         //replace the data from parameter table by construction
         private static string ProcessFormula(string formula, Construction construction)
         {
-            var businessValue = construction.BusinessValue;
-            var constructionValue = construction.ConstructionValue;
             formula = formula.Replace("", "");
             return formula;
         }
 
-        private static BusinessValue FindBusinessValue(ConstructionDataContext context, Construction construction)
-        {
-            return context.BusinessValues.FirstOrDefault(f => f.Id == construction.BusinessValueId
-                                                              && f.FeatureId == construction.BusinessFeatureId);
-        }
-    }
-
-    public enum CalculatGroup
-    {
-        潜在风险, 接受水准, 防火水准, 火灾风险
+      
     }
 }

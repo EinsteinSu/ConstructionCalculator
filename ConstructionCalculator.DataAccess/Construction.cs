@@ -11,11 +11,17 @@ namespace ConstructionCalculator.DataAccess
 
         [Display(Name = "单体编号")] public string Dtbh { get; set; }
 
-        public virtual ConstructionValue ConstructionValue { get; set; }
+       public virtual ConstructionValue ConstructionValue { get; set; }
 
-        [Display(Name = "建筑结构")]
+        [Display(Name = "建筑结构编号")]
         [ForeignKey("ConstructionValue")]
         public int ConstructionValueId { get; set; }
+        
+        public virtual BusinessFeature BusinessFeature { get; set; }
+
+        [Display(Name = "业态特征编号")]
+        [ForeignKey("BusinessFeature")]
+        public int BusinessFeatureId { get; set; }
 
         [Display(Name = "总建筑面积m2")] public string Jzmj { get; set; }
 
@@ -24,10 +30,6 @@ namespace ConstructionCalculator.DataAccess
         [Display(Name = "层数")] public int Cs { get; set; }
 
         [Display(Name = "高度m")] public double Gd { get; set; }
-
-        [Display(Name = "业态编号")] public int BusinessValueId { get; set; }
-
-        [Display(Name = "业态特征编号")] public int BusinessFeatureId { get; set; }
 
         [Display(Name = "单元单层安全出口数量")] public int Aqcksl { get; set; }
 
@@ -63,6 +65,5 @@ namespace ConstructionCalculator.DataAccess
 
         [Display(Name = "栋数")] public int Ds { get; set; }
 
-        public virtual BusinessValue BusinessValue { get; set; }
     }
 }

@@ -69,6 +69,8 @@
     <EmbeddedResource Include="TestResource\CellMapping.xlsx" />
     <EmbeddedResource Include="TestResource\Construction.xlsx" />
     <EmbeddedResource Include="TestResource\ConstructionValue.xlsx" />
+    <EmbeddedResource Include="TestResource\BusinessFeature.xlsx" />
+    <EmbeddedResource Include="TestResource\BusinessValue.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConstructionCalculator.Business\ConstructionCalculator.Business.csproj">

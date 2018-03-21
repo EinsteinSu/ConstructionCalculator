@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Imports\BusinesFeatureImport.cs" />
     <Compile Include="Imports\BusinessValueImport.cs" />
     <Compile Include="Imports\CellMappingImport.cs" />
     <Compile Include="Imports\ConstructionImport.cs" />

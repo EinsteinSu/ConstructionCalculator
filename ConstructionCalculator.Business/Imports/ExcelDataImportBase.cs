@@ -44,19 +44,20 @@ namespace ConstructionCalculator.Business.Imports
                 }
                 rowCount++;
             }
-
-            if (IncludeHeader)
-            {
-                rowCount = rowCount - 2;
-            }
             return rowCount - 1;
+        }
+
+        protected virtual bool IgnoreSaveData
+        {
+            get { return false; }
         }
 
         public void Import()
         {
             var count = RowCount;
             var cells = Excel.Workbook.Worksheets[SheetNumber].Cells;
-            for (int i = 1; i < count + 1; i++)
+            var startRow = IncludeHeader ? 2 : 1;
+            for (int i = startRow; i < count + 1; i++)
             {
                 ImportRow(cells, i);
                 ShowPercentage?.Invoke((double)i / count * 100.00);
@@ -64,7 +65,10 @@ namespace ConstructionCalculator.Business.Imports
 
             try
             {
-                Context.SaveChanges();
+                if (!IgnoreSaveData)
+                {
+                    Context.SaveChanges();
+                }
             }
             catch (Exception e)
             {
