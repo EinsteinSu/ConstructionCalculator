@@ -51,9 +51,9 @@
     <Compile Include="CellMapping.cs" />
     <Compile Include="ConstructionDataContext.cs" />
     <Compile Include="Construction.cs" />
-    <Compile Include="ConstructionFormula.cs" />
     <Compile Include="ConstructionValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RiskLevel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

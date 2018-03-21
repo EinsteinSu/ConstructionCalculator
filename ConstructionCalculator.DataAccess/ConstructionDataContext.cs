@@ -13,8 +13,6 @@ namespace ConstructionCalculator.DataAccess
 
         public DbSet<Construction> Constructions { get; set; }
 
-        public DbSet<ConstructionFormula> ConstructionFormulas { get; set; }
-
         public DbSet<ConstructionValue> ConstructionValues { get; set; }
 
         public DbSet<BusinessValue> BusinessValues { get; set; }
