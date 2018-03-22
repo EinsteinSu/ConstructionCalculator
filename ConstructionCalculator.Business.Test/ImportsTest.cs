@@ -72,8 +72,8 @@ namespace ConstructionCalculator.Business.Test
                 Assert.AreEqual(201, data.BusinessFeatureId);
                 Assert.AreEqual(7, data.Ds);
                 //todo fix all asserts
-                Assert.AreEqual(importer.RowCount, 308);
-                Assert.AreEqual(Context.Constructions.Count(), 308);
+                Assert.AreEqual(importer.RowCount, 4);
+                Assert.AreEqual(Context.Constructions.Count(), 3);
             });
         }
 
@@ -129,6 +129,18 @@ namespace ConstructionCalculator.Business.Test
                 Assert.AreEqual(data.Jgkhyz, 2.37);
                 Assert.AreEqual(importer.RowCount, 6);
                 Assert.AreEqual(Context.ConstructionValues.Count(), 6);
+            });
+        }
+
+        [TestMethod]
+        public void RiskLevel()
+        {
+            ImportAndValidate("RiskLevel.xlsx", stream =>
+            {
+                var importer = new RiskLevelImport(stream);
+                importer.Import();
+                var data = Context.RiskLevels.First();
+                //asserts
             });
         }
     }

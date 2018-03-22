@@ -18,5 +18,7 @@ namespace ConstructionCalculator.DataAccess
         public DbSet<BusinessValue> BusinessValues { get; set; }
 
         public DbSet<BusinessFeature> BusinessFeatures { get; set; }
+
+        public DbSet<RiskLevel> RiskLevels { get; set; }
     }
 }
