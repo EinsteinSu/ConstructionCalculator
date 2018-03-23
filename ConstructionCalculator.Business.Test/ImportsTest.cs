@@ -10,32 +10,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace ConstructionCalculator.Business.Test
 {
     [TestClass]
-    public class ImportsTest
+    public class ImportsTest : TestBase
     {
-        protected ConstructionDataContext Context = new ConstructionDataContext();
-        private const string prefix = "ConstructionCalculator.Business.Test.TestResource.";
-        [TestCleanup]
-        public void Cleanup()
-        {
-            Context.Database.ExecuteSqlCommand("Delete From Constructions");
-            Context.Database.ExecuteSqlCommand("Delete From BusinessFeatures");
-            Context.Database.ExecuteSqlCommand("Delete From BusinessValues");
-            Context.Database.ExecuteSqlCommand("Delete From ConstructionValues");
-            Context.Database.ExecuteSqlCommand("Delete From CellMappings");
-            Context.Dispose();
-        }
-
-        void ImportAndValidate(string fileName, Action<Stream> validation)
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            using (var stream =
-                assembly.GetManifestResourceStream(prefix + fileName)
-            )
-            {
-                validation?.Invoke(stream);
-            }
-        }
-
         [TestMethod]
         public void CellMapping()
         {
@@ -140,6 +116,34 @@ namespace ConstructionCalculator.Business.Test
                 var data = Context.RiskLevels.First();
                 //asserts
             });
+        }
+    }
+
+    [TestClass]
+    public class TestBase
+    {
+        protected ConstructionDataContext Context = new ConstructionDataContext();
+        private const string prefix = "ConstructionCalculator.Business.Test.TestResource.";
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Context.Database.ExecuteSqlCommand("Delete From Constructions");
+            Context.Database.ExecuteSqlCommand("Delete From BusinessFeatures");
+            Context.Database.ExecuteSqlCommand("Delete From BusinessValues");
+            Context.Database.ExecuteSqlCommand("Delete From ConstructionValues");
+            Context.Database.ExecuteSqlCommand("Delete From CellMappings");
+            Context.Dispose();
+        }
+
+        protected void ImportAndValidate(string fileName, Action<Stream> validation)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            using (var stream =
+                assembly.GetManifestResourceStream(prefix + fileName)
+            )
+            {
+                validation?.Invoke(stream);
+            }
         }
     }
 }

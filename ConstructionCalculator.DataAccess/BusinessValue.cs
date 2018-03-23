@@ -55,6 +55,9 @@ namespace ConstructionCalculator.DataAccess
         [Display(Name = "价值因子")]
         public double Jzyz { get; set; }
 
+        [Display(Name = "人口密度取值")]
+        public double Rkmdqz { get; set; }
+
         public virtual ObservableCollection<Construction> Constructions { get; set; }
 
     }
