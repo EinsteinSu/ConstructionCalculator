@@ -60,6 +60,7 @@
     <Compile Include="Imports\ConstructionValueImport.cs" />
     <Compile Include="Imports\ExcelDataImportBase.cs" />
     <Compile Include="CalculatorHelper.cs" />
+    <Compile Include="Imports\RiskLevelImport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeConvertHelper.cs" />
   </ItemGroup>

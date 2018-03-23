@@ -47,10 +47,7 @@ namespace ConstructionCalculator.Business.Imports
             return rowCount - 1;
         }
 
-        protected virtual bool IgnoreSaveData
-        {
-            get { return false; }
-        }
+        protected virtual bool IgnoreSaveData => false;
 
         public void Import()
         {
@@ -72,7 +69,10 @@ namespace ConstructionCalculator.Business.Imports
             }
             catch (Exception e)
             {
-                throw new Exception("Could not save data." + e.Message);
+                string errors = e.Message;
+                if (e.InnerException != null)
+                    errors += "Internal Exception:\r" + e.InnerException.Message;
+                throw new Exception("Could not save data." + errors);
             }
         }
 

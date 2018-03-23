@@ -29,9 +29,9 @@ namespace ConstructionCalculator.Utility
             importer.Import();
             importer = new ConstructionValueImport(Path.Combine(folder, "ConstructionValue.xlsx"));
             importer.Import();
-            importer = new BusinesFeatureImport(Path.Combine(folder, "BusinessFeature.xlsx"));
-            importer.Import();
             importer = new BusinessValueImport(Path.Combine(folder, "BusinessValue.xlsx"));
+            importer.Import();
+            importer = new BusinesFeatureImport(Path.Combine(folder, "BusinessFeature.xlsx"));
             importer.Import();
             importer = new RiskLevelImport(Path.Combine(folder, "RiskLevel.xlsx"));
             importer.Import();
