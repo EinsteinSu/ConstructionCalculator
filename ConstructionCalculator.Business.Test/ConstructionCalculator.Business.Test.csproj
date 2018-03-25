@@ -56,6 +56,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalculatorHelperTest.cs" />
@@ -63,6 +64,7 @@
     <Compile Include="ExcelFormulaTest.cs" />
     <Compile Include="ImportsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TypeConvertHelperTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -72,6 +74,7 @@
     <EmbeddedResource Include="TestResource\ConstructionValue.xlsx" />
     <EmbeddedResource Include="TestResource\BusinessFeature.xlsx" />
     <EmbeddedResource Include="TestResource\BusinessValue.xlsx" />
+    <EmbeddedResource Include="TestResource\RiskLevel.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConstructionCalculator.Business\ConstructionCalculator.Business.csproj">

@@ -1,28 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ConstructionCalculator.Business;
 using ConstructionCalculator.Business.Imports;
+using ConstructionCalculator.DataAccess;
 
 namespace ConstructionCalculator.Utility
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            var parameter = args[0];
+            var parameter = args[0].ToLower();
             switch (parameter)
             {
+                case "clean":
+                    Cleanup();
+                    break;
                 case "import":
-                    //todo process all files from data folder
                     ImportFromFolder();
+                    break;
+                case "calc":
+                    var folder = args[1];
+                    foreach (var file in Directory.GetFiles(folder, "*.xlsx"))
+                        CalculatorHelper.CalcAndExportExcel(file);
                     break;
             }
         }
 
-        static void ImportFromFolder()
+        public static void Cleanup()
+        {
+            using (var context = new ConstructionDataContext())
+            {
+                context.Database.ExecuteSqlCommand("Delete From Constructions");
+                context.Database.ExecuteSqlCommand("Delete From BusinessFeatures");
+                context.Database.ExecuteSqlCommand("Delete From BusinessValues");
+                context.Database.ExecuteSqlCommand("Delete From ConstructionValues");
+                context.Database.ExecuteSqlCommand("Delete From CellMappings");
+                context.Database.ExecuteSqlCommand("Delete From RiskLevels");
+            }
+        }
+
+        private static void ImportFromFolder()
         {
             var folder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ImportData");
             ExcelDataImportBase importer = new CellMappingImport(Path.Combine(folder, "CellMapping.xlsx"));

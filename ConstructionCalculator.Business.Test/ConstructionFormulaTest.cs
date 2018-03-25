@@ -14,7 +14,6 @@ namespace ConstructionCalculator.Business.Test
         public void ValueFeatchTest()
         {
             var cellMappings = Context.CellMappings.ToList();
-          
             Console.WriteLine(cellMappings.Count);
         }
     }

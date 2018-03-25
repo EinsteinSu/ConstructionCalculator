@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -26,7 +25,6 @@ namespace ConstructionCalculator.Business.Test
                 Assert.IsTrue(importer.RowCount == 67);
                 Assert.IsTrue(Context.CellMappings.Count() == 67);
             });
-
         }
 
         [TestMethod]
@@ -38,8 +36,6 @@ namespace ConstructionCalculator.Business.Test
             ImportAndValidate("Construction.xlsx", stream =>
             {
                 var importer = new ConstructionImport(stream);
-                List<Construction> constructions = new List<Construction>();
-                importer.SomeAction = construction => { constructions.Add(construction); };
                 importer.Import();
                 var data = Context.Constructions.First();
                 Assert.AreEqual(1, data.ConstructionValueId);
@@ -114,7 +110,10 @@ namespace ConstructionCalculator.Business.Test
                 var importer = new RiskLevelImport(stream);
                 importer.Import();
                 var data = Context.RiskLevels.First();
-                //asserts
+                Assert.AreEqual(data.MinValue, 0);
+                Assert.AreEqual(data.MaxValue, 1);
+                Assert.AreEqual(data.Color, "White");
+                Assert.AreEqual(data.Description, "安全");
             });
         }
     }
@@ -122,16 +121,18 @@ namespace ConstructionCalculator.Business.Test
     [TestClass]
     public class TestBase
     {
+        private const string Prefix = "ConstructionCalculator.Business.Test.TestResource.";
         protected ConstructionDataContext Context = new ConstructionDataContext();
-        private const string prefix = "ConstructionCalculator.Business.Test.TestResource.";
+
         [TestCleanup]
-        public void Cleanup()
+        public virtual void Cleanup()
         {
             Context.Database.ExecuteSqlCommand("Delete From Constructions");
             Context.Database.ExecuteSqlCommand("Delete From BusinessFeatures");
             Context.Database.ExecuteSqlCommand("Delete From BusinessValues");
             Context.Database.ExecuteSqlCommand("Delete From ConstructionValues");
             Context.Database.ExecuteSqlCommand("Delete From CellMappings");
+            Context.Database.ExecuteSqlCommand("Delete From RiskLevels");
             Context.Dispose();
         }
 
@@ -139,7 +140,7 @@ namespace ConstructionCalculator.Business.Test
         {
             var assembly = Assembly.GetExecutingAssembly();
             using (var stream =
-                assembly.GetManifestResourceStream(prefix + fileName)
+                assembly.GetManifestResourceStream(Prefix + fileName)
             )
             {
                 validation?.Invoke(stream);

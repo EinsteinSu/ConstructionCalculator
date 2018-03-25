@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace ConstructionCalculator.Business
 {
@@ -35,6 +36,11 @@ namespace ConstructionCalculator.Business
         public static DateTime? ConvertToNullValueDateTime(this string data)
         {
             return ConvertToDateTime(data).Year == 1900 ? new DateTime?() : ConvertToDateTime(data);
+        }
+
+        public static Color ConvertToColor(this string color)
+        {
+            return Color.FromName(color);
         }
 
         public static string ConvertToCnNumber(this int num)

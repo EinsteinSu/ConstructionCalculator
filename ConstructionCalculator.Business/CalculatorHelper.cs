@@ -1,22 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using ConstructionCalculator.Business.Imports;
 using ConstructionCalculator.DataAccess;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 namespace ConstructionCalculator.Business
 {
     //to be tested using interface for mocking
     public class CalculatorHelper
     {
-        public void CalcAndExportExcel(string fileName)
+        public static void CalcAndExportExcel(string fileName)
         {
-            string originalFileName = fileName + ".xlsx";
-            string savingFileName = fileName + "_Processed.xlsx";
+            string originalFileName = fileName;
+            string savingFileName = Path.GetFileName(fileName).Replace(".xlsx","") + "_Processed.xlsx";
 
             var importer = new ConstructionImport(originalFileName);
             importer.Import();
@@ -47,13 +49,39 @@ namespace ConstructionCalculator.Business
                 var cellmappings = context.CellMappings.ToList();
                 var sheet = excel.Workbook.Worksheets[1];
                 int row = 2;//with header
+                SetHeader(sheet, 1, cellmappings);
                 foreach (var construction in context.Constructions.Include(i => i.BusinessFeature).Include(i => i.ConstructionValue))
                 {
                     SetFormular(context, sheet, row, cellmappings, construction);
                     row++;
                 }
                 sheet.Cells.Calculate();
+                for (int i = cellmappings.Count - 3; i < cellmappings.Count; i++)
+                {
+                    Console.WriteLine($"Setting color of {cellmappings[i].ColumnExcelNumber}");
+                    for (int j = 2; j < row; j++)
+                    {
+                        var cell = sheet.Cells[j, i + 1];
+                        var value = cell.Value.ToString().ConvertData<double>();
+                        Console.WriteLine($"Value: {value}");
+                        cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        var color = GetRiskLevelColor(value, context);
+                        Console.WriteLine($"Color: {color}");
+                        cell.Style.Fill.BackgroundColor.SetColor(color);
+                    }
+                }
                 context.Database.ExecuteSqlCommand("Delete from Constructions");
+            }
+        }
+
+        public static void SetHeader(ExcelWorksheet sheet, int row, IList<CellMapping> mappings)
+        {
+            for (int i = 25; i < mappings.Count; i++)
+            {
+                var mapping = mappings[i];
+                var cell = sheet.Cells[row, mapping.ColumnNumber];
+                cell.Value = mapping.ColumnName;
+                cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
             }
         }
 
@@ -66,9 +94,22 @@ namespace ConstructionCalculator.Business
                 var mapping = mappings[i];
                 var formula = ParameterReplace(mapping.Formula, construction);
                 formula = formula.Replace("{row}", row.ToString());
-                sheet.Cells[row, mapping.ColumnNumber].Formula = formula;
+                var cell = sheet.Cells[row, mapping.ColumnNumber];
+                cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
+                cell.Formula = formula;
+                Console.WriteLine($"{mapping.ColumnExcelNumber}:{ formula}");
             }
+
         }
+
+        public static Color GetRiskLevelColor(double value, ConstructionDataContext context)
+        {
+            var item = context.RiskLevels.FirstOrDefault(w => w.MinValue < value && w.MaxValue >= value);
+            if (item == null)
+                return Color.Black;
+            return item.Color.ConvertToColor();
+        }
+
 
         //replace the data from parameter table by construction
         public static string ParameterReplace(string formula, Construction construction)
