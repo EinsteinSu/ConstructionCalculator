@@ -25,7 +25,7 @@ namespace ConstructionCalculator.Business.Imports
                 ColumnNumber = cells[row, 1].Text.ConvertData(0),
                 ColumnExcelNumber = cells[row, 2].Text,
                 ColumnName = cells[row, 3].Text,
-                Group = (DataAccess.CalculatGroup) cells[row, 4].Text.ConvertData(0),
+                Group = (CalculatGroup) cells[row, 4].Text.ConvertData(0),
                 Formula = cells[row, 5].Text
             };
             Context.CellMappings.Add(cell);

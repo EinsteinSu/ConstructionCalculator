@@ -18,7 +18,8 @@ namespace ConstructionCalculator.Business
         public static void CalcAndExportExcel(string fileName)
         {
             string originalFileName = fileName;
-            string savingFileName = Path.GetFileName(fileName).Replace(".xlsx","") + "_Processed.xlsx";
+            string savingFileName = Path.Combine(Path.GetDirectoryName(fileName),
+                Path.GetFileName(fileName).Replace(".xlsx", "") + "_Processed.xlsx");
 
             var importer = new ConstructionImport(originalFileName);
             importer.Import();
@@ -44,7 +45,7 @@ namespace ConstructionCalculator.Business
 
         private static void ProcessInExcel(ExcelPackage excel)
         {
-            using (var context = new ConstructionDataContext())
+            using (var context = new ConstructionDataContext("Construction"))
             {
                 var cellmappings = context.CellMappings.ToList();
                 var sheet = excel.Workbook.Worksheets[1];

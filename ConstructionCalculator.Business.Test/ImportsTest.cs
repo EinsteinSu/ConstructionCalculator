@@ -22,8 +22,6 @@ namespace ConstructionCalculator.Business.Test
                 Assert.AreEqual(1, data.ColumnNumber);
                 Assert.AreEqual("A", data.ColumnExcelNumber);
                 Assert.AreEqual("建筑名称", data.ColumnName);
-                Assert.IsTrue(importer.RowCount == 67);
-                Assert.IsTrue(Context.CellMappings.Count() == 67);
             });
         }
 
@@ -122,7 +120,7 @@ namespace ConstructionCalculator.Business.Test
     public class TestBase
     {
         private const string Prefix = "ConstructionCalculator.Business.Test.TestResource.";
-        protected ConstructionDataContext Context = new ConstructionDataContext();
+        protected ConstructionDataContext Context = new ConstructionDataContext("Construction");
 
         [TestCleanup]
         public virtual void Cleanup()

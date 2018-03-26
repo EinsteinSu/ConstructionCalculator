@@ -10,16 +10,16 @@ namespace ConstructionCalculator.Business.Imports
         protected ExcelPackage Excel;
         protected ConstructionDataContext Context;
 
-        public ExcelDataImportBase(string fileName)
+        public ExcelDataImportBase(string fileName,string database = "Construction")
         {
             Excel = new ExcelPackage(new FileInfo(fileName));
-            Context = new ConstructionDataContext();
+            Context = new ConstructionDataContext(database);
         }
 
-        public ExcelDataImportBase(Stream stream)
+        public ExcelDataImportBase(Stream stream, string database = "Construction")
         {
             Excel = new ExcelPackage(stream);
-            Context = new ConstructionDataContext();
+            Context = new ConstructionDataContext(database);
         }
 
         //is it include header

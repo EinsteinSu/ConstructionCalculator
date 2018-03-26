@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.IO;
 using ConstructionCalculator.Business;
 using ConstructionCalculator.Business.Imports;
@@ -10,6 +11,7 @@ namespace ConstructionCalculator.Utility
     {
         private static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Databases"));
             var parameter = args[0].ToLower();
             switch (parameter)
             {
@@ -29,8 +31,9 @@ namespace ConstructionCalculator.Utility
 
         public static void Cleanup()
         {
-            using (var context = new ConstructionDataContext())
+            using (var context = new ConstructionDataContext("Construction"))
             {
+                Console.WriteLine(context.Database.Connection.ConnectionString);
                 context.Database.ExecuteSqlCommand("Delete From Constructions");
                 context.Database.ExecuteSqlCommand("Delete From BusinessFeatures");
                 context.Database.ExecuteSqlCommand("Delete From BusinessValues");
