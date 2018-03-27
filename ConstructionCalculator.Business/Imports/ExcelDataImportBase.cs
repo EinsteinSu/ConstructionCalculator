@@ -1,16 +1,18 @@
 ﻿using System;
 using System.IO;
 using ConstructionCalculator.DataAccess;
+using log4net;
 using OfficeOpenXml;
 
 namespace ConstructionCalculator.Business.Imports
 {
     public abstract class ExcelDataImportBase : IDisposable
     {
+        private static readonly ILog Log = LogManager.GetLogger("ExcelDataImport");
         protected ExcelPackage Excel;
         protected ConstructionDataContext Context;
 
-        public ExcelDataImportBase(string fileName,string database = "Construction")
+        public ExcelDataImportBase(string fileName, string database = "Construction")
         {
             Excel = new ExcelPackage(new FileInfo(fileName));
             Context = new ConstructionDataContext(database);
@@ -64,6 +66,10 @@ namespace ConstructionCalculator.Business.Imports
             {
                 if (!IgnoreSaveData)
                 {
+                    Context.Database.Log = s =>
+                    {
+                        Log.Info(s);
+                    };
                     Context.SaveChanges();
                 }
             }

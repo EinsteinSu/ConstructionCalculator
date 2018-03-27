@@ -11,7 +11,7 @@ namespace ConstructionCalculator.DataAccess
 
         public ConstructionDataContext(string connection) : base(connection)
         {
-
+            
         }
 
         public DbSet<CellMapping> CellMappings { get; set; }

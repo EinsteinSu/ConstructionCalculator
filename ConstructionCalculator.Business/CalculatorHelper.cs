@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using ConstructionCalculator.Business.Imports;
 using ConstructionCalculator.DataAccess;
+using log4net;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 
@@ -15,6 +16,7 @@ namespace ConstructionCalculator.Business
     //to be tested using interface for mocking
     public class CalculatorHelper
     {
+        private static readonly ILog Log = LogManager.GetLogger("CalculatorHelper");
         public static void CalcAndExportExcel(string fileName)
         {
             string originalFileName = fileName;
@@ -59,15 +61,15 @@ namespace ConstructionCalculator.Business
                 sheet.Cells.Calculate();
                 for (int i = cellmappings.Count - 3; i < cellmappings.Count; i++)
                 {
-                    Console.WriteLine($"Setting color of {cellmappings[i].ColumnExcelNumber}");
+                    Log.Info($"Setting color of {cellmappings[i].ColumnExcelNumber}");
                     for (int j = 2; j < row; j++)
                     {
                         var cell = sheet.Cells[j, i + 1];
                         var value = cell.Value.ToString().ConvertData<double>();
-                        Console.WriteLine($"Value: {value}");
+                        Log.Info($"Value: {value}");
                         cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
                         var color = GetRiskLevelColor(value, context);
-                        Console.WriteLine($"Color: {color}");
+                        Log.Info($"Color: {color}");
                         cell.Style.Fill.BackgroundColor.SetColor(color);
                     }
                 }
@@ -98,7 +100,7 @@ namespace ConstructionCalculator.Business
                 var cell = sheet.Cells[row, mapping.ColumnNumber];
                 cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
                 cell.Formula = formula;
-                Console.WriteLine($"{mapping.ColumnExcelNumber}:{ formula}");
+                Log.Info($"{mapping.ColumnExcelNumber}:{ formula}");
             }
 
         }
