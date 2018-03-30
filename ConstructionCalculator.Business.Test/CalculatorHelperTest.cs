@@ -63,7 +63,7 @@ namespace ConstructionCalculator.Business.Test
                 CalculatorHelper.Calc(stream, excel =>
                 {
                     //TODO assert the headers and values
-                    excel.SaveAs(new FileInfo("D:\\test.xlsx"));
+                    excel.SaveAs(new FileInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "test.xlsx")));
                 });
             });
         }
@@ -101,6 +101,15 @@ namespace ConstructionCalculator.Business.Test
             const double value = 0.64;
             var color = CalculatorHelper.GetRiskLevelColor(value, Context);
             Assert.AreEqual(color, Color.White);
+        }
+
+        [TestMethod]
+        public void GetRiskLevel()
+        {
+            ImportRiskLevel();
+            const double value = 0.64;
+            var item = CalculatorHelper.GetRiskLevel(value, Context);
+            Assert.AreEqual(item.Color.ConvertToColor(), Color.White);
         }
 
         private void ImportCellMappings()

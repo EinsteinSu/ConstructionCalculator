@@ -59,6 +59,8 @@ namespace ConstructionCalculator.Business
                     row++;
                 }
                 sheet.Cells.Calculate();
+                //todo process the t column that set the vale to 0.5 which less than 0 or greater than 0.5, otherwise 
+                //last 3 columns process
                 for (int i = cellmappings.Count - 3; i < cellmappings.Count; i++)
                 {
                     Log.Info($"Setting color of {cellmappings[i].ColumnExcelNumber}");
@@ -68,9 +70,17 @@ namespace ConstructionCalculator.Business
                         var value = cell.Value.ToString().ConvertData<double>();
                         Log.Info($"Value: {value}");
                         cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                        var color = GetRiskLevelColor(value, context);
-                        Log.Info($"Color: {color}");
-                        cell.Style.Fill.BackgroundColor.SetColor(color);
+                        var item = GetRiskLevel(value, context);
+                        if (item != null)
+                        {
+                            Log.Info($"Color: {item.Color}");
+                            cell.Style.Fill.BackgroundColor.SetColor(item.Color.ConvertToColor());
+                            cell.Value = item.Description;
+                        }
+                        else
+                        {
+                            Log.Warn("Can not found any risk level.");
+                        }
                     }
                 }
                 context.Database.ExecuteSqlCommand("Delete from Constructions");
@@ -100,9 +110,14 @@ namespace ConstructionCalculator.Business
                 var cell = sheet.Cells[row, mapping.ColumnNumber];
                 cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
                 cell.Formula = formula;
+                cell.Style.Numberformat.Format = "0.00";
                 Log.Info($"{mapping.ColumnExcelNumber}:{ formula}");
             }
+        }
 
+        public static RiskLevel GetRiskLevel(double value, ConstructionDataContext context)
+        {
+            return context.RiskLevels.FirstOrDefault(w => w.MinValue < value && w.MaxValue >= value);
         }
 
         public static Color GetRiskLevelColor(double value, ConstructionDataContext context)
