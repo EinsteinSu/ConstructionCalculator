@@ -20,9 +20,8 @@ namespace ConstructionCalculator.DataAccess
 
     public enum CalculatGroup
     {
-        潜在风险,
-        接受水准,
-        防火水准,
-        火灾风险
+        Normal,
+        Result,
+        ParameterT,
     }
 }

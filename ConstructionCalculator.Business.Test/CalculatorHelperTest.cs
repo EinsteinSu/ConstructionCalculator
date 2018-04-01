@@ -95,6 +95,21 @@ namespace ConstructionCalculator.Business.Test
         }
 
         [TestMethod]
+        public void GetParemeterT()
+        {
+            double input = 0.2;
+            var result = CalculatorHelper.GetParamerT(input);
+            Assert.AreEqual(result, 0.2);
+            input = 1.5;
+            result = CalculatorHelper.GetParamerT(input);
+            Assert.AreEqual(0.5, result);
+            input = -0.2;
+            CalculatorHelper.GetParamerT(input);
+            result = CalculatorHelper.GetParamerT(input);
+            Assert.AreEqual(0.5, result);
+        }
+
+        [TestMethod]
         public void GetRiskLevelColor()
         {
             ImportRiskLevel();

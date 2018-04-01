@@ -58,31 +58,31 @@ namespace ConstructionCalculator.Business
                     SetFormular(context, sheet, row, cellmappings, construction);
                     row++;
                 }
-                sheet.Cells.Calculate();
+                //sheet.Cells.Calculate();
                 //todo process the t column that set the vale to 0.5 which less than 0 or greater than 0.5, otherwise 
                 //last 3 columns process
-                for (int i = cellmappings.Count - 3; i < cellmappings.Count; i++)
-                {
-                    Log.Info($"Setting color of {cellmappings[i].ColumnExcelNumber}");
-                    for (int j = 2; j < row; j++)
-                    {
-                        var cell = sheet.Cells[j, i + 1];
-                        var value = cell.Value.ToString().ConvertData<double>();
-                        Log.Info($"Value: {value}");
-                        cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                        var item = GetRiskLevel(value, context);
-                        if (item != null)
-                        {
-                            Log.Info($"Color: {item.Color}");
-                            cell.Style.Fill.BackgroundColor.SetColor(item.Color.ConvertToColor());
-                            cell.Value = item.Description;
-                        }
-                        else
-                        {
-                            Log.Warn("Can not found any risk level.");
-                        }
-                    }
-                }
+                //for (int i = cellmappings.Count - 3; i < cellmappings.Count; i++)
+                //{
+                //    Log.Info($"Setting color of {cellmappings[i].ColumnExcelNumber}");
+                //    for (int j = 2; j < row; j++)
+                //    {
+                //        var cell = sheet.Cells[j, i + 1];
+                //        var value = cell.Value.ToString().ConvertData<double>();
+                //        Log.Info($"Value: {value}");
+                //        cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                //        var item = GetRiskLevel(value, context);
+                //        if (item != null)
+                //        {
+                //            Log.Info($"Color: {item.Color}");
+                //            cell.Style.Fill.BackgroundColor.SetColor(item.Color.ConvertToColor());
+                //            cell.Value = item.Description;
+                //        }
+                //        else
+                //        {
+                //            Log.Warn("Can not found any risk level.");
+                //        }
+                //    }
+                //}
                 context.Database.ExecuteSqlCommand("Delete from Constructions");
             }
         }
@@ -111,7 +111,43 @@ namespace ConstructionCalculator.Business
                 cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
                 cell.Formula = formula;
                 cell.Style.Numberformat.Format = "0.00";
+                cell.Calculate();
+                var value = cell.Value.ToString().ConvertData<double>();
+                if (mapping.Group == CalculatGroup.Result)
+                {
+                    SetResult(cell, value, context);
+                }
+
+                if (mapping.Group == CalculatGroup.ParameterT)
+                {
+                    cell.Value = GetParamerT(value);
+                }
                 Log.Info($"{mapping.ColumnExcelNumber}:{ formula}");
+            }
+        }
+
+        public static double GetParamerT(double value)
+        {
+            Log.InfoFormat($"Parameter T Value: {value}");
+            if (value <= 0 || value >= 0.5)
+                return 0.5;
+            return value;
+        }
+
+        private static void SetResult(ExcelRange cell, double value, ConstructionDataContext context)
+        {
+            Log.Info($"Value: {value}");
+            cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
+            var item = GetRiskLevel(value, context);
+            if (item != null)
+            {
+                Log.Info($"Color: {item.Color}");
+                cell.Style.Fill.BackgroundColor.SetColor(item.Color.ConvertToColor());
+                cell.Value = item.Description;
+            }
+            else
+            {
+                Log.Warn("Can not found any risk level.");
             }
         }
 
