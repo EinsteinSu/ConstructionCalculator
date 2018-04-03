@@ -16,12 +16,14 @@ namespace ConstructionCalculator.DataAccess
 
 
         [MaxLength(500)] public string Formula { get; set; }
+
+        public int Digital { get; set; }
     }
 
     public enum CalculatGroup
     {
         Normal,
         Result,
-        ParameterT,
+        ParameterT
     }
 }

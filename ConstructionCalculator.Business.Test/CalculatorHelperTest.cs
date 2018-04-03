@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Runtime.Remoting;
 using ConstructionCalculator.Business.Imports;
 using ConstructionCalculator.DataAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -43,6 +44,15 @@ namespace ConstructionCalculator.Business.Test
             formula = "JZKHYZF * PJKHNLF";
             formula = CalculatorHelper.ParameterReplace(formula, construction);
             Assert.AreEqual("3 * 4", formula);
+        }
+
+        [TestMethod]
+        public void GetFormat()
+        {
+            var result = CalculatorHelper.GetDigitalFormat(2);
+            Assert.AreEqual("0.00", result);
+            result = CalculatorHelper.GetDigitalFormat(3);
+            Assert.AreEqual("0.000", result);
         }
 
         private void InitializeData()
@@ -123,7 +133,7 @@ namespace ConstructionCalculator.Business.Test
         {
             ImportRiskLevel();
             const double value = 0.64;
-            var item = CalculatorHelper.GetRiskLevel(value, Context);
+            var item = CalculatorHelper.GetRiskLevel(value);
             Assert.AreEqual(item.Color.ConvertToColor(), Color.White);
         }
 

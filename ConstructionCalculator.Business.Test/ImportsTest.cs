@@ -55,8 +55,8 @@ namespace ConstructionCalculator.Business.Test
                 var data = Context.BusinessValues.First();
                 Assert.AreEqual(1, data.Id);
                 Assert.AreEqual("车库", data.Name);
-                Assert.AreEqual(importer.RowCount, 28);
-                Assert.AreEqual(Context.BusinessValues.Count(), 27);
+                Assert.AreEqual(importer.RowCount, 29);
+                Assert.AreEqual(Context.BusinessValues.Count(), 28);
             });
         }
 
@@ -78,8 +78,8 @@ namespace ConstructionCalculator.Business.Test
                 Assert.AreEqual("室内停车场", data.Name);
                 Assert.AreEqual(1, data.BusinessValueId);
                 Assert.AreEqual(0.2, data.Hdyza);
-                Assert.AreEqual(importer.RowCount, 59);
-                Assert.AreEqual(Context.BusinessFeatures.Count(), 58);
+                Assert.AreEqual(importer.RowCount, 60);
+                Assert.AreEqual(Context.BusinessFeatures.Count(), 59);
             });
         }
 
@@ -95,8 +95,8 @@ namespace ConstructionCalculator.Business.Test
                 Assert.AreEqual(1, data.Id);
                 Assert.AreEqual(data.DesignRequirement, ConstructionDesignRequirement.一级);
                 Assert.AreEqual(data.Jgkhyz, 2.37);
-                Assert.AreEqual(importer.RowCount, 6);
-                Assert.AreEqual(Context.ConstructionValues.Count(), 6);
+                Assert.AreEqual(importer.RowCount, 7);
+                Assert.AreEqual(Context.ConstructionValues.Count(), 7);
             });
         }
 

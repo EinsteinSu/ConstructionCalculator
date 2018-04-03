@@ -58,31 +58,6 @@ namespace ConstructionCalculator.Business
                     SetFormular(context, sheet, row, cellmappings, construction);
                     row++;
                 }
-                //sheet.Cells.Calculate();
-                //todo process the t column that set the vale to 0.5 which less than 0 or greater than 0.5, otherwise 
-                //last 3 columns process
-                //for (int i = cellmappings.Count - 3; i < cellmappings.Count; i++)
-                //{
-                //    Log.Info($"Setting color of {cellmappings[i].ColumnExcelNumber}");
-                //    for (int j = 2; j < row; j++)
-                //    {
-                //        var cell = sheet.Cells[j, i + 1];
-                //        var value = cell.Value.ToString().ConvertData<double>();
-                //        Log.Info($"Value: {value}");
-                //        cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
-                //        var item = GetRiskLevel(value, context);
-                //        if (item != null)
-                //        {
-                //            Log.Info($"Color: {item.Color}");
-                //            cell.Style.Fill.BackgroundColor.SetColor(item.Color.ConvertToColor());
-                //            cell.Value = item.Description;
-                //        }
-                //        else
-                //        {
-                //            Log.Warn("Can not found any risk level.");
-                //        }
-                //    }
-                //}
                 context.Database.ExecuteSqlCommand("Delete from Constructions");
             }
         }
@@ -110,20 +85,31 @@ namespace ConstructionCalculator.Business
                 var cell = sheet.Cells[row, mapping.ColumnNumber];
                 cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
                 cell.Formula = formula;
-                cell.Style.Numberformat.Format = "0.00";
+                cell.Style.Numberformat.Format = GetDigitalFormat(mapping.Digital);
+                Log.Info($"{mapping.ColumnExcelNumber}:{ formula}");
                 cell.Calculate();
+                Log.Info($"Calculated, Result:{cell.Value}");
                 var value = cell.Value.ToString().ConvertData<double>();
                 if (mapping.Group == CalculatGroup.Result)
                 {
-                    SetResult(cell, value, context);
+                    SetResult(cell, value);
                 }
-
                 if (mapping.Group == CalculatGroup.ParameterT)
                 {
                     cell.Value = GetParamerT(value);
                 }
-                Log.Info($"{mapping.ColumnExcelNumber}:{ formula}");
             }
+        }
+
+        public static string GetDigitalFormat(int digital)
+        {
+            var result = "0.";
+            for (int i = 0; i < digital; i++)
+            {
+                result += "0";
+            }
+
+            return result;
         }
 
         public static double GetParamerT(double value)
@@ -134,11 +120,11 @@ namespace ConstructionCalculator.Business
             return value;
         }
 
-        private static void SetResult(ExcelRange cell, double value, ConstructionDataContext context)
+        private static void SetResult(ExcelRange cell, double value)
         {
             Log.Info($"Value: {value}");
             cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
-            var item = GetRiskLevel(value, context);
+            var item = GetRiskLevel(value);
             if (item != null)
             {
                 Log.Info($"Color: {item.Color}");
@@ -151,9 +137,12 @@ namespace ConstructionCalculator.Business
             }
         }
 
-        public static RiskLevel GetRiskLevel(double value, ConstructionDataContext context)
+        public static RiskLevel GetRiskLevel(double value)
         {
-            return context.RiskLevels.FirstOrDefault(w => w.MinValue < value && w.MaxValue >= value);
+            using (var context = new ConstructionDataContext("Construction"))
+            {
+                return context.RiskLevels.FirstOrDefault(w => w.MinValue < value && w.MaxValue >= value);
+            }
         }
 
         public static Color GetRiskLevelColor(double value, ConstructionDataContext context)
@@ -164,27 +153,33 @@ namespace ConstructionCalculator.Business
             return item.Color.ConvertToColor();
         }
 
+        private static string Replace(string item, string source, string target)
+        {
+            Log.Info($"Replace {source} to {target}");
+            return item.Replace(source, target);
+        }
+
 
         //replace the data from parameter table by construction
         public static string ParameterReplace(string formula, Construction construction)
         {
             //business values
-            formula = formula.Replace("GDQI", construction.BusinessFeature.GdQi.ToString(CultureInfo.InvariantCulture));
-            formula = formula.Replace("YDQM", construction.BusinessFeature.YdQm.ToString(CultureInfo.InvariantCulture));
-            formula = formula.Replace("HZMYYZI", construction.BusinessFeature.Hzmyyzi.ToString(CultureInfo.InvariantCulture));
-            formula = formula.Replace("HDYZA", construction.BusinessFeature.Hdyza.ToString(CultureInfo.InvariantCulture));
-            formula = formula.Replace("YLYZD", construction.BusinessFeature.Ylyzd.ToString(CultureInfo.InvariantCulture));
-            formula = formula.Replace("SSSJXZZP", construction.BusinessFeature.Sssjxzzp.ToString(CultureInfo.InvariantCulture));
-            formula = formula.Replace("JZYZ", construction.BusinessFeature.Jzyz.ToString(CultureInfo.InvariantCulture));
-            formula = formula.Replace("RKMDQZ", construction.BusinessFeature.Rkmdqz.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "GDQI", construction.BusinessFeature.GdQi.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "YDQM", construction.BusinessFeature.YdQm.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "HZMYYZI", construction.BusinessFeature.Hzmyyzi.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "HDYZA", construction.BusinessFeature.Hdyza.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "YLYZD", construction.BusinessFeature.Ylyzd.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "SSSJXZZP", construction.BusinessFeature.Sssjxzzp.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "JZYZ", construction.BusinessFeature.Jzyz.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "RKMDQZ", construction.BusinessFeature.Rkmdqz.ToString(CultureInfo.InvariantCulture));
             //construction values
-            formula = formula.Replace("JGKHSJ", construction.ConstructionValue.Jgkhsj.ToString(CultureInfo.InvariantCulture));
-            formula = formula.Replace("WQKHSJ", construction.ConstructionValue.Wqkhsj.ToString(CultureInfo.InvariantCulture));
-            formula = formula.Replace("WDDDKHSJ", construction.ConstructionValue.Wdkhsj.ToString(CultureInfo.InvariantCulture));
-            formula = formula.Replace("NQKHSJ", construction.ConstructionValue.Nqkhsj.ToString(CultureInfo.InvariantCulture));
-            formula = formula.Replace("JZKHYZF", construction.ConstructionValue.Jzkhyz.ToString(CultureInfo.InvariantCulture));
-            formula = formula.Replace("PJKHNLF", construction.ConstructionValue.Pjkhnl.ToString(CultureInfo.InvariantCulture));
-            formula = formula.Replace("JGKHYZF0", construction.ConstructionValue.Jgkhyz.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "JGKHSJ", construction.ConstructionValue.Jgkhsj.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "WQKHSJ", construction.ConstructionValue.Wqkhsj.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "WDDDKHSJ", construction.ConstructionValue.Wdkhsj.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "NQKHSJ", construction.ConstructionValue.Nqkhsj.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "JZKHYZF", construction.ConstructionValue.Jzkhyz.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "PJKHNLF", construction.ConstructionValue.Pjkhnl.ToString(CultureInfo.InvariantCulture));
+            formula = Replace(formula, "JGKHYZF0", construction.ConstructionValue.Jgkhyz.ToString(CultureInfo.InvariantCulture));
             return formula;
         }
 

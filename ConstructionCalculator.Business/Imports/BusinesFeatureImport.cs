@@ -36,9 +36,8 @@ namespace ConstructionCalculator.Business.Imports
                 Hdyza = cells[row, 7].Text.ConvertData<double>(),
                 Ylyzd = cells[row, 8].Text.ConvertData<double>(),
                 Sssjxzzp = cells[row, 9].Text.ConvertData<double>(),
-                Ssrs = cells[row, 10].Text.ConvertData<double>(),
-                Jzyz = cells[row, 11].Text.ConvertData<double>(),
-                Rkmdqz = cells[row, 12].Text.ConvertData<double>()
+                Rkmdqz = cells[row, 10].Text.ConvertData<double>(),
+                Jzyz = cells[row, 11].Text.ConvertData<double>()
             };
             Context.BusinessFeatures.Add(f);
         }
