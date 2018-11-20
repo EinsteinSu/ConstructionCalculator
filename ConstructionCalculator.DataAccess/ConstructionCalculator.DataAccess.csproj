@@ -58,12 +58,23 @@
     <Compile Include="ConstructionDataContext.cs" />
     <Compile Include="Construction.cs" />
     <Compile Include="ConstructionValue.cs" />
+    <Compile Include="File.cs" />
+    <Compile Include="Migrations\201811201238230_file-first-version.cs" />
+    <Compile Include="Migrations\201811201238230_file-first-version.Designer.cs">
+      <DependentUpon>201811201238230_file-first-version.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RiskLevel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201811201238230_file-first-version.resx">
+      <DependentUpon>201811201238230_file-first-version.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

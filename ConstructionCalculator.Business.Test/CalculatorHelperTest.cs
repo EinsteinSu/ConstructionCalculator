@@ -5,6 +5,7 @@ using System.Runtime.Remoting;
 using ConstructionCalculator.Business.Imports;
 using ConstructionCalculator.DataAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using File = System.IO.File;
 
 namespace ConstructionCalculator.Business.Test
 {

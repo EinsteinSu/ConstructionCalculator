@@ -1,10 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ConstructionCalculator.DataAccess
 {
     public class CellMapping
     {
         public int Id { get; set; }
+
+        public File File { get; set; }
+
+        [ForeignKey("File")]
+        public int? FileId { get; set; }
 
         public int ColumnNumber { get; set; }
 
