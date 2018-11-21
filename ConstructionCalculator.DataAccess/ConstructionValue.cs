@@ -1,13 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ConstructionCalculator.DataAccess.Interfaces;
 
 namespace ConstructionCalculator.DataAccess
 {
-    public class ConstructionValue
+    public class ConstructionValue : IFile
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
+
+        public File File { get; set; }
+
+        [ForeignKey("File")]
+        public int? FileId { get; set; }
 
         [MaxLength(100)]
         public string Name { get; set; }

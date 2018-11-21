@@ -25,5 +25,7 @@ namespace ConstructionCalculator.DataAccess
         public DbSet<BusinessFeature> BusinessFeatures { get; set; }
 
         public DbSet<RiskLevel> RiskLevels { get; set; }
+
+        public DbSet<File> Files { get; set; }
     }
 }

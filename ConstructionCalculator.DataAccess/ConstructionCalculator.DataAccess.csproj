@@ -59,6 +59,7 @@
     <Compile Include="Construction.cs" />
     <Compile Include="ConstructionValue.cs" />
     <Compile Include="File.cs" />
+    <Compile Include="Interfaces\IFile.cs" />
     <Compile Include="Migrations\201811201238230_file-first-version.cs" />
     <Compile Include="Migrations\201811201238230_file-first-version.Designer.cs">
       <DependentUpon>201811201238230_file-first-version.cs</DependentUpon>

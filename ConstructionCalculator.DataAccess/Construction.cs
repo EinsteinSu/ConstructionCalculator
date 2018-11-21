@@ -3,9 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ConstructionCalculator.DataAccess
 {
-    public class Construction
+    public class Construction : IFile
     {
         public int Id { get; set; }
+
+        public File File { get; set; }
+
+        [ForeignKey("File")]
+        public int? FileId { get; set; }
 
         [Display(Name = "建筑名称")] public string Jzmc { get; set; }
 

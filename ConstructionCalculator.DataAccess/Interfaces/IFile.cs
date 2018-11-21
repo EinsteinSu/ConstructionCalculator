@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConstructionCalculator.DataAccess.Interfaces
 {
@@ -11,20 +9,57 @@ namespace ConstructionCalculator.DataAccess.Interfaces
         int? FileId { get; set; }
     }
 
-    public static class IFileHelper
+    public static class FileHelper
     {
         //todo: to be tested
-        public static void SaveAs<T>(List<T> data, string filename) where T : IFile
+        public static bool SaveAs<T>(this IEnumerable<T> data, ConstructionDataContext context, string filename,
+            out string report, string description) where T : class, IFile
         {
+            report = string.Empty;
+
             //todo: check whether an entry exists in file table, if yes, return false and out a notification
             //todo: insert an entry after checking and get the id
-            int id = 0;
-            foreach (var item in data)
+            var enumerable = data as T[] ?? data.ToArray();
+            if (!enumerable.Any())
             {
-                item.FileId = id;
+                report = "no data needs to be saved";
+                return false;
             }
-            //todo: store it in database.
 
+            var type = ConvertFileType(GetName(enumerable.First()));
+            var file = File.Select(context, filename, type);
+            if (file != null)
+            {
+                report = "File has already exists";
+                return false;
+            }
+
+            file = new File
+            {
+                FileName = filename,
+                Description = description,
+                Type = type
+            };
+            var id = file.Add(context);
+            foreach (var item in enumerable) item.FileId = id;
+            context.SaveChanges();
+            return true;
+        }
+
+        public static string GetName<T>(T data) where T : class, IFile
+        {
+            return typeof(T).Name;
+        }
+
+        public static FileType ConvertFileType(string type)
+        {
+            Enum.TryParse(type, true, out FileType item);
+            return item;
+        }
+
+        public static bool Exists(ConstructionDataContext context, string fileName, string type)
+        {
+            return File.Select(context, fileName, ConvertFileType(type)) != null;
         }
     }
 }

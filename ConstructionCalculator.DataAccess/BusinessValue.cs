@@ -2,10 +2,11 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ConstructionCalculator.DataAccess.Interfaces;
 
 namespace ConstructionCalculator.DataAccess
 {
-    public class BusinessValue
+    public class BusinessValue : IFile
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -15,13 +16,22 @@ namespace ConstructionCalculator.DataAccess
         [Display(Name = "业态名称")]
         public string Name { get; set; }
 
+        public File File { get; set; }
+
+        [ForeignKey("File")]
+        public int? FileId { get; set; }
+
     }
 
-    public class BusinessFeature
+    public class BusinessFeature:IFile
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
+        public File File { get; set; }
+
+        [ForeignKey("File")]
+        public int? FileId { get; set; }
 
         [Display(Name = "业态特征")]
         public string Name { get; set; }

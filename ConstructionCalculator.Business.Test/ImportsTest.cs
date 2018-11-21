@@ -131,6 +131,7 @@ namespace ConstructionCalculator.Business.Test
             Context.Database.ExecuteSqlCommand("Delete From ConstructionValues");
             Context.Database.ExecuteSqlCommand("Delete From CellMappings");
             Context.Database.ExecuteSqlCommand("Delete From RiskLevels");
+            Context.Database.ExecuteSqlCommand("Delete From Files");
             Context.Dispose();
         }
 
