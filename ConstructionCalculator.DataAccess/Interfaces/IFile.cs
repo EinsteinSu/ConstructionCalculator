@@ -11,14 +11,11 @@ namespace ConstructionCalculator.DataAccess.Interfaces
 
     public static class FileHelper
     {
-        //todo: to be tested
         public static bool SaveAs<T>(this IEnumerable<T> data, ConstructionDataContext context, string filename,
             out string report, string description) where T : class, IFile
         {
             report = string.Empty;
 
-            //todo: check whether an entry exists in file table, if yes, return false and out a notification
-            //todo: insert an entry after checking and get the id
             var enumerable = data as T[] ?? data.ToArray();
             if (!enumerable.Any())
             {
@@ -45,6 +42,7 @@ namespace ConstructionCalculator.DataAccess.Interfaces
             context.SaveChanges();
             return true;
         }
+
 
         public static string GetName<T>(T data) where T : class, IFile
         {
