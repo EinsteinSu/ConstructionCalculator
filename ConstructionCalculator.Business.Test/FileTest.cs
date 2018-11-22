@@ -35,15 +35,22 @@ namespace ConstructionCalculator.Business.Test
         [TestMethod]
         public void FileAdd()
         {
+
+            var id = AddFile();
+            Assert.IsTrue(id > 0);
+            Console.WriteLine(id);
+        }
+
+        private int AddFile()
+        {
             var file = new File
             {
                 FileName = FileName,
                 Type = FileType.CellMapping,
                 Description = Description
             };
-            var id = file.Add(Context);
-            Assert.IsTrue(id > 0);
-            Console.WriteLine(id);
+            return file.Add(Context);
+
         }
 
         [TestMethod]
@@ -53,6 +60,56 @@ namespace ConstructionCalculator.Business.Test
             var result = File.Select(Context, FileName, FileType.CellMapping);
             Console.WriteLine(result.Id);
             Assert.IsTrue(result != null);
+        }
+
+        [TestMethod]
+        public void HasValue()
+        {
+            ImportAndValidate("CellMapping.xlsx", stream =>
+            {
+                var importer = new CellMappingImport(stream);
+                importer.Import();
+                var result = Context.CellMappings.HasFile();
+                Assert.IsFalse(result);
+                var id = AddFile();
+                FileHelper.SaveWithFileId(Context.CellMappings, Context, id);
+                result = Context.CellMappings.HasFile();
+                Assert.IsTrue(result);
+            });
+        }
+
+        [TestMethod]
+        public void GetFileId()
+        {
+            ImportAndValidate("CellMapping.xlsx", stream =>
+            {
+                var importer = new CellMappingImport(stream);
+                importer.Import();
+                var id = AddFile();
+                FileHelper.SaveWithFileId(Context.CellMappings, Context, id);
+                var result = FileHelper.GetFileId(Context.CellMappings);
+                Assert.AreEqual(id, result);
+            });
+        }
+
+        [TestMethod]
+        public void Save()
+        {
+            ImportAndValidate("CellMapping.xlsx", stream =>
+            {
+                var importer = new CellMappingImport(stream);
+                importer.Import();
+                var id = AddFile();
+                FileHelper.SaveWithFileId(Context.CellMappings, Context, id);
+                var item = Context.CellMappings.FirstOrDefault();
+                Assert.IsNotNull(item);
+                item.ColumnExcelNumber = "A%";
+                FileHelper.Save(Context.CellMappings, Context);
+                var context = new ConstructionDataContext("Construction");
+                var actual = context.CellMappings.FirstOrDefault();
+                Assert.IsNotNull(actual);
+                Assert.AreEqual(actual.ColumnExcelNumber, item.ColumnExcelNumber);
+            });
         }
 
         [TestMethod]

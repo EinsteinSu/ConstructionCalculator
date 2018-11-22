@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace ConstructionCalculator.DataAccess.Interfaces
@@ -43,6 +44,38 @@ namespace ConstructionCalculator.DataAccess.Interfaces
             return true;
         }
 
+        public static void Save<T>(this IEnumerable<T> data, ConstructionDataContext context) where T : class, IFile
+        {
+            if (HasFile(data))
+            {
+                var id = GetFileId(data);
+                SaveWithFileId(data, context, id);
+            }
+        }
+
+        public static void SaveWithFileId<T>(this IEnumerable<T> data, ConstructionDataContext context, int fileId) where T : class, IFile
+        {
+            foreach (var item in data)
+            {
+                item.FileId = fileId;
+                context.Entry(item).State = EntityState.Modified;
+            }
+            context.SaveChanges();
+        }
+
+        public static bool HasFile<T>(this IEnumerable<T> data) where T : IFile
+        {
+            return data.Any(a => a.FileId.HasValue);
+        }
+
+        public static int GetFileId<T>(this IEnumerable<T> data) where T : IFile
+        {
+            if (HasFile(data))
+            {
+                return data.FirstOrDefault().FileId.Value;
+            }
+            return 0;
+        }
 
         public static string GetName<T>(T data) where T : class, IFile
         {
