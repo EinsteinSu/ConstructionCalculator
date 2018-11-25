@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:ConstructionCalculator.UI.Test"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>

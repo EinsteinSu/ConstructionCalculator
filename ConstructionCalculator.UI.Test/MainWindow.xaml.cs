@@ -4,10 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Input;
 using ConstructionCalculator.Business.Imports;
+using ConstructionCalculator.Business.Utilities;
 using ConstructionCalculator.DataAccess;
-using ConstructionCalculator.DataAccess.Interfaces;
+using ConstructionCalculator.DataAccess.Utilities;
+using ConstructionCalculator.UI.Test.Common;
 using DevExpress.Xpf.Bars;
+using Microsoft.Win32;
 using File = ConstructionCalculator.DataAccess.File;
 
 namespace ConstructionCalculator.UI.Test
@@ -23,8 +27,8 @@ namespace ConstructionCalculator.UI.Test
         public MainWindow()
         {
             InitializeComponent();
-
-            CreateData();
+            Closed += MainWindow_Closed;
+            BindingData();
         }
 
         public void Dispose()
@@ -32,17 +36,16 @@ namespace ConstructionCalculator.UI.Test
             Cleanup();
         }
 
-        private void CreateData()
+        private void MainWindow_Closed(object sender, EventArgs e)
         {
-            ImportAndValidate("CellMapping.xlsx", stream =>
-            {
-                var importer = new CellMappingImport(stream);
-                importer.Import();
-                var data = Context.CellMappings;
-                var id = AddFile();
-                data.SaveWithFileId(Context, id);
-                GridControl.ItemsSource = data.ToList();
-            });
+            Dispose();
+        }
+
+        private void BindingData()
+        {
+            var data = Context.CellMappings;
+            GridControl.ItemsSource = data.ToList();
+
         }
 
         protected void ImportAndValidate(string fileName, Action<Stream> validation)
@@ -56,7 +59,7 @@ namespace ConstructionCalculator.UI.Test
             }
         }
 
-        public virtual void Cleanup()
+        public void Cleanup()
         {
             Context.Database.ExecuteSqlCommand("Delete From Constructions");
             Context.Database.ExecuteSqlCommand("Delete From BusinessFeatures");
@@ -68,25 +71,111 @@ namespace ConstructionCalculator.UI.Test
             Context.Dispose();
         }
 
-        private void biSave_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void biSave_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MessageBox.Show("Saving...");
         }
 
-        private int AddFile()
+        private int AddFile(string fileName)
         {
             var file = new File
             {
-                FileName = "aaa",
+                FileName = fileName,
                 Type = FileType.CellMapping,
                 Description = "description"
             };
             return file.Add(Context);
-
         }
+
         private void BiSave_OnItemClick(object sender, ItemClickEventArgs e)
         {
+
             var list = GridControl.ItemsSource as List<CellMapping>;
-            list.Save(Context);
+            if (!list.HasFile())
+            {
+                var window = new FileNameInputWindow();
+                if (window.GetShowDialog())
+                {
+                    list.SaveAs(Context, window.FileName, out var id, "");
+                }
+            }
+            else
+            {
+                list.Save(Context);
+            }
         }
-    }}
+        private void BiExport_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            var dlg = new SaveFileDialog
+            {
+                FileName = "Document",
+                DefaultExt = ".xlsx",
+                Filter = "Excel Files (.xlsx)|*.xlsx"
+            };
+            if (dlg.ShowDialog().Value)
+            {
+                var fileName = dlg.FileName;
+                var list = GridControl.ItemsSource as List<CellMapping>;
+                list.Export(fileName, "Test");
+            }
+        }
+
+        private void BiImport_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            var ofd = new OpenFileDialog
+            {
+                DefaultExt = ".xlsx",
+                Filter = "Excel Files (.xlsx)|*.xlsx"
+            };
+            if (ofd.ShowDialog().Value)
+            {
+                var fileName = ofd.FileName;
+                var importer = new CellMappingImport(fileName);
+                var includeHeader = MessageBox.Show("Include header?", "Include header", MessageBoxButton.OKCancel) ==
+                                    MessageBoxResult.OK;
+                importer.IncludeHeader = includeHeader;
+                importer.Import();
+                var data = Context.CellMappings;
+                GridControl.ItemsSource = data.ToList();
+                processBar.EditValue = 100;
+            }
+        }
+        //save as
+        private void BarItem_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            var window = new FileNameInputWindow();
+            if (window.GetShowDialog())
+            {
+                var fileName = window.FileName;
+                var list = GridControl.ItemsSource as List<CellMapping>;
+                if (!list.SaveAs(Context, fileName, out var fileId, ""))
+                {
+                    if (MessageBox.Show("The file has exists!", "File exists", MessageBoxButton.OKCancel) ==
+                        MessageBoxResult.OK)
+                    {
+                        list.SaveWithFileId(Context, fileId);
+                    }
+                }
+
+            }
+        }
+
+        private void AddButton_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            var cm = new CellMapping();
+            cm.ColumnName = "1";
+            cm.ColumnExcelNumber = "A1";
+            var list = GridControl.ItemsSource as List<CellMapping>;
+            list.Add(cm);
+        }
+
+        private void RemoveButton_OnItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (GridControl.SelectedItem is CellMapping item)
+            {
+                var list = GridControl.ItemsSource as List<CellMapping>;
+                list.Remove(item);
+            }
+        }
+    }
+}

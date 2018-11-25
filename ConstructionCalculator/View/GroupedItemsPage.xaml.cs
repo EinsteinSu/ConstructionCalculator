@@ -3,7 +3,7 @@
 namespace ConstructionCalculator.View
 {
     /// <summary>
-    /// Interaction logic for GroupedItemsPage.xaml
+    ///     Interaction logic for GroupedItemsPage.xaml
     /// </summary>
     public partial class GroupedItemsPage : UserControl
     {

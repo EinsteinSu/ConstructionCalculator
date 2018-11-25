@@ -8,13 +8,14 @@ namespace ConstructionCalculator.Business.Imports
     {
         public BusinessValueImport(string fileName) : base(fileName)
         {
+            IncludeHeader = true;
         }
 
         public BusinessValueImport(Stream file) : base(file)
         {
+            IncludeHeader = true;
         }
 
-        protected override bool IncludeHeader => true;
 
         protected override int SheetNumber => 1;
 

@@ -1,28 +1,30 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using ConstructionCalculator.DataAccess.Interfaces;
 
 namespace ConstructionCalculator.DataAccess
 {
-    public class Construction : IFile
+    public class Construction : IFile, IExport
     {
+        [ForeignKey("File")] public int? FileId { get; set; }
+
+        #region properteis
+
         public int Id { get; set; }
 
         public File File { get; set; }
-
-        [ForeignKey("File")]
-        public int? FileId { get; set; }
 
         [Display(Name = "建筑名称")] public string Jzmc { get; set; }
 
         [Display(Name = "单体编号")] public string Dtbh { get; set; }
 
-       public virtual ConstructionValue ConstructionValue { get; set; }
+        public virtual ConstructionValue ConstructionValue { get; set; }
 
         [Display(Name = "建筑结构编号")]
         [ForeignKey("ConstructionValue")]
         public int ConstructionValueId { get; set; }
-        
+
         public virtual BusinessFeature BusinessFeature { get; set; }
 
         [Display(Name = "业态特征编号")]
@@ -71,5 +73,74 @@ namespace ConstructionCalculator.DataAccess
 
         [Display(Name = "栋数")] public int Ds { get; set; }
 
+        #endregion
+
+        #region IExport
+
+        public List<string> GetHeader()
+        {
+            return new List<string>
+            {
+                "建筑名称",
+                "单体编号",
+                "建筑结构编号",
+                "业态特征编号",
+                "总建筑面积m2",
+                "单元单层建筑面积m2",
+                "层数",
+                "高度m",
+                "单元单层安全出口数量",
+                "单元单层安全出口宽度cm",
+                "总出口数量",
+                "总出口宽度cm",
+                "水源、水池、水箱",
+                "灭火器",
+                "室内栓",
+                "自动报警",
+                "喷淋",
+                "可临近面",
+                "有无私拉乱接",
+                "有无维保记录",
+                "有/无有室外栓",
+                "室外栓内有/无水",
+                "室外栓最近距离 (m)",
+                "现役消防部队距片区距离(km)",
+                "栋数"
+            };
+        }
+
+        public List<object> GetRow()
+        {
+            return new List<object>
+            {
+                Jzmc,
+                Dtbh,
+                ConstructionValueId,
+                BusinessFeatureId,
+                Jzmj,
+                Dydcjzmj,
+                Cs,
+                Gd,
+                Aqcksl,
+                Aqckkd,
+                Zcksl,
+                Zckkd,
+                Sy,
+                Mhq,
+                Sns,
+                Zdbj,
+                Pl,
+                Kljm,
+                Ywsl,
+                Ywwbjl,
+                Ywsws,
+                Swsyws,
+                Swsjl,
+                Xfdjl,
+                Ds
+            };
+        }
+
+        #endregion
     }
 }

@@ -64,6 +64,8 @@
     <Compile Include="Imports\RiskLevelImport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypeConvertHelper.cs" />
+    <Compile Include="Utilities\ExcelHelper.cs" />
+    <Compile Include="Utilities\ExportHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConstructionCalculator.DataAccess\ConstructionCalculator.DataAccess.csproj">

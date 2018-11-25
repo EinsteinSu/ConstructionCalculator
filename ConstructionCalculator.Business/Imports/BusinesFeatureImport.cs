@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using ConstructionCalculator.DataAccess;
 using OfficeOpenXml;
 
@@ -13,13 +8,14 @@ namespace ConstructionCalculator.Business.Imports
     {
         public BusinesFeatureImport(string fileName) : base(fileName)
         {
+            IncludeHeader = true;
         }
 
         public BusinesFeatureImport(Stream stream) : base(stream)
         {
+            IncludeHeader = true;
         }
 
-        protected override bool IncludeHeader => true;
 
         protected override int SheetNumber => 1;
 

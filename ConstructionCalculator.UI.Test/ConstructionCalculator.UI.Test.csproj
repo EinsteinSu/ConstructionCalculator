@@ -39,10 +39,44 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="DevExpress.Mvvm.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Mvvm.v17.1.DataModel, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Mvvm.v17.1.DataModel.EF6, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Mvvm.v17.1.ViewModel, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DevExpress.Printing.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Accordion.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Controls.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DevExpress.Xpf.Core.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Docking.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DevExpress.Xpf.Grid.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Xpf.Grid.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Layout.v17.1.Core, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.LayoutControl.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.NavBar.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Printing.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.ReportDesigner.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Ribbon.v17.1, Version=17.1.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -52,6 +86,9 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -61,6 +98,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -70,6 +109,76 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\WindowsHelper.cs" />
+    <Compile Include="Localization\ViewResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ViewResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BusinessFeature\BusinessFeatureCollectionViewModel.cs" />
+    <Compile Include="ViewModels\BusinessFeature\BusinessFeatureViewModel.cs" />
+    <Compile Include="ViewModels\BusinessValue\BusinessValueCollectionViewModel.cs" />
+    <Compile Include="ViewModels\BusinessValue\BusinessValueViewModel.cs" />
+    <Compile Include="ViewModels\CellMapping\CellMappingCollectionViewModel.cs" />
+    <Compile Include="ViewModels\CellMapping\CellMappingViewModel.cs" />
+    <Compile Include="ViewModels\ConstructionDataContextViewModel.cs" />
+    <Compile Include="ViewModels\ConstructionValue\ConstructionValueCollectionViewModel.cs" />
+    <Compile Include="ViewModels\ConstructionValue\ConstructionValueViewModel.cs" />
+    <Compile Include="ViewModels\Construction\ConstructionCollectionViewModel.cs" />
+    <Compile Include="ViewModels\Construction\ConstructionViewModel.cs" />
+    <Compile Include="ViewModels\File\FileCollectionViewModel.cs" />
+    <Compile Include="ViewModels\File\FileViewModel.cs" />
+    <Compile Include="ViewModels\RiskLevel\RiskLevelCollectionViewModel.cs" />
+    <Compile Include="ViewModels\RiskLevel\RiskLevelViewModel.cs" />
+    <Compile Include="Views\BusinessFeature\BusinessFeatureCollectionView.xaml.cs">
+      <DependentUpon>BusinessFeatureCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessFeature\BusinessFeatureView.xaml.cs">
+      <DependentUpon>BusinessFeatureView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessValue\BusinessValueCollectionView.xaml.cs">
+      <DependentUpon>BusinessValueCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusinessValue\BusinessValueView.xaml.cs">
+      <DependentUpon>BusinessValueView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CellMapping\CellMappingCollectionView.xaml.cs">
+      <DependentUpon>CellMappingCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CellMapping\CellMappingView.xaml.cs">
+      <DependentUpon>CellMappingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConstructionDataContextView.xaml.cs">
+      <DependentUpon>ConstructionDataContextView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConstructionValue\ConstructionValueCollectionView.xaml.cs">
+      <DependentUpon>ConstructionValueCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConstructionValue\ConstructionValueView.xaml.cs">
+      <DependentUpon>ConstructionValueView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Construction\ConstructionCollectionView.xaml.cs">
+      <DependentUpon>ConstructionCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Construction\ConstructionView.xaml.cs">
+      <DependentUpon>ConstructionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\File\FileCollectionView.xaml.cs">
+      <DependentUpon>FileCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\File\FileView.xaml.cs">
+      <DependentUpon>FileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RiskLevel\RiskLevelCollectionView.xaml.cs">
+      <DependentUpon>RiskLevelCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RiskLevel\RiskLevelView.xaml.cs">
+      <DependentUpon>RiskLevelView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="FileNameInputWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -78,10 +187,96 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Common\CollectionViewModel.cs" />
+    <Compile Include="Common\EntitiesViewModel.cs" />
+    <Compile Include="Common\InstantFeedbackCollectionViewModel.cs" />
+    <Compile Include="Common\ReadOnlyCollectionViewModel.cs" />
+    <Compile Include="Common\SingleObjectViewModel.cs" />
+    <Compile Include="ConstructionDataContextDataModel\ConstructionDataContextMetadata.cs" />
+    <Compile Include="ConstructionDataContextDataModel\ConstructionDataContextUnitOfWork.cs" />
+    <Compile Include="ConstructionDataContextDataModel\DesignTimeConstructionDataContextUnitOfWork.cs" />
+    <Compile Include="ConstructionDataContextDataModel\IConstructionDataContextUnitOfWork.cs" />
+    <Compile Include="ConstructionDataContextDataModel\UnitOfWorkSource.cs" />
+    <Compile Include="FileNameInputWindow.xaml.cs">
+      <DependentUpon>FileNameInputWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\ConstructionDataContextResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConstructionDataContextResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Resources\CollectionViewResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\EntityViewResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BusinessFeature\BusinessFeatureCollectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BusinessFeature\BusinessFeatureView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BusinessValue\BusinessValueCollectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BusinessValue\BusinessValueView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CellMapping\CellMappingCollectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CellMapping\CellMappingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ConstructionDataContextView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ConstructionValue\ConstructionValueCollectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ConstructionValue\ConstructionValueView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Construction\ConstructionCollectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Construction\ConstructionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\File\FileCollectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\File\FileView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RiskLevel\RiskLevelCollectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\RiskLevel\RiskLevelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -97,6 +292,20 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Localization\ConstructionDataContextResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ConstructionDataContextResources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ConstructionCalculator.UI.Test.Localization</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\ViewResources.de-DE.resx" />
+    <EmbeddedResource Include="Localization\ViewResources.es-ES.resx" />
+    <EmbeddedResource Include="Localization\ViewResources.ja-JP.resx" />
+    <EmbeddedResource Include="Localization\ViewResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ViewResources.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>ConstructionCalculator.UI.Test.Localization</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localization\ViewResources.ru-RU.resx" />
     <EmbeddedResource Include="Properties\Licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

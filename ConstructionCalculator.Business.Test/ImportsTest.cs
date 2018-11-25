@@ -1,5 +1,4 @@
-﻿using System.Data.Entity;
-using System.Linq;
+﻿using System.Linq;
 using ConstructionCalculator.Business.Imports;
 using ConstructionCalculator.DataAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -37,6 +37,7 @@ namespace ConstructionCalculator.Utility
                         Log.InfoFormat($"Processing {file}");
                         CalculatorHelper.CalcAndExportExcel(file);
                     }
+
                     break;
                 case "transfer":
                     Log.InfoFormat($"Action: Transfer from folder {args[1]}");

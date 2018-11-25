@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 
 namespace ConstructionCalculator.DataAccess
 {
@@ -11,7 +10,6 @@ namespace ConstructionCalculator.DataAccess
 
         public ConstructionDataContext(string connection) : base(connection)
         {
-            
         }
 
         public DbSet<CellMapping> CellMappings { get; set; }

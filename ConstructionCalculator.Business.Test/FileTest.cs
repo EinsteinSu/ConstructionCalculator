@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ConstructionCalculator.Business.Imports;
 using ConstructionCalculator.DataAccess;
-using ConstructionCalculator.DataAccess.Interfaces;
+using ConstructionCalculator.DataAccess.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ConstructionCalculator.Business.Test
@@ -13,6 +10,9 @@ namespace ConstructionCalculator.Business.Test
     [TestClass]
     public class FileTest : TestBase
     {
+        private const string FileName = "test file";
+        private const string Description = "this is a description";
+
         [TestMethod]
         public void GetName()
         {
@@ -30,12 +30,9 @@ namespace ConstructionCalculator.Business.Test
             Assert.AreEqual(result, expected);
         }
 
-        private const string FileName = "test file";
-        private const string Description = "this is a description";
         [TestMethod]
         public void FileAdd()
         {
-
             var id = AddFile();
             Assert.IsTrue(id > 0);
             Console.WriteLine(id);
@@ -50,7 +47,6 @@ namespace ConstructionCalculator.Business.Test
                 Description = Description
             };
             return file.Add(Context);
-
         }
 
         [TestMethod]
@@ -72,7 +68,7 @@ namespace ConstructionCalculator.Business.Test
                 var result = Context.CellMappings.HasFile();
                 Assert.IsFalse(result);
                 var id = AddFile();
-                FileHelper.SaveWithFileId(Context.CellMappings, Context, id);
+                Context.CellMappings.SaveWithFileId(Context, id);
                 result = Context.CellMappings.HasFile();
                 Assert.IsTrue(result);
             });
@@ -86,8 +82,8 @@ namespace ConstructionCalculator.Business.Test
                 var importer = new CellMappingImport(stream);
                 importer.Import();
                 var id = AddFile();
-                FileHelper.SaveWithFileId(Context.CellMappings, Context, id);
-                var result = FileHelper.GetFileId(Context.CellMappings);
+                Context.CellMappings.SaveWithFileId(Context, id);
+                var result = Context.CellMappings.GetFileId();
                 Assert.AreEqual(id, result);
             });
         }
@@ -100,11 +96,11 @@ namespace ConstructionCalculator.Business.Test
                 var importer = new CellMappingImport(stream);
                 importer.Import();
                 var id = AddFile();
-                FileHelper.SaveWithFileId(Context.CellMappings, Context, id);
+                Context.CellMappings.SaveWithFileId(Context, id);
                 var item = Context.CellMappings.FirstOrDefault();
                 Assert.IsNotNull(item);
                 item.ColumnExcelNumber = "A%";
-                FileHelper.Save(Context.CellMappings, Context);
+                Context.CellMappings.Save(Context);
                 var context = new ConstructionDataContext("Construction");
                 var actual = context.CellMappings.FirstOrDefault();
                 Assert.IsNotNull(actual);
@@ -122,13 +118,13 @@ namespace ConstructionCalculator.Business.Test
                 var list = Context.CellMappings;
                 var result = list.SaveAs(Context, FileName, out var report, Description);
                 Assert.IsTrue(result);
-                Assert.IsTrue(string.IsNullOrEmpty(report));
+                Assert.IsTrue(report == 0);
                 var item = Context.CellMappings.First();
                 Assert.IsNotNull(item);
                 Assert.IsTrue(item.FileId > 0);
                 result = list.SaveAs(Context, FileName, out report, Description);
                 Assert.IsFalse(result);
-                Assert.IsTrue(!string.IsNullOrEmpty(report));
+                Assert.IsTrue(report > 0);
                 Console.WriteLine(report);
             });
         }

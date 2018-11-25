@@ -1,0 +1,321 @@
+﻿<root>
+    <xsd:schema id="root"
+        xmlns=""
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+        <xsd:element name="root" msdata:IsDataSet="true">
+            <xsd:complexType>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string" />
+                            <xsd:attribute name="type" type="xsd:string" />
+                            <xsd:attribute name="mimetype" type="xsd:string" />
+                            <xsd:attribute ref="xml:space" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                            <xsd:attribute name="alias" type="xsd:string" />
+                            <xsd:attribute name="name" type="xsd:string" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+                            <xsd:attribute ref="xml:space" />
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" />
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="BusinessFeature" xml:space="preserve">
+    <value>Business Feature</value>
+  </data>
+    <data name="BusinessFeaturePlural" xml:space="preserve">
+    <value>Business Features</value>
+  </data>
+    <data name="BusinessFeature_Id" xml:space="preserve">
+    <value>业态特征编号</value>
+  </data>
+    <data name="BusinessFeature_Name" xml:space="preserve">
+    <value>业态特征</value>
+  </data>
+    <data name="BusinessFeature_GdQi" xml:space="preserve">
+    <value>固定,Qi</value>
+  </data>
+    <data name="BusinessFeature_YdQm" xml:space="preserve">
+    <value>移动,Qm</value>
+  </data>
+    <data name="BusinessFeature_Hzmyyzi" xml:space="preserve">
+    <value>火灾蔓延因子i</value>
+  </data>
+    <data name="BusinessFeature_Hdyza" xml:space="preserve">
+    <value>活动因子a</value>
+  </data>
+    <data name="BusinessFeature_Ylyzd" xml:space="preserve">
+    <value>依赖因子d</value>
+  </data>
+    <data name="BusinessFeature_Sssjxzzp" xml:space="preserve">
+    <value>疏散时间修正值P</value>
+  </data>
+    <data name="BusinessFeature_Ssrs" xml:space="preserve">
+    <value>疏散人数密度*单层（单元）面积</value>
+  </data>
+    <data name="BusinessFeature_Jzyz" xml:space="preserve">
+    <value>价值因子</value>
+  </data>
+    <data name="BusinessFeature_Rkmdqz" xml:space="preserve">
+    <value>人口密度取值</value>
+  </data>
+    <data name="BusinessFeature_BusinessValue" xml:space="preserve">
+    <value>Business Value</value>
+  </data>
+    <data name="BusinessFeature_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+    <data name="BusinessValue" xml:space="preserve">
+    <value>Business Value</value>
+  </data>
+    <data name="BusinessValuePlural" xml:space="preserve">
+    <value>Business Values</value>
+  </data>
+    <data name="BusinessValue_Id" xml:space="preserve">
+    <value>业态编号</value>
+  </data>
+    <data name="BusinessValue_Name" xml:space="preserve">
+    <value>业态名称</value>
+  </data>
+    <data name="BusinessValue_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+    <data name="File" xml:space="preserve">
+    <value>File</value>
+  </data>
+    <data name="FilePlural" xml:space="preserve">
+    <value>Files</value>
+  </data>
+    <data name="File_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+    <data name="File_FileName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+    <data name="File_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+    <data name="File_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+    <data name="Construction" xml:space="preserve">
+    <value>Construction</value>
+  </data>
+    <data name="ConstructionPlural" xml:space="preserve">
+    <value>Constructions</value>
+  </data>
+    <data name="Construction_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+    <data name="Construction_Jzmc" xml:space="preserve">
+    <value>建筑名称</value>
+  </data>
+    <data name="Construction_Dtbh" xml:space="preserve">
+    <value>单体编号</value>
+  </data>
+    <data name="Construction_Jzmj" xml:space="preserve">
+    <value>总建筑面积m2</value>
+  </data>
+    <data name="Construction_Dydcjzmj" xml:space="preserve">
+    <value>单元单层建筑面积m2</value>
+  </data>
+    <data name="Construction_Cs" xml:space="preserve">
+    <value>层数</value>
+  </data>
+    <data name="Construction_Gd" xml:space="preserve">
+    <value>高度m</value>
+  </data>
+    <data name="Construction_Aqcksl" xml:space="preserve">
+    <value>单元单层安全出口数量</value>
+  </data>
+    <data name="Construction_Aqckkd" xml:space="preserve">
+    <value>单元单层安全出口宽度cm</value>
+  </data>
+    <data name="Construction_Zcksl" xml:space="preserve">
+    <value>总出口数量</value>
+  </data>
+    <data name="Construction_Zckkd" xml:space="preserve">
+    <value>总出口宽度cm</value>
+  </data>
+    <data name="Construction_Sy" xml:space="preserve">
+    <value>水源、水池、水箱</value>
+  </data>
+    <data name="Construction_Mhq" xml:space="preserve">
+    <value>灭火器</value>
+  </data>
+    <data name="Construction_Sns" xml:space="preserve">
+    <value>室内栓</value>
+  </data>
+    <data name="Construction_Zdbj" xml:space="preserve">
+    <value>自动报警</value>
+  </data>
+    <data name="Construction_Pl" xml:space="preserve">
+    <value>喷淋</value>
+  </data>
+    <data name="Construction_Kljm" xml:space="preserve">
+    <value>可临近面</value>
+  </data>
+    <data name="Construction_Ywsl" xml:space="preserve">
+    <value>有无私拉乱接</value>
+  </data>
+    <data name="Construction_Ywwbjl" xml:space="preserve">
+    <value>有无维保记录</value>
+  </data>
+    <data name="Construction_Ywsws" xml:space="preserve">
+    <value>有/无有室外栓</value>
+  </data>
+    <data name="Construction_Swsyws" xml:space="preserve">
+    <value>室外栓内有/无水</value>
+  </data>
+    <data name="Construction_Swsjl" xml:space="preserve">
+    <value>室外栓最近距离 (m)</value>
+  </data>
+    <data name="Construction_Xfdjl" xml:space="preserve">
+    <value>现役消防部队距片区距离(km)</value>
+  </data>
+    <data name="Construction_Ds" xml:space="preserve">
+    <value>栋数</value>
+  </data>
+    <data name="Construction_BusinessFeature" xml:space="preserve">
+    <value>Business Feature</value>
+  </data>
+    <data name="Construction_ConstructionValue" xml:space="preserve">
+    <value>Construction Value</value>
+  </data>
+    <data name="Construction_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+    <data name="ConstructionValue" xml:space="preserve">
+    <value>Construction Value</value>
+  </data>
+    <data name="ConstructionValuePlural" xml:space="preserve">
+    <value>Construction Values</value>
+  </data>
+    <data name="ConstructionValue_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+    <data name="ConstructionValue_Name" xml:space="preserve">
+    <value>名称</value>
+  </data>
+    <data name="ConstructionValue_DesignRequirement" xml:space="preserve">
+    <value>等级</value>
+  </data>
+    <data name="ConstructionValue_Jgkhsj" xml:space="preserve">
+    <value>结构抗火时间，fs(min)</value>
+  </data>
+    <data name="ConstructionValue_Wqkhsj" xml:space="preserve">
+    <value>外墙抗火时间,ff(min)</value>
+  </data>
+    <data name="ConstructionValue_Wdkhsj" xml:space="preserve">
+    <value>屋顶和吊顶抗火时间,fd(min)</value>
+  </data>
+    <data name="ConstructionValue_Nqkhsj" xml:space="preserve">
+    <value>内墙抗火时间,fw(min)</value>
+  </data>
+    <data name="ConstructionValue_Pjkhnl" xml:space="preserve">
+    <value>平均抗火能力，f</value>
+  </data>
+    <data name="ConstructionValue_Jgkhyz" xml:space="preserve">
+    <value>结构抗火因子，F0</value>
+  </data>
+    <data name="ConstructionValue_Jzkhyz" xml:space="preserve">
+    <value>建筑抗火因子，F</value>
+  </data>
+    <data name="ConstructionValue_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+    <data name="CellMapping" xml:space="preserve">
+    <value>Cell Mapping</value>
+  </data>
+    <data name="CellMappingPlural" xml:space="preserve">
+    <value>Cell Mappings</value>
+  </data>
+    <data name="CellMapping_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+    <data name="CellMapping_ColumnNumber" xml:space="preserve">
+    <value>列序号</value>
+  </data>
+    <data name="CellMapping_ColumnExcelNumber" xml:space="preserve">
+    <value>Excel列序号</value>
+  </data>
+    <data name="CellMapping_ColumnName" xml:space="preserve">
+    <value>列名称</value>
+  </data>
+    <data name="CellMapping_Group" xml:space="preserve">
+    <value>分类</value>
+  </data>
+    <data name="CellMapping_Formula" xml:space="preserve">
+    <value>公式</value>
+  </data>
+    <data name="CellMapping_Digital" xml:space="preserve">
+    <value>小数位数</value>
+  </data>
+    <data name="CellMapping_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+    <data name="RiskLevel" xml:space="preserve">
+    <value>Risk Level</value>
+  </data>
+    <data name="RiskLevelPlural" xml:space="preserve">
+    <value>Risk Levels</value>
+  </data>
+    <data name="RiskLevel_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+    <data name="RiskLevel_MinValue" xml:space="preserve">
+    <value>最小值</value>
+  </data>
+    <data name="RiskLevel_MaxValue" xml:space="preserve">
+    <value>最大值</value>
+  </data>
+    <data name="RiskLevel_Color" xml:space="preserve">
+    <value>颜色</value>
+  </data>
+    <data name="RiskLevel_Description" xml:space="preserve">
+    <value>说明</value>
+  </data>
+    <data name="RiskLevel_File" xml:space="preserve">
+    <value>File</value>
+  </data>
+</root>

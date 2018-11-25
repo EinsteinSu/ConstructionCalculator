@@ -9,8 +9,8 @@ namespace ConstructionCalculator.Business.Imports
     public abstract class ExcelDataImportBase : IDisposable
     {
         private static readonly ILog Log = LogManager.GetLogger("ExcelDataImport");
-        protected ExcelPackage Excel;
         protected ConstructionDataContext Context;
+        protected ExcelPackage Excel;
 
         public ExcelDataImportBase(string fileName, string database = "Construction")
         {
@@ -25,66 +25,16 @@ namespace ConstructionCalculator.Business.Imports
         }
 
         //is it include header
-        protected abstract bool IncludeHeader { get; }
+        public bool IncludeHeader { get; set; }
 
         //which worksheet can be import
         protected abstract int SheetNumber { get; }
 
         public int RowCount => GetRowCount();
 
-        protected int GetRowCount()
-        {
-            var sheet = Excel.Workbook.Worksheets[SheetNumber];
-            if (sheet == null)
-                return 0;
-            int rowCount = 1;
-            while (true)
-            {
-                if (string.IsNullOrEmpty(sheet.Cells[rowCount, 1].Text.Trim()))
-                {
-                    break;
-                }
-                rowCount++;
-            }
-            return rowCount - 1;
-        }
-
         protected virtual bool IgnoreSaveData => false;
 
-        public void Import()
-        {
-            var count = RowCount;
-            var cells = Excel.Workbook.Worksheets[SheetNumber].Cells;
-            var startRow = IncludeHeader ? 2 : 1;
-            for (int i = startRow; i < count + 1; i++)
-            {
-                ImportRow(cells, i);
-                ShowPercentage?.Invoke((double)i / count * 100.00);
-            }
-
-            try
-            {
-                if (!IgnoreSaveData)
-                {
-                    Context.Database.Log = s =>
-                    {
-                        Log.Info(s);
-                    };
-                    Context.SaveChanges();
-                }
-            }
-            catch (Exception e)
-            {
-                string errors = e.Message;
-                if (e.InnerException != null)
-                    errors += "Internal Exception:\r" + e.InnerException.Message;
-                throw new Exception("Could not save data." + errors);
-            }
-        }
-
         public Action<double> ShowPercentage { get; set; }
-
-        public abstract void ImportRow(ExcelRange cells, int row);
 
 
         public void Dispose()
@@ -92,5 +42,50 @@ namespace ConstructionCalculator.Business.Imports
             Excel?.Dispose();
             Context?.Dispose();
         }
+
+        protected int GetRowCount()
+        {
+            var sheet = Excel.Workbook.Worksheets[SheetNumber];
+            if (sheet == null)
+                return 0;
+            var rowCount = 1;
+            while (true)
+            {
+                if (string.IsNullOrEmpty(sheet.Cells[rowCount, 1].Text.Trim())) break;
+                rowCount++;
+            }
+
+            return rowCount - 1;
+        }
+
+        public void Import()
+        {
+            var count = RowCount;
+            var cells = Excel.Workbook.Worksheets[SheetNumber].Cells;
+            var startRow = IncludeHeader ? 2 : 1;
+            for (var i = startRow; i < count + 1; i++)
+            {
+                ImportRow(cells, i);
+                ShowPercentage?.Invoke((double) i / count * 100.00);
+            }
+
+            try
+            {
+                if (!IgnoreSaveData)
+                {
+                    Context.Database.Log = s => { Log.Info(s); };
+                    Context.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                var errors = e.Message;
+                if (e.InnerException != null)
+                    errors += "Internal Exception:\r" + e.InnerException.Message;
+                throw new Exception("Could not save data." + errors);
+            }
+        }
+
+        public abstract void ImportRow(ExcelRange cells, int row);
     }
 }

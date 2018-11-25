@@ -8,13 +8,13 @@ namespace ConstructionCalculator.Business.Imports
     {
         public RiskLevelImport(string fileName) : base(fileName)
         {
+            IncludeHeader = false;
         }
 
         public RiskLevelImport(Stream stream) : base(stream)
         {
+            IncludeHeader = false;
         }
-
-        protected override bool IncludeHeader => false;
 
         protected override int SheetNumber => 1;
 
