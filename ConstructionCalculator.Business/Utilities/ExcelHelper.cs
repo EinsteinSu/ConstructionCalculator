@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ConstructionCalculator.DataAccess.Interfaces;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 
@@ -20,7 +21,7 @@ namespace ConstructionCalculator.Business.Utilities
         }
 
         public static void WriteRow(this ExcelWorksheet sheet, List<object> rows, int rowIndex,
-            Action<ExcelRange> write = null)
+            Action<ExcelRange> write = null, ILogPrint print = null, IShowProgress showProgress = null)
         {
             var column = 1;
             foreach (var r in rows)
@@ -28,6 +29,7 @@ namespace ConstructionCalculator.Business.Utilities
                 var cell = sheet.Cells[rowIndex, column];
                 cell.Value = r;
                 write?.Invoke(cell);
+                print?.PrintLog($"Writing Cell {column}");
                 column++;
             }
         }

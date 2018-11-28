@@ -59,6 +59,8 @@
     <Compile Include="Construction.cs" />
     <Compile Include="ConstructionValue.cs" />
     <Compile Include="File.cs" />
+    <Compile Include="Interfaces\ILogPrint.cs" />
+    <Compile Include="Interfaces\IShowProgress.cs" />
     <Compile Include="Utilities\FileHelper.cs" />
     <Compile Include="Interfaces\IExport.cs" />
     <Compile Include="Interfaces\IFile.cs" />

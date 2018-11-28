@@ -9,7 +9,7 @@ namespace ConstructionCalculator.DataAccess.Utilities
     public static class FileHelper
     {
         public static bool SaveAs<T>(this IEnumerable<T> data, ConstructionDataContext context, string filename,
-            out int existsFileId, string description) where T : class, IFile
+            out int existsFileId, string description, ILogPrint print = null, IShowProgress showProgress = null) where T : class, IFile
         {
             existsFileId = 0;
 
@@ -17,6 +17,7 @@ namespace ConstructionCalculator.DataAccess.Utilities
 
 
             var type = ConvertFileType(GetName(enumerable.First()));
+            print?.PrintLog("Find the existing files.");
             var file = File.Select(context, filename, type);
             if (file != null)
             {
@@ -31,16 +32,25 @@ namespace ConstructionCalculator.DataAccess.Utilities
                 Type = type
             };
             var id = file.Add(context);
-            foreach (var item in enumerable) item.FileId = id;
+            print?.PrintLog($"The file id is {id}");
+            showProgress?.SetMaxValue(enumerable.Length);
+            int i = 0;
+            foreach (var item in enumerable)
+            {
+                showProgress?.SetCurrentValue(i);
+                item.FileId = id;
+                i++;
+            }
             context.SaveChanges();
             return true;
         }
 
-        public static void Save<T>(this IEnumerable<T> data, ConstructionDataContext context) where T : class, IFile
+        public static void Save<T>(this IEnumerable<T> data, ConstructionDataContext context, ILogPrint print = null) where T : class, IFile
         {
             if (HasFile(data))
             {
                 var id = GetFileId(data);
+                print?.PrintLog($"The file id is {id}");
                 SaveWithFileId(data, context, id);
             }
         }

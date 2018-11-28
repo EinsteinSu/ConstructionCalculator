@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using ConstructionCalculator.DataAccess;
+using ConstructionCalculator.DataAccess.Interfaces;
 using log4net;
 using OfficeOpenXml;
 
@@ -11,6 +12,9 @@ namespace ConstructionCalculator.Business.Imports
         private static readonly ILog Log = LogManager.GetLogger("ExcelDataImport");
         protected ConstructionDataContext Context;
         protected ExcelPackage Excel;
+        public ILogPrint Print { get; set; }
+
+        public IShowProgress ShowProgress { get; set; }
 
         public ExcelDataImportBase(string fileName, string database = "Construction")
         {
@@ -61,19 +65,28 @@ namespace ConstructionCalculator.Business.Imports
         public void Import()
         {
             var count = RowCount;
+            ShowProgress?.SetMaxValue(count);
             var cells = Excel.Workbook.Worksheets[SheetNumber].Cells;
+            Print?.PrintLog("Start importing data from excel");
             var startRow = IncludeHeader ? 2 : 1;
             for (var i = startRow; i < count + 1; i++)
             {
                 ImportRow(cells, i);
-                ShowPercentage?.Invoke((double) i / count * 100.00);
+                Print?.PrintLog($"Rows {i} has imported.");
+                ShowProgress?.SetCurrentValue(i);
+                ShowPercentage?.Invoke((double)i / count * 100.00);
             }
 
             try
             {
+                Print?.PrintLog("Start saving to database.");
                 if (!IgnoreSaveData)
                 {
-                    Context.Database.Log = s => { Log.Info(s); };
+                    Context.Database.Log = s =>
+                    {
+                        Log.Info(s);
+                        Print?.PrintLog(s);
+                    };
                     Context.SaveChanges();
                 }
             }
@@ -82,7 +95,12 @@ namespace ConstructionCalculator.Business.Imports
                 var errors = e.Message;
                 if (e.InnerException != null)
                     errors += "Internal Exception:\r" + e.InnerException.Message;
+                Print?.PrintLog(errors);
                 throw new Exception("Could not save data." + errors);
+            }
+            finally
+            {
+                ShowProgress?.Done();
             }
         }
 
