@@ -5,7 +5,7 @@ using ConstructionCalculator.DataAccess.Interfaces;
 
 namespace ConstructionCalculator.DataAccess
 {
-    public class CellMapping : IFile, IExport
+    public class CellMapping : IFile, IExport, ICreate<CellMapping>
     {
         public int Id { get; set; }
 
@@ -31,15 +31,19 @@ namespace ConstructionCalculator.DataAccess
 
         public List<string> GetHeader()
         {
-            return new List<string> {"列序号", "Excel列序号", "列名称", "分类", "公式", "小数位数"};
+            return new List<string> { "列序号", "Excel列序号", "列名称", "分类", "公式", "小数位数" };
         }
 
         public List<object> GetRow()
         {
-            return new List<object> {ColumnNumber, ColumnExcelNumber, ColumnName, (int) Group, Formula, Digital};
+            return new List<object> { ColumnNumber, ColumnExcelNumber, ColumnName, (int)Group, Formula, Digital };
         }
 
         [ForeignKey("File")] public int? FileId { get; set; }
+        public CellMapping CreateItem()
+        {
+            return new CellMapping();
+        }
     }
 
     public enum CalculatGroup

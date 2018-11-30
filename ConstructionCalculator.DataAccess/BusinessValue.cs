@@ -6,7 +6,7 @@ using ConstructionCalculator.DataAccess.Interfaces;
 
 namespace ConstructionCalculator.DataAccess
 {
-    public class BusinessValue : IFile, IExport
+    public class BusinessValue : IFile, IExport,ICreate<BusinessValue>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -28,9 +28,13 @@ namespace ConstructionCalculator.DataAccess
         }
 
         [ForeignKey("File")] public int? FileId { get; set; }
+        public BusinessValue CreateItem()
+        {
+            return new BusinessValue();
+        }
     }
 
-    public class BusinessFeature : IFile, IExport
+    public class BusinessFeature : IFile, IExport,ICreate<BusinessFeature>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -89,5 +93,9 @@ namespace ConstructionCalculator.DataAccess
         }
 
         [ForeignKey("File")] public int? FileId { get; set; }
+        public BusinessFeature CreateItem()
+        {
+            return new BusinessFeature();
+        }
     }
 }

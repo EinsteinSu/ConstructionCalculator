@@ -41,7 +41,9 @@ namespace ConstructionCalculator.DataAccess.Utilities
                 item.FileId = id;
                 i++;
             }
+            print?.PrintLog("Saving data to database.");
             context.SaveChanges();
+            showProgress?.Done();
             return true;
         }
 
@@ -55,16 +57,22 @@ namespace ConstructionCalculator.DataAccess.Utilities
             }
         }
 
-        public static void SaveWithFileId<T>(this IEnumerable<T> data, ConstructionDataContext context, int fileId)
+        public static void SaveWithFileId<T>(this IEnumerable<T> data, ConstructionDataContext context, int fileId, ILogPrint print = null, IShowProgress showProgress = null)
             where T : class, IFile
         {
+            print?.PrintLog($"The file id is {fileId}");
+            showProgress?.SetMaxValue(data.Count());
+            int i = 0;
             foreach (var item in data)
             {
                 item.FileId = fileId;
                 context.Entry(item).State = EntityState.Modified;
+                showProgress?.SetCurrentValue(i);
+                i++;
             }
-
+            print?.PrintLog("Saving data to database.");
             context.SaveChanges();
+            showProgress?.Done();
         }
 
         public static bool HasFile<T>(this IEnumerable<T> data) where T : IFile
@@ -92,6 +100,49 @@ namespace ConstructionCalculator.DataAccess.Utilities
         public static bool Exists(ConstructionDataContext context, string fileName, string type)
         {
             return File.Select(context, fileName, ConvertFileType(type)) != null;
+        }
+
+        public static object GetDataByFileType(ConstructionDataContext context, FileType type)
+        {
+            switch (type)
+            {
+                case FileType.BusinessValue:
+                    return context.BusinessValues;
+                case FileType.BusinessFeature:
+                    return context.BusinessFeatures;
+                case FileType.CellMapping:
+                    return context.CellMappings;
+                case FileType.Construction:
+                    return context.Constructions;
+                case FileType.ConstructionValue:
+                    return context.ConstructionValues;
+                case FileType.RiskLevel:
+                    return context.RiskLevels;
+            }
+            return null;
+        }
+
+        public static object GetDataByFileId(ConstructionDataContext context, int fileId)
+        {
+            var file = context.Files.FirstOrDefault(f => f.Id == fileId);
+            if (file == null)
+                return null;
+            switch (file.Type)
+            {
+                case FileType.BusinessValue:
+                    return context.BusinessValues.Where(w=>w.FileId == file.Id);
+                case FileType.BusinessFeature:
+                    return context.BusinessFeatures.Where(w => w.FileId == file.Id);
+                case FileType.CellMapping:
+                    return context.CellMappings.Where(w => w.FileId == file.Id);
+                case FileType.Construction:
+                    return context.Constructions.Where(w => w.FileId == file.Id);
+                case FileType.ConstructionValue:
+                    return context.ConstructionValues.Where(w => w.FileId == file.Id);
+                case FileType.RiskLevel:
+                    return context.RiskLevels.Where(w => w.FileId == file.Id);
+            }
+            return null;
         }
     }
 }

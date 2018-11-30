@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using ConstructionCalculator.Business.Imports;
 using ConstructionCalculator.Business.Utilities;
 using ConstructionCalculator.DataAccess;
+using ConstructionCalculator.DataAccess.Interfaces;
 using ConstructionCalculator.DataAccess.Utilities;
 using ConstructionCalculator.UI.Test.Common;
 using DevExpress.Xpf.Bars;
@@ -19,7 +21,7 @@ namespace ConstructionCalculator.UI.Test
     /// <summary>
     ///     Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window, IDisposable
+    public partial class MainWindow : Window, IDisposable, ILogPrint, IShowProgress
     {
         private const string Prefix = "ConstructionCalculator.UI.Test.TestResource.";
         protected ConstructionDataContext Context = new ConstructionDataContext("Construction");
@@ -27,10 +29,10 @@ namespace ConstructionCalculator.UI.Test
         public MainWindow()
         {
             InitializeComponent();
+            Context.Database.Log = PrintLog;
             Closed += MainWindow_Closed;
             BindingData();
         }
-
         public void Dispose()
         {
             Cleanup();
@@ -116,7 +118,7 @@ namespace ConstructionCalculator.UI.Test
             {
                 var fileName = dlg.FileName;
                 var list = GridControl.ItemsSource as List<CellMapping>;
-                list.Export(fileName, "Test");
+                list.Export(fileName, "Test", this, this);
             }
         }
 
@@ -130,14 +132,13 @@ namespace ConstructionCalculator.UI.Test
             if (ofd.ShowDialog().Value)
             {
                 var fileName = ofd.FileName;
-                var importer = new CellMappingImport(fileName);
+                var importer = new CellMappingImport(fileName) { Print = this, ShowProgress = this };
                 var includeHeader = MessageBox.Show("Include header?", "Include header", MessageBoxButton.OKCancel) ==
                                     MessageBoxResult.OK;
                 importer.IncludeHeader = includeHeader;
                 importer.Import();
                 var data = Context.CellMappings;
                 GridControl.ItemsSource = data.ToList();
-                processBar.EditValue = 100;
             }
         }
         //save as
@@ -176,6 +177,30 @@ namespace ConstructionCalculator.UI.Test
                 var list = GridControl.ItemsSource as List<CellMapping>;
                 list.Remove(item);
             }
+        }
+        public void PrintLog(string logging)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                this.Dispatcher.Invoke(() => { text.AppendText(logging); }
+                );
+            });
+
+
+
+        }public void SetMaxValue(int maxValue)
+        {
+            progressBar.Maximum = maxValue;
+        }
+
+        public void SetCurrentValue(int value)
+        {
+            processBarContainer.EditValue = value;
+        }
+
+        public void Done()
+        {
+            processBarContainer.EditValue = 0;
         }
     }
 }

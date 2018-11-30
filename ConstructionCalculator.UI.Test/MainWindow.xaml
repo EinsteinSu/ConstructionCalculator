@@ -56,9 +56,9 @@
                                   GroupIndex="1" />
                 <dxb:BarCheckItem x:Name="biRight" Alignment="Far" Glyph="{dx:DXImage Image=AlignRight_16x16.png}"
                                   GroupIndex="1" />
-                <dxb:BarEditItem x:Name="processBar" EditWidth="100">
+                <dxb:BarEditItem x:Name="processBarContainer" EditWidth="100">
                     <dxb:BarEditItem.EditSettings>
-                        <dxe:ProgressBarEditSettings />
+                        <dxe:ProgressBarEditSettings x:Name="progressBar" ContentDisplayMode="Value"/>
                     </dxb:BarEditItem.EditSettings>
                 </dxb:BarEditItem>
             </dxb:StatusBarControl>
@@ -68,6 +68,9 @@
                         <dxg:TableView AllowPerPixelScrolling="True" ShowTotalSummary="True" />
                     </dxg:GridControl.View>
                 </dxg:GridControl>
+            </Grid>
+            <Grid DockPanel.Dock="Bottom">
+                <RichTextBox x:Name="text"></RichTextBox>
             </Grid>
         </DockPanel>
 
