@@ -2,10 +2,11 @@
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
+using ConstructionCalculator.DataAccess.Interfaces;
 
 namespace ConstructionCalculator.DataAccess
 {
-    public class File
+    public class File: IKey
     {
         [Key] public int Id { get; set; }
 

@@ -25,6 +25,7 @@ namespace ConstructionCalculator.Business.Imports
         {
             var c = new Construction
             {
+                FileId = FileId,
                 Jzmc = cells[row, 1].Text,
                 Dtbh = cells[row, 2].Text,
                 ConstructionValueId = cells[row, 3].Text.ConvertData(0),

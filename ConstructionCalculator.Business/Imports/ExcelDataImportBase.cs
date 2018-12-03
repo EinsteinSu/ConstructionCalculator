@@ -40,6 +40,8 @@ namespace ConstructionCalculator.Business.Imports
 
         public Action<double> ShowPercentage { get; set; }
 
+        public int FileId { get; set; }
+
 
         public void Dispose()
         {

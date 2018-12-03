@@ -24,6 +24,7 @@ namespace ConstructionCalculator.Business.Imports
             var f = new BusinessFeature
             {
                 Id = cells[row, 1].Text.ConvertData(0),
+                FileId = FileId,
                 Name = cells[row, 2].Text,
                 BusinessValueId = cells[row, 3].Text.ConvertData(0),
                 GdQi = cells[row, 4].Text.ConvertData<double>(),

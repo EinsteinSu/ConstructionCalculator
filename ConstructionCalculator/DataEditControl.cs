@@ -1,5 +1,5 @@
 ﻿using ConstructionCalculator.DataAccess;
-using ConstructionCalculator.DataAccess.Utilities;
+using ConstructionCalculator.DataEdit;
 using DevExpress.XtraBars.Docking2010;
 using DevExpress.XtraEditors;
 
@@ -7,20 +7,18 @@ namespace ConstructionCalculator
 {
     public partial class DataEditControl : XtraUserControl
     {
-        protected DataFactory dataFactory;
-
         public DataEditControl()
         {
             InitializeComponent();
+            gridView.OptionsBehavior.AutoPopulateColumns = true;
         }
-
-        public int FileId { get; set; }
 
         public ConstructionDataContext Context { get; set; }
 
+        public IDataEdit DataEdit { get; set; }
+
         public void Initialize()
         {
-            dataFactory = new DataFactory(FileId, Context);
             LoadData();
         }
 
@@ -28,23 +26,40 @@ namespace ConstructionCalculator
         {
             if (e.Button.Properties.Caption == "Print") gridControl.ShowRibbonPrintPreview();
             if (e.Button.Properties.Caption == "Refresh") LoadData();
-            if (e.Button.Properties.Caption == "New") AddNew();
-            if (e.Button.Properties.Caption == "Save") Save();
+            if (e.Button.Properties.Caption == "New")
+            {
+                AddNew();
+            }
+
+            if (e.Button.Properties.Caption == "Delete")
+            {
+                Remove();
+            }
+            if (e.Button.Properties.Caption == "Save")
+            {
+                Context.SaveChanges();
+            }
+        }
+
+        private void Remove()
+        {
+            var item = gridView.GetFocusedRow();
+            DataEdit.Remove(item);
         }
 
         private void Save()
         {
-            Context.SaveChanges();
+            DataEdit.Save(gridControl.DataSource, null);
         }
 
         private void AddNew()
         {
-            dataFactory.AddItem(FileId);
+            DataEdit.Add();
         }
 
         private void LoadData()
         {
-            gridControl.DataSource = dataFactory.GetList();
+            DataEdit.BindingData(gridControl);
         }
     }
 }

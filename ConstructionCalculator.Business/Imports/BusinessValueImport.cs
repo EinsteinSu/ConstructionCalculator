@@ -24,6 +24,7 @@ namespace ConstructionCalculator.Business.Imports
             var b = new BusinessValue
             {
                 Id = cells[row, 1].Text.ConvertData<int>(),
+                FileId = FileId,
                 Name = cells[row, 2].Text
             };
             Context.BusinessValues.Add(b);

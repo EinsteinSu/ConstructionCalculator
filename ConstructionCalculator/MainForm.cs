@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using ConstructionCalculator.DataAccess;
+using ConstructionCalculator.DataEdit;
 using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Docking2010.Views;
@@ -80,7 +81,7 @@ namespace ConstructionCalculator
             var result = new DataEditControl
             {
                 Name = text.ToLower() + "UserControl",
-                FileId = 4,
+                DataEdit = new BusinessValueEdit(4, Context),
                 Context = Context
             };
             result.Initialize();

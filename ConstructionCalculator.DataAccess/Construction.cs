@@ -5,7 +5,7 @@ using ConstructionCalculator.DataAccess.Interfaces;
 
 namespace ConstructionCalculator.DataAccess
 {
-    public class Construction : IFile, IExport,ICreate<Construction>
+    public class Construction : IFile, IExport, IKey
     {
         [ForeignKey("File")] public int? FileId { get; set; }
 
@@ -143,9 +143,6 @@ namespace ConstructionCalculator.DataAccess
 
         #endregion
 
-        public Construction CreateItem()
-        {
-            return new Construction();
-        }
+      
     }
 }

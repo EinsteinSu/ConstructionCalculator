@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace ConstructionCalculator.DataAccess.Interfaces
 {
-    public interface ICreate<out T>
+    public interface  IKey
     {
-        T CreateItem();
+        int Id { get; set; }
     }
 }

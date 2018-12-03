@@ -5,7 +5,7 @@ using ConstructionCalculator.DataAccess.Interfaces;
 
 namespace ConstructionCalculator.DataAccess
 {
-    public class ConstructionValue : IFile, IExport,ICreate<ConstructionValue>
+    public class ConstructionValue : IFile, IExport, IKey
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -55,10 +55,7 @@ namespace ConstructionCalculator.DataAccess
         }
 
         [ForeignKey("File")] public int? FileId { get; set; }
-        public ConstructionValue CreateItem()
-        {
-            return new ConstructionValue();
-        }
+      
     }
 
     public enum ConstructionDesignRequirement

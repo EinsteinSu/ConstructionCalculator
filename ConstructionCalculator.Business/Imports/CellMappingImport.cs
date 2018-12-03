@@ -23,6 +23,7 @@ namespace ConstructionCalculator.Business.Imports
         {
             var cell = new CellMapping
             {
+                FileId = FileId,
                 ColumnNumber = cells[row, 1].Text.ConvertData(0),
                 ColumnExcelNumber = cells[row, 2].Text,
                 ColumnName = cells[row, 3].Text,

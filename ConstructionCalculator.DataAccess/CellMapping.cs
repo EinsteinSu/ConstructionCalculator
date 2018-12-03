@@ -5,7 +5,7 @@ using ConstructionCalculator.DataAccess.Interfaces;
 
 namespace ConstructionCalculator.DataAccess
 {
-    public class CellMapping : IFile, IExport, ICreate<CellMapping>
+    public class CellMapping : IFile, IExport, IKey
     {
         public int Id { get; set; }
 

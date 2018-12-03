@@ -5,7 +5,7 @@ using ConstructionCalculator.DataAccess.Interfaces;
 
 namespace ConstructionCalculator.DataAccess
 {
-    public class RiskLevel : IFile, IExport,ICreate<RiskLevel>
+    public class RiskLevel : IFile, IExport, IKey
     {
         public int Id { get; set; }
 
@@ -36,9 +36,5 @@ namespace ConstructionCalculator.DataAccess
             return new List<object> { MinValue, MaxValue, Color, Description };
         }
 
-        public RiskLevel CreateItem()
-        {
-            return new RiskLevel();
-        }
     }
 }

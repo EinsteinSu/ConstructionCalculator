@@ -22,16 +22,19 @@ namespace ConstructionCalculator.Business.Imports
 
         public override void ImportRow(ExcelRange cells, int row)
         {
-            var c = new ConstructionValue();
-            c.Name = cells[row, 1].Text;
-            c.Id = cells[row, 2].Text.ConvertData<int>();
-            c.Jgkhsj = cells[row, 4].Text.ConvertData<double>();
-            c.Wqkhsj = cells[row, 5].Text.ConvertData<double>();
-            c.Wdkhsj = cells[row, 6].Text.ConvertData<double>();
-            c.Nqkhsj = cells[row, 7].Text.ConvertData<double>();
-            c.Pjkhnl = cells[row, 8].Text.ConvertData<double>();
-            c.Jgkhyz = cells[row, 9].Text.ConvertData<double>();
-            c.Jzkhyz = cells[row, 10].Text.ConvertData<double>();
+            var c = new ConstructionValue
+            {
+                Name = cells[row, 1].Text,
+                FileId = FileId,
+                Id = cells[row, 2].Text.ConvertData<int>(),
+                Jgkhsj = cells[row, 4].Text.ConvertData<double>(),
+                Wqkhsj = cells[row, 5].Text.ConvertData<double>(),
+                Wdkhsj = cells[row, 6].Text.ConvertData<double>(),
+                Nqkhsj = cells[row, 7].Text.ConvertData<double>(),
+                Pjkhnl = cells[row, 8].Text.ConvertData<double>(),
+                Jgkhyz = cells[row, 9].Text.ConvertData<double>(),
+                Jzkhyz = cells[row, 10].Text.ConvertData<double>()
+            };
             Enum.TryParse(cells[row, 3].Text.Trim(), out ConstructionDesignRequirement requirement);
             c.DesignRequirement = requirement;
             Context.ConstructionValues.Add(c);

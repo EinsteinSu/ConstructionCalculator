@@ -23,6 +23,7 @@ namespace ConstructionCalculator.Business.Imports
             var r = new RiskLevel
             {
                 MinValue = cells[row, 1].Text.ConvertData<double>(),
+                FileId = FileId,
                 MaxValue = cells[row, 2].Text.ConvertData<double>(),
                 Color = cells[row, 3].Text,
                 Description = cells[row, 4].Text
