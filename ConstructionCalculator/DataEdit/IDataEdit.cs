@@ -10,6 +10,8 @@ namespace ConstructionCalculator.DataEdit
 
         void Remove(object data);
 
+        void Clean();
+
         void Import(string fileName, ILogPrint log, IShowProgress showProgress);
 
         void Export(object list, string fileName, ILogPrint log, IShowProgress showProgress);

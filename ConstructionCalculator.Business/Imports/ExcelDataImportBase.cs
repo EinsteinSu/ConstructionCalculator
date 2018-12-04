@@ -10,7 +10,7 @@ namespace ConstructionCalculator.Business.Imports
     public abstract class ExcelDataImportBase : IDisposable
     {
         private static readonly ILog Log = LogManager.GetLogger("ExcelDataImport");
-        protected ConstructionDataContext Context;
+        public ConstructionDataContext Context { get; set; }
         protected ExcelPackage Excel;
         public ILogPrint Print { get; set; }
 
@@ -36,7 +36,7 @@ namespace ConstructionCalculator.Business.Imports
 
         public int RowCount => GetRowCount();
 
-        protected virtual bool IgnoreSaveData => false;
+        public virtual bool IgnoreSaveData { get; set; }
 
         public Action<double> ShowPercentage { get; set; }
 
@@ -89,7 +89,7 @@ namespace ConstructionCalculator.Business.Imports
                         Log.Info(s);
                         Print?.PrintLog(s);
                     };
-                    Context.SaveChanges();
+
                 }
             }
             catch (Exception e)

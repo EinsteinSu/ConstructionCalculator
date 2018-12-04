@@ -38,13 +38,17 @@ namespace ConstructionCalculator.DataEdit
 
         public abstract void Remove(object data);
 
+        public abstract void Clean();
+
         //todo: don't save the changes untill the save button clicked      
         public void Import(string fileName, ILogPrint log, IShowProgress showProgress)
         {
             var importer = ImportFactory.GetImporter(File.Type, fileName);
+            importer.IgnoreSaveData = true;
             importer.Print = log;
             importer.ShowProgress = showProgress;
             importer.FileId = FileId;
+            importer.Context = Context;
             importer.Import();
         }
 

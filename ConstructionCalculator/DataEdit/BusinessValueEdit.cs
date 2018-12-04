@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using ConstructionCalculator.Business.Cruds;
 using ConstructionCalculator.Business.Imports;
 using ConstructionCalculator.DataAccess;
 using DevExpress.XtraGrid;
@@ -15,6 +13,7 @@ namespace ConstructionCalculator.DataEdit
         {
         }
 
+        protected override string EntityName => "Business Value";
 
 
         public override void Add()
@@ -33,6 +32,11 @@ namespace ConstructionCalculator.DataEdit
             Context.BusinessValues.Remove(item ?? throw new InvalidOperationException());
         }
 
+        public override void Clean()
+        {
+            Context.BusinessValues.Local.Clear();
+        }
+
 
         protected override ExcelDataImportBase GetImporter(string fileName)
         {
@@ -41,10 +45,9 @@ namespace ConstructionCalculator.DataEdit
 
         public override void BindingData(GridControl control)
         {
+            control.DataSource = null;
             Context.BusinessValues.Where(w => w.FileId == FileId).Load();
             control.DataSource = Context.BusinessValues.Local.ToBindingList();
         }
-
-        protected override string EntityName => "Business Value";
     }
 }

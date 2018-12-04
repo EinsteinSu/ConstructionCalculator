@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using ConstructionCalculator.DataAccess;
+using ConstructionCalculator.DataAccess.Interfaces;
 using ConstructionCalculator.DataEdit;
 using DevExpress.Utils;
 using DevExpress.XtraBars;
@@ -14,84 +16,102 @@ using DevExpress.XtraEditors;
 
 namespace ConstructionCalculator
 {
-    public partial class MainForm : RibbonForm
+    public partial class MainForm : RibbonForm, ILogPrint, IShowProgress
     {
-        protected ConstructionDataContext Context = new ConstructionDataContext("Construction");
-        private XtraUserControl customersUserControl;
-        private XtraUserControl employeesUserControl;
-
         public MainForm()
         {
             InitializeComponent();
-            employeesUserControl = CreateUserControl("Employees");
-            customersUserControl = CreateUserControl("Customers");
+            //employeesUserControl = CreateUserControl("Employees");
+            //customersUserControl = CreateUserControl("Customers");
             //accordionControl.SelectedElement = employeesAccordionControlElement;
-            DisplayFiles();
+            if (!DesignMode)
+                DisplayFiles();
         }
 
         #region file operation
 
         private void DisplayFiles()
         {
-            ((ISupportInitialize)ribbonControl).BeginInit();
-            barSubItemNavigation.LinksPersistInfo.Clear();
-            accordionControl.Elements.Clear();
-            foreach (var typeName in Enum.GetNames(typeof(FileType)))
+            using (var context = new ConstructionDataContext())
             {
-                var group = new AccordionControlElement { Text = typeName };
-                Enum.TryParse(typeName, out FileType type);
-                foreach (var file in Context.Files.Where(w => w.Type == type))
+                ((ISupportInitialize)ribbonControl).BeginInit();
+                barSubItemNavigation.LinksPersistInfo.Clear();
+                accordionControl.Elements.Clear();
+                foreach (var typeName in Enum.GetNames(typeof(FileType)))
                 {
-                    #region display file in the group of parameter types
-
-                    var item = new AccordionControlElement
+                    var group = new AccordionControlElement { Text = typeName };
+                    Enum.TryParse(typeName, out FileType type);
+                    foreach (var file in context.Files.Where(w => w.Type == type))
                     {
-                        Style = ElementStyle.Item,
-                        Name = file.FileName,
-                        Text = file.FileName,
-                        Tag = file
-                    };
-                    group.Elements.Add(item);
+                        #region display file in the group of parameter types
 
-                    #endregion
+                        var item = new AccordionControlElement
+                        {
+                            Style = ElementStyle.Item,
+                            Name = file.FileName,
+                            Text = file.FileName,
+                            Tag = file
+                        };
+                        group.Elements.Add(item);
+                        item.Click += Item_Click;
+                        #endregion
 
-                    #region add to navigation list
+                        #region add to navigation list
 
-                    var barItem = new BarButtonItem
-                    {
-                        Caption = file.FileName,
-                        Tag = file
-                    };
-                    ribbonControl.Items.Add(barItem);
-                    barSubItemNavigation.LinksPersistInfo.Add(new LinkPersistInfo(barItem));
-                    #endregion
+                        var barItem = new BarButtonItem
+                        {
+                            Caption = file.FileName,
+                            Tag = file
+                        };
+                        ribbonControl.Items.Add(barItem);
+                        barSubItemNavigation.LinksPersistInfo.Add(new LinkPersistInfo(barItem));
+                        #endregion
+                    }
+
+                    accordionControl.Elements.Add(group);
                 }
 
-                accordionControl.Elements.Add(group);
+                ((ISupportInitialize)ribbonControl).EndInit();
             }
 
-            ((ISupportInitialize)ribbonControl).EndInit();
+        }
+
+        Dictionary<string, DataEditControl> controls = new Dictionary<string, DataEditControl>();
+        private void Item_Click(object sender, EventArgs e)
+        {
+            if (sender is AccordionControlElement item)
+            {
+                if (item.Tag is File file && !controls.ContainsKey(file.FileName))
+                {
+                    var control = CreateUserControl(file.FileName);
+                    var dataEdit = DataEditFactory.GetDataEdit(file, control.Context);
+                    control.DataEdit = dataEdit;
+                    dataEdit.BindingData(control.GridControl);
+                    controls.Add(file.FileName, control);
+                }
+            }
         }
 
         #endregion
 
 
-        private XtraUserControl CreateUserControl(string text)
+        private DataEditControl CreateUserControl(string text)
         {
             var result = new DataEditControl
             {
                 Name = text.ToLower() + "UserControl",
-                DataEdit = new BusinessValueEdit(4, Context),
-                Context = Context
+                Text = text,
+                Context = new ConstructionDataContext()
             };
-            result.Initialize();
+            result.Context.Database.Log = PrintLog;
             return result;
         }
 
         private void accordionControl_SelectedElementChanged(object sender, SelectedElementChangedEventArgs e)
         {
-            if (e.Element == null) return;
-            var userControl = e.Element.Text == "Employees" ? employeesUserControl : customersUserControl;
+            if (e.Element == null)
+                return;
+            var userControl = controls[e.Element.Text];
             tabbedView.AddDocument(userControl);
             tabbedView.ActivateDocument(userControl);
         }
@@ -104,8 +124,7 @@ namespace ConstructionCalculator
 
         private void tabbedView_DocumentClosed(object sender, DocumentEventArgs e)
         {
-            RecreateUserControls(e);
-            SetAccordionSelectedElement(e);
+            //todo: checking the unchanged data then reminde
         }
 
         private void SetAccordionSelectedElement(DocumentEventArgs e)
@@ -121,8 +140,67 @@ namespace ConstructionCalculator
 
         private void RecreateUserControls(DocumentEventArgs e)
         {
-            if (e.Document.Caption == "Employees") employeesUserControl = CreateUserControl("Employees");
-            else customersUserControl = CreateUserControl("Customers");
+
+        }
+
+        private void barButtonItemAdd_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (tabbedView.ActiveDocument.Control is DataEditControl control)
+                control.DataEdit.Add();
+        }
+
+        private void barButtonItemSave_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (tabbedView.ActiveDocument.Control is DataEditControl control)
+                control.Context.SaveChanges();
+        }
+
+        private void barButtonItemImport_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (tabbedView.ActiveDocument.Control is DataEditControl control)
+            {
+                OpenFileDialog dialog = new OpenFileDialog
+                {
+                    DefaultExt = ".xlsx",
+                    Filter = @"Excel Files (.xlsx)|*.xlsx"
+                };
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    control.DataEdit.Import(dialog.FileName, this, this);
+                }
+            }
+        }
+
+        #region Print log and show progress
+        public void PrintLog(string logging)
+        {
+            rtbOutput.AppendText(logging);
+            rtbOutput.ScrollToCaret();
+            Application.DoEvents();
+        }
+
+        public void SetMaxValue(int maxValue)
+        {
+
+        }
+
+        public void SetCurrentValue(int value)
+        {
+
+        }
+
+        public void Done()
+        {
+
+        }
+        #endregion
+
+        private void barButtonItemClear_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (tabbedView.ActiveDocument.Control is DataEditControl control)
+            {
+                control.DataEdit.Clean();
+            }
         }
     }
 }

@@ -35,6 +35,17 @@
             this.barSubItemNavigation = new DevExpress.XtraBars.BarSubItem();
             this.employeesBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
             this.customersBarButtonItem = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemAdd = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemSave = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemSaveAs = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemImport = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemExport = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemAddFile = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemRemoveFile = new DevExpress.XtraBars.BarButtonItem();
+            this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.fileGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.dataEditGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.excelGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroupNavigation = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -46,29 +57,21 @@
             this.mainAccordionGroup = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.employeesAccordionControlElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
             this.customersAccordionControlElement = new DevExpress.XtraBars.Navigation.AccordionControlElement();
-            this.tabbedView = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
-            this.documentManager = new DevExpress.XtraBars.Docking2010.DocumentManager(this.components);
-            this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.dataEditGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.barButtonItemAdd = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItemSave = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItemSaveAs = new DevExpress.XtraBars.BarButtonItem();
-            this.excelGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.barButtonItemImport = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItemExport = new DevExpress.XtraBars.BarButtonItem();
             this.outputDockPanel = new DevExpress.XtraBars.Docking.DockPanel();
             this.dockPanel1_Container = new DevExpress.XtraBars.Docking.ControlContainer();
-            this.fileGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.barButtonItemAddFile = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItemRemoveFile = new DevExpress.XtraBars.BarButtonItem();
+            this.rtbOutput = new System.Windows.Forms.RichTextBox();
+            this.tabbedView = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
+            this.documentManager = new DevExpress.XtraBars.Docking2010.DocumentManager(this.components);
+            this.barButtonItemClear = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
             this.dockPanel.SuspendLayout();
             this.dockPanel_Container.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.accordionControl)).BeginInit();
+            this.outputDockPanel.SuspendLayout();
+            this.dockPanel1_Container.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.documentManager)).BeginInit();
-            this.outputDockPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // ribbonControl
@@ -86,9 +89,10 @@
             this.barButtonItemImport,
             this.barButtonItemExport,
             this.barButtonItemAddFile,
-            this.barButtonItemRemoveFile});
+            this.barButtonItemRemoveFile,
+            this.barButtonItemClear});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 55;
+            this.ribbonControl.MaxItemId = 56;
             this.ribbonControl.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -128,6 +132,97 @@
             this.customersBarButtonItem.Id = 47;
             this.customersBarButtonItem.Name = "customersBarButtonItem";
             this.customersBarButtonItem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonNavigation_ItemClick);
+            // 
+            // barButtonItemAdd
+            // 
+            this.barButtonItemAdd.Caption = "Add";
+            this.barButtonItemAdd.Id = 48;
+            this.barButtonItemAdd.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemAdd.ImageOptions.Image")));
+            this.barButtonItemAdd.Name = "barButtonItemAdd";
+            this.barButtonItemAdd.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
+            this.barButtonItemAdd.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemAdd_ItemClick);
+            // 
+            // barButtonItemSave
+            // 
+            this.barButtonItemSave.Caption = "Save";
+            this.barButtonItemSave.Id = 49;
+            this.barButtonItemSave.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemSave.ImageOptions.Image")));
+            this.barButtonItemSave.Name = "barButtonItemSave";
+            this.barButtonItemSave.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItemSave.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemSave_ItemClick);
+            // 
+            // barButtonItemSaveAs
+            // 
+            this.barButtonItemSaveAs.Caption = "Save As";
+            this.barButtonItemSaveAs.Id = 50;
+            this.barButtonItemSaveAs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemSaveAs.ImageOptions.Image")));
+            this.barButtonItemSaveAs.Name = "barButtonItemSaveAs";
+            this.barButtonItemSaveAs.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            // 
+            // barButtonItemImport
+            // 
+            this.barButtonItemImport.Caption = "Import";
+            this.barButtonItemImport.Id = 51;
+            this.barButtonItemImport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemImport.ImageOptions.Image")));
+            this.barButtonItemImport.Name = "barButtonItemImport";
+            this.barButtonItemImport.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItemImport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemImport_ItemClick);
+            // 
+            // barButtonItemExport
+            // 
+            this.barButtonItemExport.Caption = "Export";
+            this.barButtonItemExport.Id = 52;
+            this.barButtonItemExport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemExport.ImageOptions.Image")));
+            this.barButtonItemExport.Name = "barButtonItemExport";
+            this.barButtonItemExport.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            // 
+            // barButtonItemAddFile
+            // 
+            this.barButtonItemAddFile.Caption = "Add File";
+            this.barButtonItemAddFile.Id = 53;
+            this.barButtonItemAddFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemAddFile.ImageOptions.Image")));
+            this.barButtonItemAddFile.Name = "barButtonItemAddFile";
+            this.barButtonItemAddFile.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            // 
+            // barButtonItemRemoveFile
+            // 
+            this.barButtonItemRemoveFile.Caption = "Remove File";
+            this.barButtonItemRemoveFile.Id = 54;
+            this.barButtonItemRemoveFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemRemoveFile.ImageOptions.Image")));
+            this.barButtonItemRemoveFile.Name = "barButtonItemRemoveFile";
+            this.barButtonItemRemoveFile.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            // 
+            // ribbonPage1
+            // 
+            this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.fileGroup,
+            this.dataEditGroup,
+            this.excelGroup});
+            this.ribbonPage1.Name = "ribbonPage1";
+            this.ribbonPage1.Text = "Edit";
+            // 
+            // fileGroup
+            // 
+            this.fileGroup.ItemLinks.Add(this.barButtonItemAddFile);
+            this.fileGroup.ItemLinks.Add(this.barButtonItemRemoveFile);
+            this.fileGroup.Name = "fileGroup";
+            this.fileGroup.Text = "File";
+            // 
+            // dataEditGroup
+            // 
+            this.dataEditGroup.ItemLinks.Add(this.barButtonItemAdd);
+            this.dataEditGroup.ItemLinks.Add(this.barButtonItemSave);
+            this.dataEditGroup.ItemLinks.Add(this.barButtonItemSaveAs);
+            this.dataEditGroup.ItemLinks.Add(this.barButtonItemClear);
+            this.dataEditGroup.Name = "dataEditGroup";
+            this.dataEditGroup.Text = "Data";
+            // 
+            // excelGroup
+            // 
+            this.excelGroup.ItemLinks.Add(this.barButtonItemImport);
+            this.excelGroup.ItemLinks.Add(this.barButtonItemExport);
+            this.excelGroup.Name = "excelGroup";
+            this.excelGroup.Text = "Excel";
             // 
             // ribbonPage
             // 
@@ -229,83 +324,6 @@
             this.customersAccordionControlElement.Style = DevExpress.XtraBars.Navigation.ElementStyle.Item;
             this.customersAccordionControlElement.Text = "Customers";
             // 
-            // tabbedView
-            // 
-            this.tabbedView.RootContainer.Element = null;
-            this.tabbedView.DocumentClosed += new DevExpress.XtraBars.Docking2010.Views.DocumentEventHandler(this.tabbedView_DocumentClosed);
-            // 
-            // documentManager
-            // 
-            this.documentManager.ContainerControl = this;
-            this.documentManager.RibbonAndBarsMergeStyle = DevExpress.XtraBars.Docking2010.Views.RibbonAndBarsMergeStyle.Always;
-            this.documentManager.View = this.tabbedView;
-            this.documentManager.ViewCollection.AddRange(new DevExpress.XtraBars.Docking2010.Views.BaseView[] {
-            this.tabbedView});
-            // 
-            // ribbonPage1
-            // 
-            this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.fileGroup,
-            this.dataEditGroup,
-            this.excelGroup});
-            this.ribbonPage1.Name = "ribbonPage1";
-            this.ribbonPage1.Text = "Edit";
-            // 
-            // dataEditGroup
-            // 
-            this.dataEditGroup.ItemLinks.Add(this.barButtonItemAdd);
-            this.dataEditGroup.ItemLinks.Add(this.barButtonItemSave);
-            this.dataEditGroup.ItemLinks.Add(this.barButtonItemSaveAs);
-            this.dataEditGroup.Name = "dataEditGroup";
-            this.dataEditGroup.Text = "Data";
-            // 
-            // barButtonItemAdd
-            // 
-            this.barButtonItemAdd.Caption = "Add";
-            this.barButtonItemAdd.Id = 48;
-            this.barButtonItemAdd.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
-            this.barButtonItemAdd.Name = "barButtonItemAdd";
-            this.barButtonItemAdd.RibbonStyle = ((DevExpress.XtraBars.Ribbon.RibbonItemStyles)((DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large | DevExpress.XtraBars.Ribbon.RibbonItemStyles.SmallWithoutText)));
-            // 
-            // barButtonItemSave
-            // 
-            this.barButtonItemSave.Caption = "Save";
-            this.barButtonItemSave.Id = 49;
-            this.barButtonItemSave.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.Image")));
-            this.barButtonItemSave.Name = "barButtonItemSave";
-            this.barButtonItemSave.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            // 
-            // barButtonItemSaveAs
-            // 
-            this.barButtonItemSaveAs.Caption = "Save As";
-            this.barButtonItemSaveAs.Id = 50;
-            this.barButtonItemSaveAs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem3.ImageOptions.Image")));
-            this.barButtonItemSaveAs.Name = "barButtonItemSaveAs";
-            this.barButtonItemSaveAs.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            // 
-            // excelGroup
-            // 
-            this.excelGroup.ItemLinks.Add(this.barButtonItemImport);
-            this.excelGroup.ItemLinks.Add(this.barButtonItemExport);
-            this.excelGroup.Name = "excelGroup";
-            this.excelGroup.Text = "Excel";
-            // 
-            // barButtonItemImport
-            // 
-            this.barButtonItemImport.Caption = "Import";
-            this.barButtonItemImport.Id = 51;
-            this.barButtonItemImport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem4.ImageOptions.Image")));
-            this.barButtonItemImport.Name = "barButtonItemImport";
-            this.barButtonItemImport.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            // 
-            // barButtonItemExport
-            // 
-            this.barButtonItemExport.Caption = "Export";
-            this.barButtonItemExport.Id = 52;
-            this.barButtonItemExport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem5.ImageOptions.Image")));
-            this.barButtonItemExport.Name = "barButtonItemExport";
-            this.barButtonItemExport.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            // 
             // outputDockPanel
             // 
             this.outputDockPanel.Controls.Add(this.dockPanel1_Container);
@@ -319,33 +337,45 @@
             // 
             // dockPanel1_Container
             // 
+            this.dockPanel1_Container.Controls.Add(this.rtbOutput);
             this.dockPanel1_Container.Location = new System.Drawing.Point(4, 24);
             this.dockPanel1_Container.Name = "dockPanel1_Container";
             this.dockPanel1_Container.Size = new System.Drawing.Size(582, 172);
             this.dockPanel1_Container.TabIndex = 0;
             // 
-            // fileGroup
+            // rtbOutput
             // 
-            this.fileGroup.ItemLinks.Add(this.barButtonItemAddFile);
-            this.fileGroup.ItemLinks.Add(this.barButtonItemRemoveFile);
-            this.fileGroup.Name = "fileGroup";
-            this.fileGroup.Text = "File";
+            this.rtbOutput.AutoWordSelection = true;
+            this.rtbOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbOutput.Location = new System.Drawing.Point(0, 0);
+            this.rtbOutput.Name = "rtbOutput";
+            this.rtbOutput.ReadOnly = true;
+            this.rtbOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+            this.rtbOutput.Size = new System.Drawing.Size(582, 172);
+            this.rtbOutput.TabIndex = 0;
+            this.rtbOutput.Text = "";
             // 
-            // barButtonItemAddFile
+            // tabbedView
             // 
-            this.barButtonItemAddFile.Caption = "Add File";
-            this.barButtonItemAddFile.Id = 53;
-            this.barButtonItemAddFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image1")));
-            this.barButtonItemAddFile.Name = "barButtonItemAddFile";
-            this.barButtonItemAddFile.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.tabbedView.RootContainer.Element = null;
+            this.tabbedView.DocumentClosed += new DevExpress.XtraBars.Docking2010.Views.DocumentEventHandler(this.tabbedView_DocumentClosed);
             // 
-            // barButtonItemRemoveFile
+            // documentManager
             // 
-            this.barButtonItemRemoveFile.Caption = "Remove File";
-            this.barButtonItemRemoveFile.Id = 54;
-            this.barButtonItemRemoveFile.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.Image1")));
-            this.barButtonItemRemoveFile.Name = "barButtonItemRemoveFile";
-            this.barButtonItemRemoveFile.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.documentManager.ContainerControl = this;
+            this.documentManager.RibbonAndBarsMergeStyle = DevExpress.XtraBars.Docking2010.Views.RibbonAndBarsMergeStyle.Always;
+            this.documentManager.View = this.tabbedView;
+            this.documentManager.ViewCollection.AddRange(new DevExpress.XtraBars.Docking2010.Views.BaseView[] {
+            this.tabbedView});
+            // 
+            // barButtonItemClear
+            // 
+            this.barButtonItemClear.Caption = "Clear";
+            this.barButtonItemClear.Id = 55;
+            this.barButtonItemClear.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.ImageOptions.Image")));
+            this.barButtonItemClear.Name = "barButtonItemClear";
+            this.barButtonItemClear.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItemClear.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemClear_ItemClick);
             // 
             // MainForm
             // 
@@ -364,9 +394,10 @@
             this.dockPanel.ResumeLayout(false);
             this.dockPanel_Container.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.accordionControl)).EndInit();
+            this.outputDockPanel.ResumeLayout(false);
+            this.dockPanel1_Container.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabbedView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.documentManager)).EndInit();
-            this.outputDockPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -404,5 +435,7 @@
         private DevExpress.XtraBars.BarButtonItem barButtonItemAddFile;
         private DevExpress.XtraBars.BarButtonItem barButtonItemRemoveFile;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup fileGroup;
+        private System.Windows.Forms.RichTextBox rtbOutput;
+        private DevExpress.XtraBars.BarButtonItem barButtonItemClear;
     }
 }
