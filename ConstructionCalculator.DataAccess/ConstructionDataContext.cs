@@ -12,6 +12,11 @@ namespace ConstructionCalculator.DataAccess
         {
         }
 
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+           
+        }
+
         public DbSet<CellMapping> CellMappings { get; set; }
 
         public DbSet<Construction> Constructions { get; set; }

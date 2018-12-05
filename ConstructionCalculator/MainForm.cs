@@ -21,9 +21,6 @@ namespace ConstructionCalculator
         public MainForm()
         {
             InitializeComponent();
-            //employeesUserControl = CreateUserControl("Employees");
-            //customersUserControl = CreateUserControl("Customers");
-            //accordionControl.SelectedElement = employeesAccordionControlElement;
             if (!DesignMode)
                 DisplayFiles();
         }
@@ -81,13 +78,23 @@ namespace ConstructionCalculator
         {
             if (sender is AccordionControlElement item)
             {
-                if (item.Tag is File file && !controls.ContainsKey(file.FileName))
+                if (item.Tag is File file)
                 {
-                    var control = CreateUserControl(file.FileName);
-                    var dataEdit = DataEditFactory.GetDataEdit(file, control.Context);
-                    control.DataEdit = dataEdit;
-                    dataEdit.BindingData(control.GridControl);
-                    controls.Add(file.FileName, control);
+                    DataEditControl control;
+                    if (!controls.ContainsKey(file.FileName))
+                    {
+                        control = CreateUserControl(file.FileName);
+                        var dataEdit = DataEditFactory.GetDataEdit(file, control.Context);
+                        control.DataEdit = dataEdit;
+                        dataEdit.BindingData(control.GridControl);
+                        controls.Add(file.FileName, control);
+                    }
+                    else
+                    {
+                        control = controls[file.FileName];
+                    }
+                    tabbedView.AddDocument(control);
+                    tabbedView.ActivateDocument(control);
                 }
             }
         }
@@ -109,11 +116,11 @@ namespace ConstructionCalculator
 
         private void accordionControl_SelectedElementChanged(object sender, SelectedElementChangedEventArgs e)
         {
-            if (e.Element == null)
-                return;
-            var userControl = controls[e.Element.Text];
-            tabbedView.AddDocument(userControl);
-            tabbedView.ActivateDocument(userControl);
+            //if (e.Element == null)
+            //    return;
+            //var userControl = controls[e.Element.Text];
+            //tabbedView.AddDocument(userControl);
+            //tabbedView.ActivateDocument(userControl);
         }
 
         private void barButtonNavigation_ItemClick(object sender, ItemClickEventArgs e)
@@ -125,27 +132,13 @@ namespace ConstructionCalculator
         private void tabbedView_DocumentClosed(object sender, DocumentEventArgs e)
         {
             //todo: checking the unchanged data then reminde
-        }
-
-        private void SetAccordionSelectedElement(DocumentEventArgs e)
-        {
-            if (tabbedView.Documents.Count != 0)
-                if (e.Document.Caption == "Employees")
-                    accordionControl.SelectedElement = customersAccordionControlElement;
-                else
-                    accordionControl.SelectedElement = employeesAccordionControlElement;
-            else
-                accordionControl.SelectedElement = null;
-        }
-
-        private void RecreateUserControls(DocumentEventArgs e)
-        {
-
+            tabbedView.RemoveDocument(controls[e.Document.Caption]);
+            controls.Remove(e.Document.Caption);
         }
 
         private void barButtonItemAdd_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (tabbedView.ActiveDocument.Control is DataEditControl control)
+            if (tabbedView.ActiveDocument.Control != null && tabbedView.ActiveDocument.Control is DataEditControl control)
                 control.DataEdit.Add();
         }
 
@@ -174,24 +167,26 @@ namespace ConstructionCalculator
         #region Print log and show progress
         public void PrintLog(string logging)
         {
-            rtbOutput.AppendText(logging);
+            rtbOutput.AppendText(logging + Environment.NewLine);
+            barStaticItemLog.Caption = logging;
             rtbOutput.ScrollToCaret();
             Application.DoEvents();
         }
 
         public void SetMaxValue(int maxValue)
         {
-
+            progressBar.Maximum = maxValue;
         }
 
         public void SetCurrentValue(int value)
         {
-
+            barEditItemProgress.EditValue = value;
+            Application.DoEvents();
         }
 
         public void Done()
         {
-
+            barEditItemProgress.EditValue = 0;
         }
         #endregion
 
@@ -200,6 +195,67 @@ namespace ConstructionCalculator
             if (tabbedView.ActiveDocument.Control is DataEditControl control)
             {
                 control.DataEdit.Clean();
+            }
+        }
+
+        private void barButtonItemAddFile_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var addForm = new FileEditWindow();
+            if (addForm.ShowDialog() == DialogResult.OK)
+            {
+                using (var context = new ConstructionDataContext())
+                {
+                    context.Database.Log = PrintLog;
+                    File file = new File();
+                    file.FileName = addForm.FileName;
+                    file.Type = addForm.FileType;
+                    if (!file.Exists(context))
+                    {
+                        file.Add(context);
+                        DisplayFiles();
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            $"The type of file has existed, please try another name. {file.Type}|{file.FileName}");
+                    }
+                }
+            }
+        }
+
+        private void barButtonItemRemoveFile_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var item = accordionControl.SelectedElement;
+            if (item != null)
+            {
+                var file = item.Tag as File;
+                if (file == null)
+                    return;
+                using (var context = new ConstructionDataContext())
+                {
+                    context.Database.Log = PrintLog;
+                    file.Delete(context);
+                }
+                tabbedView.RemoveDocument(controls[file.FileName]);
+                controls.Remove(file.FileName);
+                DisplayFiles();
+            }
+        }
+
+        private void barButtonItemExport_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (tabbedView.ActiveDocument.Control is DataEditControl control)
+            {
+                var dialog = new SaveFileDialog
+                {
+                    FileName = control.Text,
+                    DefaultExt = ".xlsx",
+                    Filter = @"Excel Files (.xlsx)|*.xlsx"
+                };
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    control.DataEdit.Export(dialog.FileName, this, this);
+                }
             }
         }
     }

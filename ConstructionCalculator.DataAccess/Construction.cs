@@ -7,13 +7,15 @@ namespace ConstructionCalculator.DataAccess
 {
     public class Construction : IFile, IExport, IKey
     {
-        [ForeignKey("File")] public int? FileId { get; set; }
+        [Display(AutoGenerateField = false)]
+        [ForeignKey("File")]
+        public int? FileId { get; set; }
 
         #region properteis
 
-        public int Id { get; set; }
+        [Display(AutoGenerateField = false)] public int Id { get; set; }
 
-        public File File { get; set; }
+        [Display(AutoGenerateField = false)] public File File { get; set; }
 
         [Display(Name = "建筑名称")] public string Jzmc { get; set; }
 
@@ -142,7 +144,5 @@ namespace ConstructionCalculator.DataAccess
         }
 
         #endregion
-
-      
     }
 }

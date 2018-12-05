@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using ConstructionCalculator.Business.Imports;
@@ -35,6 +36,11 @@ namespace ConstructionCalculator.DataEdit
         public override void Clean()
         {
             Context.BusinessValues.Local.Clear();
+        }
+
+        protected override List<BusinessValue> GetList()
+        {
+            return Context.BusinessValues.Local.ToList();
         }
 
 

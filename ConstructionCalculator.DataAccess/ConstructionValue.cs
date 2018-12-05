@@ -7,11 +7,7 @@ namespace ConstructionCalculator.DataAccess
 {
     public class ConstructionValue : IFile, IExport, IKey
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
-
-        public File File { get; set; }
+        [Display(AutoGenerateField = false)] public File File { get; set; }
 
         [Display(Name = "名称")]
         [MaxLength(100)]
@@ -51,11 +47,17 @@ namespace ConstructionCalculator.DataAccess
 
         public List<object> GetRow()
         {
-            return new List<object> { Name, DesignRequirement, Jgkhsj, Wqkhsj, Wdkhsj, Nqkhsj, Pjkhnl, Jgkhyz, Jzkhyz };
+            return new List<object> {Name, DesignRequirement, Jgkhsj, Wqkhsj, Wdkhsj, Nqkhsj, Pjkhnl, Jgkhyz, Jzkhyz};
         }
 
-        [ForeignKey("File")] public int? FileId { get; set; }
-      
+        [Display(AutoGenerateField = false)]
+        [ForeignKey("File")]
+        public int? FileId { get; set; }
+
+        [Key]
+        [Display(AutoGenerateField = false)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
     }
 
     public enum ConstructionDesignRequirement

@@ -14,12 +14,11 @@ namespace ConstructionCalculator.DataEdit
 
         void Import(string fileName, ILogPrint log, IShowProgress showProgress);
 
-        void Export(object list, string fileName, ILogPrint log, IShowProgress showProgress);
-
-        void SaveAs(object list, string fileName, string description, out int existFileId, ILogPrint log,
+        void Export(string fileName, ILogPrint log, IShowProgress showProgress);
+        void SaveAs(string fileName, string description, out int existFileId, ILogPrint log,
             IShowProgress showProgress);
 
-        void Save(object list, ILogPrint log);
+        void Save(ILogPrint log);
 
         void BindingData(GridControl control);
     }
