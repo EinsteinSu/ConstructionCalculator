@@ -21,13 +21,13 @@ namespace ConstructionCalculator.DataAccess
 
         [Display(Name = "单体编号")] public string Dtbh { get; set; }
 
-        public virtual ConstructionValue ConstructionValue { get; set; }
+        [Display(AutoGenerateField = false)] public virtual ConstructionValue ConstructionValue { get; set; }
 
         [Display(Name = "建筑结构编号")]
         [ForeignKey("ConstructionValue")]
         public int ConstructionValueId { get; set; }
 
-        public virtual BusinessFeature BusinessFeature { get; set; }
+        [Display(AutoGenerateField = false)] public virtual BusinessFeature BusinessFeature { get; set; }
 
         [Display(Name = "业态特征编号")]
         [ForeignKey("BusinessFeature")]

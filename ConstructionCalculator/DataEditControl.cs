@@ -10,13 +10,15 @@ namespace ConstructionCalculator
         public DataEditControl()
         {
             InitializeComponent();
-            gridView1.OptionsBehavior.AutoPopulateColumns = true;
+            gridControl1.ShowOnlyPredefinedDetails = true;
         }
 
         public ConstructionDataContext Context { get; set; }
 
         public IDataEdit DataEdit { get; set; }
 
-        public GridControl GridControl { get; private set; }
+        public GridControl GridControl => gridControl1;
+
+        public object FocusedRow => gridView1.GetFocusedRow();
     }
 }

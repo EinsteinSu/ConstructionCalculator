@@ -34,7 +34,7 @@ namespace ConstructionCalculator.DataAccess
 
         public bool Exists(ConstructionDataContext context)
         {
-            return context.Files.Any(a => a.FileName == FileName && a.Type == Type);
+            return context.Files.Any(a => a.FileName == FileName);
         }
 
         //todo: create a abstract class 
@@ -85,11 +85,11 @@ namespace ConstructionCalculator.DataAccess
 
     public enum FileType
     {
-        BusinessFeature,
         BusinessValue,
-        CellMapping,
+        BusinessFeature,
         ConstructionValue,
         RiskLevel,
+        CellMapping,
         Construction
     }
 }

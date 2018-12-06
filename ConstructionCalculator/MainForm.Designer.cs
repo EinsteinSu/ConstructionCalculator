@@ -43,6 +43,9 @@
             this.barButtonItemAddFile = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItemRemoveFile = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItemClear = new DevExpress.XtraBars.BarButtonItem();
+            this.barEditItemProgress = new DevExpress.XtraBars.BarEditItem();
+            this.progressBar = new DevExpress.XtraEditors.Repository.RepositoryItemProgressBar();
+            this.barStaticItemLog = new DevExpress.XtraBars.BarStaticItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.fileGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.dataEditGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -63,10 +66,12 @@
             this.rtbOutput = new System.Windows.Forms.RichTextBox();
             this.tabbedView = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
             this.documentManager = new DevExpress.XtraBars.Docking2010.DocumentManager(this.components);
-            this.barEditItemProgress = new DevExpress.XtraBars.BarEditItem();
-            this.progressBar = new DevExpress.XtraEditors.Repository.RepositoryItemProgressBar();
-            this.barStaticItemLog = new DevExpress.XtraBars.BarStaticItem();
+            this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.barButtonItemCalculate = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemDelete = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.progressBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
             this.dockPanel.SuspendLayout();
             this.dockPanel_Container.SuspendLayout();
@@ -75,7 +80,6 @@
             this.dockPanel1_Container.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabbedView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.documentManager)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.progressBar)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbonControl
@@ -96,15 +100,18 @@
             this.barButtonItemRemoveFile,
             this.barButtonItemClear,
             this.barEditItemProgress,
-            this.barStaticItemLog});
+            this.barStaticItemLog,
+            this.barButtonItemCalculate,
+            this.barButtonItemDelete});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
             this.ribbonControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.ribbonControl.MaxItemId = 58;
+            this.ribbonControl.MaxItemId = 60;
             this.ribbonControl.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1,
-            this.ribbonPage});
+            this.ribbonPage,
+            this.ribbonPage2});
             this.ribbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.progressBar});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2013;
@@ -167,6 +174,7 @@
             this.barButtonItemSaveAs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemSaveAs.ImageOptions.Image")));
             this.barButtonItemSaveAs.Name = "barButtonItemSaveAs";
             this.barButtonItemSaveAs.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItemSaveAs.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemSaveAs_ItemClick);
             // 
             // barButtonItemImport
             // 
@@ -213,6 +221,25 @@
             this.barButtonItemClear.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.barButtonItemClear.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemClear_ItemClick);
             // 
+            // barEditItemProgress
+            // 
+            this.barEditItemProgress.Edit = this.progressBar;
+            this.barEditItemProgress.EditWidth = 200;
+            this.barEditItemProgress.Id = 56;
+            this.barEditItemProgress.Name = "barEditItemProgress";
+            this.barEditItemProgress.Visibility = DevExpress.XtraBars.BarItemVisibility.Never;
+            // 
+            // progressBar
+            // 
+            this.progressBar.Name = "progressBar";
+            this.progressBar.Step = 100;
+            // 
+            // barStaticItemLog
+            // 
+            this.barStaticItemLog.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.barStaticItemLog.Id = 57;
+            this.barStaticItemLog.Name = "barStaticItemLog";
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -232,6 +259,7 @@
             // dataEditGroup
             // 
             this.dataEditGroup.ItemLinks.Add(this.barButtonItemAdd);
+            this.dataEditGroup.ItemLinks.Add(this.barButtonItemDelete);
             this.dataEditGroup.ItemLinks.Add(this.barButtonItemSave);
             this.dataEditGroup.ItemLinks.Add(this.barButtonItemSaveAs);
             this.dataEditGroup.ItemLinks.Add(this.barButtonItemClear);
@@ -399,23 +427,36 @@
             this.documentManager.ViewCollection.AddRange(new DevExpress.XtraBars.Docking2010.Views.BaseView[] {
             this.tabbedView});
             // 
-            // barEditItemProgress
+            // ribbonPage2
             // 
-            this.barEditItemProgress.Edit = this.progressBar;
-            this.barEditItemProgress.EditWidth = 200;
-            this.barEditItemProgress.Id = 56;
-            this.barEditItemProgress.Name = "barEditItemProgress";
+            this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup1});
+            this.ribbonPage2.Name = "ribbonPage2";
+            this.ribbonPage2.Text = "Calculation";
             // 
-            // progressBar
+            // ribbonPageGroup1
             // 
-            this.progressBar.Name = "progressBar";
-            this.progressBar.Step = 100;
+            this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItemCalculate);
+            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+            this.ribbonPageGroup1.Text = "ribbonPageGroup1";
             // 
-            // barStaticItemLog
+            // barButtonItemCalculate
             // 
-            this.barStaticItemLog.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            this.barStaticItemLog.Id = 57;
-            this.barStaticItemLog.Name = "barStaticItemLog";
+            this.barButtonItemCalculate.Caption = "Calculate";
+            this.barButtonItemCalculate.Id = 58;
+            this.barButtonItemCalculate.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemCalculate.ImageOptions.Image")));
+            this.barButtonItemCalculate.Name = "barButtonItemCalculate";
+            this.barButtonItemCalculate.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItemCalculate.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemCalculate_ItemClick);
+            // 
+            // barButtonItemDelete
+            // 
+            this.barButtonItemDelete.Caption = "Delete";
+            this.barButtonItemDelete.Id = 59;
+            this.barButtonItemDelete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemDelete.ImageOptions.Image")));
+            this.barButtonItemDelete.Name = "barButtonItemDelete";
+            this.barButtonItemDelete.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItemDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemDelete_ItemClick);
             // 
             // MainForm
             // 
@@ -431,6 +472,7 @@
             this.Ribbon = this.ribbonControl;
             this.StatusBar = this.ribbonStatusBar;
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.progressBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager)).EndInit();
             this.dockPanel.ResumeLayout(false);
             this.dockPanel_Container.ResumeLayout(false);
@@ -439,7 +481,6 @@
             this.dockPanel1_Container.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabbedView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.documentManager)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.progressBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -482,5 +523,9 @@
         private DevExpress.XtraBars.BarEditItem barEditItemProgress;
         private DevExpress.XtraEditors.Repository.RepositoryItemProgressBar progressBar;
         private DevExpress.XtraBars.BarStaticItem barStaticItemLog;
+        private DevExpress.XtraBars.BarButtonItem barButtonItemCalculate;
+        private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItemDelete;
     }
 }

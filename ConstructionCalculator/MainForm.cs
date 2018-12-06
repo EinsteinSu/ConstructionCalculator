@@ -13,6 +13,7 @@ using DevExpress.XtraBars.Docking2010.Views;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Views.Grid;
 
 namespace ConstructionCalculator
 {
@@ -114,6 +115,8 @@ namespace ConstructionCalculator
             return result;
         }
 
+        #region navigation and tabbed view actions
+
         private void accordionControl_SelectedElementChanged(object sender, SelectedElementChangedEventArgs e)
         {
             //if (e.Element == null)
@@ -136,33 +139,72 @@ namespace ConstructionCalculator
             controls.Remove(e.Document.Caption);
         }
 
+
+        #endregion
+
+        #region Parameters edit actions
         private void barButtonItemAdd_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (tabbedView.ActiveDocument.Control != null && tabbedView.ActiveDocument.Control is DataEditControl control)
-                control.DataEdit.Add();
+            if (tabbedView.ActiveDocument.Control != null &&
+                tabbedView.ActiveDocument.Control is DataEditControl control)
+            {
+                try
+                {
+                    control.DataEdit.Add();
+                }
+                catch (Exception exception)
+                {
+                    ShowException(exception, $"Add entry for {control.Text} failed.");
+                }
+
+            }
         }
 
         private void barButtonItemSave_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (tabbedView.ActiveDocument.Control is DataEditControl control)
-                control.Context.SaveChanges();
+            {
+                try
+                {
+                    control.Context.SaveChanges();
+                }
+                catch (Exception exception)
+                {
+                    ShowException(exception, $"Save changes for {control.Text} failed.");
+                }
+
+            }
         }
 
-        private void barButtonItemImport_ItemClick(object sender, ItemClickEventArgs e)
+
+        private void barButtonItemSaveAs_ItemClick(object sender, ItemClickEventArgs e)
         {
             if (tabbedView.ActiveDocument.Control is DataEditControl control)
             {
-                OpenFileDialog dialog = new OpenFileDialog
-                {
-                    DefaultExt = ".xlsx",
-                    Filter = @"Excel Files (.xlsx)|*.xlsx"
-                };
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    control.DataEdit.Import(dialog.FileName, this, this);
-                }
+                //todo: implement
+                //control.DataEdit.SaveAs();
             }
         }
+
+        private void barButtonItemDelete_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (tabbedView.ActiveDocument.Control is DataEditControl control)
+            {
+                try
+                {
+                    control.DataEdit.Remove(control.FocusedRow);
+                }
+                catch (Exception exception)
+                {
+                    ShowException(exception, $"Remove file for {control.Text} failed.");
+                }
+
+            }
+        }
+        #endregion
+
+
+
 
         #region Print log and show progress
         public void PrintLog(string logging)
@@ -175,6 +217,7 @@ namespace ConstructionCalculator
 
         public void SetMaxValue(int maxValue)
         {
+            barEditItemProgress.Visibility = BarItemVisibility.Always;
             progressBar.Maximum = maxValue;
         }
 
@@ -187,6 +230,7 @@ namespace ConstructionCalculator
         public void Done()
         {
             barEditItemProgress.EditValue = 0;
+            barEditItemProgress.Visibility = BarItemVisibility.Never;
         }
         #endregion
 
@@ -198,6 +242,7 @@ namespace ConstructionCalculator
             }
         }
 
+        #region file operations
         private void barButtonItemAddFile_ItemClick(object sender, ItemClickEventArgs e)
         {
             var addForm = new FileEditWindow();
@@ -211,8 +256,17 @@ namespace ConstructionCalculator
                     file.Type = addForm.FileType;
                     if (!file.Exists(context))
                     {
-                        file.Add(context);
-                        DisplayFiles();
+                        try
+                        {
+                            file.Add(context);
+                            DisplayFiles();
+
+                        }
+                        catch (Exception exception)
+                        {
+                            ShowException(exception, "Add file failed.");
+                        }
+
                     }
                     else
                     {
@@ -233,12 +287,47 @@ namespace ConstructionCalculator
                     return;
                 using (var context = new ConstructionDataContext())
                 {
-                    context.Database.Log = PrintLog;
-                    file.Delete(context);
+                    try
+                    {
+                        context.Database.Log = PrintLog;
+                        file.Delete(context);
+                    }
+                    catch (Exception exception)
+                    {
+                        ShowException(exception, "Remove file failed.");
+                    }
+
                 }
                 tabbedView.RemoveDocument(controls[file.FileName]);
                 controls.Remove(file.FileName);
                 DisplayFiles();
+            }
+        }
+        #endregion
+
+        #region Import and export
+
+        private void barButtonItemImport_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (tabbedView.ActiveDocument.Control is DataEditControl control)
+            {
+                OpenFileDialog dialog = new OpenFileDialog
+                {
+                    DefaultExt = ".xlsx",
+                    Filter = @"Excel Files (.xlsx)|*.xlsx"
+                };
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        control.DataEdit.Import(dialog.FileName, this, this);
+                    }
+                    catch (Exception exception)
+                    {
+                        ShowException(exception, "Import failed.");
+                    }
+
+                }
             }
         }
 
@@ -254,9 +343,37 @@ namespace ConstructionCalculator
                 };
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    control.DataEdit.Export(dialog.FileName, this, this);
+                    try
+                    {
+                        control.DataEdit.Export(dialog.FileName, this, this);
+                    }
+                    catch (Exception exception)
+                    {
+                        ShowException(exception, "Export failed.");
+                    }
+
                 }
             }
         }
+
+        #endregion
+
+
+        private void barButtonItemCalculate_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var dialog = new CalculateTemplateWindow(this);
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                //todo: calculate
+
+            }
+        }
+
+        private void ShowException(Exception exception, string message)
+        {
+            MessageBox.Show($"message, {exception.Message}", "Error");
+            PrintLog($"Error: {exception.Message}");
+        }
+
     }
 }

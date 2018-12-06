@@ -71,6 +71,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculateTemplateWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CalculateTemplateWindow.Designer.cs">
+      <DependentUpon>CalculateTemplateWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataEdit\BusinessFeatureEdit.cs" />
     <Compile Include="DataEdit\BusinessValueEdit.cs" />
     <Compile Include="DataEdit\CellMappingEdit.cs" />
@@ -100,6 +106,9 @@
     <Compile Include="DataEditControl.Designer.cs">
       <DependentUpon>DataEditControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CalculateTemplateWindow.resx">
+      <DependentUpon>CalculateTemplateWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DataEditControl.resx">
       <DependentUpon>DataEditControl.cs</DependentUpon>
     </EmbeddedResource>
