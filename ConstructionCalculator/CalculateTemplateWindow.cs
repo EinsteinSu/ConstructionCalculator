@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using ConstructionCalculator.Business;
 using ConstructionCalculator.DataAccess;
 using ConstructionCalculator.DataAccess.Interfaces;
 using DevExpress.XtraEditors;
@@ -23,6 +24,8 @@ namespace ConstructionCalculator
             LoadList();
         }
 
+        public CalculationTemplate Template { get; set; }
+
         private void LoadList()
         {
             using (var context = new ConstructionDataContext())
@@ -38,36 +41,28 @@ namespace ConstructionCalculator
             }
         }
 
-        public string BusinessFeature => comboBoxEditBusinessFeature.SelectedItem.ToString();
-
-        public string ConstructionValue => comboBoxEditConstructionValue.SelectedItem.ToString();
-
-        public string RiskLevel => comboBoxEditRiskLevel.SelectedItem.ToString();
-
-        public string CellMapping => comboBoxEditCellMapping.SelectedItem.ToString();
-
-        public string Construction => comboBoxEditConstruction.SelectedItem.ToString();
-
         private void AddListToComboBox(ConstructionDataContext context, FileType type, ComboBoxEdit comboBox)
         {
             comboBox.Properties.Items.Clear();
-            foreach (var file in context.Files.Where(w => w.Type == type)) comboBox.Properties.Items.Add(file.FileName);
+            foreach (var file in context.Files.Where(w => w.Type == type)) comboBox.Properties.Items.Add(file);
         }
 
         private string Check()
         {
             var error = string.Empty;
-            if (string.IsNullOrEmpty(comboBoxEditBusinessFeature.SelectedItem.ToString()))
-                error += "Please select a business value." + Environment.NewLine;
-            if (string.IsNullOrEmpty(comboBoxEditConstructionValue.SelectedItem.ToString()))
-                error += "Please select a construction value." + Environment.NewLine;
-            if (string.IsNullOrEmpty(comboBoxEditRiskLevel.SelectedItem.ToString()))
-                error += "Please select a risk level." + Environment.NewLine;
-            if (string.IsNullOrEmpty(comboBoxEditCellMapping.SelectedItem.ToString()))
-                error += "Please select a cell mapping." + Environment.NewLine;
-            if (string.IsNullOrEmpty(comboBoxEditConstruction.SelectedItem.ToString()))
-                error += "Please select a construction." + Environment.NewLine;
+            error += CheckComboBoxItem(comboBoxEditBusinessFeature, "business value");
+            error += CheckComboBoxItem(comboBoxEditConstructionValue, "construction value");
+            error += CheckComboBoxItem(comboBoxEditRiskLevel, "risk level");
+            error += CheckComboBoxItem(comboBoxEditCellMapping, "cell mapping");
+            error += CheckComboBoxItem(comboBoxEditConstruction, "construction");
+            return error;
+        }
 
+        private string CheckComboBoxItem(ComboBoxEdit comboBox, string name)
+        {
+            var error = string.Empty;
+            if (comboBox.SelectedItem == null || string.IsNullOrEmpty(comboBox.SelectedItem.ToString()))
+                error += $"Please select a {name}" + Environment.NewLine;
             return error;
         }
 
@@ -75,9 +70,32 @@ namespace ConstructionCalculator
         {
             var error = Check();
             if (string.IsNullOrEmpty(error))
+            {
+                Template = new CalculationTemplate
+                {
+                    BusinessFeature = GetTemplate(comboBoxEditBusinessFeature),
+                    ConstructionValue = GetTemplate(comboBoxEditConstructionValue),
+                    RiskLevel = GetTemplate(comboBoxEditRiskLevel),
+                    CellMapping = GetTemplate(comboBoxEditCellMapping)
+                };
+
                 DialogResult = DialogResult.OK;
+            }
             else
+            {
                 MessageBox.Show(error);
+            }
+        }
+
+        private Table GetTemplate(ComboBoxEdit comboBox)
+        {
+            var templateTable = new Table();
+            var file = comboBox.SelectedItem as File;
+            if (file == null)
+                throw new Exception("File was not found.");
+            templateTable.Id = file.Id;
+            templateTable.Name = file.FileName;
+            return templateTable;
         }
 
         private void simpleButtonCancel_Click(object sender, EventArgs e)
@@ -87,7 +105,22 @@ namespace ConstructionCalculator
 
         private void simpleButtonSaveAs_Click(object sender, EventArgs e)
         {
-            //todo: save as a json file
+            var error = Check();
+            if (!string.IsNullOrEmpty(error))
+            {
+                MessageBox.Show(error);
+                return;
+            }
+
+            var saveDialog = new SaveFileDialog
+            {
+                DefaultExt = ".template",
+                Filter = @"Template Files (.template)|*.template"
+            };
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                //todo: implement with Newtonsoft.Json
+            }
         }
 
         private void simpleButtonLoadTemplate_Click(object sender, EventArgs e)

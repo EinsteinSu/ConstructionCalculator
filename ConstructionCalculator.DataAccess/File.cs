@@ -81,6 +81,11 @@ namespace ConstructionCalculator.DataAccess
             }
 
         }
+
+        public override string ToString()
+        {
+            return FileName;
+        }
     }
 
     public enum FileType

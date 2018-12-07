@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculationTemplate.cs" />
     <Compile Include="Cruds\BusinessValueMgr.cs" />
     <Compile Include="Cruds\FileMgr.cs" />
     <Compile Include="Cruds\ICrud.cs" />
