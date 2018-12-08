@@ -49,5 +49,10 @@ namespace ConstructionCalculator.DataEdit
         {
             return Context.Constructions.Local.ToList();
         }
+
+        protected override void AddItem(Construction item)
+        {
+            Context.Constructions.Add(item);
+        }
     }
 }

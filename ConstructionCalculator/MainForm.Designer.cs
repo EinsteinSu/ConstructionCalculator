@@ -46,6 +46,8 @@
             this.barEditItemProgress = new DevExpress.XtraBars.BarEditItem();
             this.progressBar = new DevExpress.XtraEditors.Repository.RepositoryItemProgressBar();
             this.barStaticItemLog = new DevExpress.XtraBars.BarStaticItem();
+            this.barButtonItemCalculate = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItemDelete = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.fileGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.dataEditGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -53,6 +55,8 @@
             this.ribbonPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroupNavigation = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
             this.dockManager = new DevExpress.XtraBars.Docking.DockManager(this.components);
             this.dockPanel = new DevExpress.XtraBars.Docking.DockPanel();
@@ -66,10 +70,6 @@
             this.rtbOutput = new System.Windows.Forms.RichTextBox();
             this.tabbedView = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
             this.documentManager = new DevExpress.XtraBars.Docking2010.DocumentManager(this.components);
-            this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
-            this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.barButtonItemCalculate = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItemDelete = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.progressBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
@@ -104,7 +104,6 @@
             this.barButtonItemCalculate,
             this.barButtonItemDelete});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.ribbonControl.MaxItemId = 60;
             this.ribbonControl.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
             this.ribbonControl.Name = "ribbonControl";
@@ -116,7 +115,7 @@
             this.progressBar});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2013;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(922, 178);
+            this.ribbonControl.Size = new System.Drawing.Size(790, 143);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -240,6 +239,24 @@
             this.barStaticItemLog.Id = 57;
             this.barStaticItemLog.Name = "barStaticItemLog";
             // 
+            // barButtonItemCalculate
+            // 
+            this.barButtonItemCalculate.Caption = "Calculate";
+            this.barButtonItemCalculate.Id = 58;
+            this.barButtonItemCalculate.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemCalculate.ImageOptions.Image")));
+            this.barButtonItemCalculate.Name = "barButtonItemCalculate";
+            this.barButtonItemCalculate.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItemCalculate.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemCalculate_ItemClick);
+            // 
+            // barButtonItemDelete
+            // 
+            this.barButtonItemDelete.Caption = "Delete";
+            this.barButtonItemDelete.Id = 59;
+            this.barButtonItemDelete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemDelete.ImageOptions.Image")));
+            this.barButtonItemDelete.Name = "barButtonItemDelete";
+            this.barButtonItemDelete.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItemDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemDelete_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -295,15 +312,27 @@
             this.ribbonPageGroup.ShowCaptionButton = false;
             this.ribbonPageGroup.Text = "Appearance";
             // 
+            // ribbonPage2
+            // 
+            this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.ribbonPageGroup1});
+            this.ribbonPage2.Name = "ribbonPage2";
+            this.ribbonPage2.Text = "Calculation";
+            // 
+            // ribbonPageGroup1
+            // 
+            this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItemCalculate);
+            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
+            this.ribbonPageGroup1.Text = "ribbonPageGroup1";
+            // 
             // ribbonStatusBar
             // 
             this.ribbonStatusBar.ItemLinks.Add(this.barEditItemProgress);
             this.ribbonStatusBar.ItemLinks.Add(this.barStaticItemLog);
-            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 700);
-            this.ribbonStatusBar.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 568);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(922, 37);
+            this.ribbonStatusBar.Size = new System.Drawing.Size(790, 31);
             // 
             // dockManager
             // 
@@ -327,21 +356,18 @@
             this.dockPanel.Controls.Add(this.dockPanel_Container);
             this.dockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Left;
             this.dockPanel.ID = new System.Guid("a045df26-1503-4d9a-99c1-a531310af22b");
-            this.dockPanel.Location = new System.Drawing.Point(0, 178);
-            this.dockPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dockPanel.Location = new System.Drawing.Point(0, 143);
             this.dockPanel.Name = "dockPanel";
             this.dockPanel.OriginalSize = new System.Drawing.Size(200, 200);
-            this.dockPanel.SavedSizeFactor = 0D;
-            this.dockPanel.Size = new System.Drawing.Size(200, 522);
+            this.dockPanel.Size = new System.Drawing.Size(200, 425);
             this.dockPanel.Text = "Navigation";
             // 
             // dockPanel_Container
             // 
             this.dockPanel_Container.Controls.Add(this.accordionControl);
-            this.dockPanel_Container.Location = new System.Drawing.Point(5, 25);
-            this.dockPanel_Container.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dockPanel_Container.Location = new System.Drawing.Point(4, 23);
             this.dockPanel_Container.Name = "dockPanel_Container";
-            this.dockPanel_Container.Size = new System.Drawing.Size(188, 492);
+            this.dockPanel_Container.Size = new System.Drawing.Size(191, 398);
             this.dockPanel_Container.TabIndex = 0;
             // 
             // accordionControl
@@ -351,9 +377,8 @@
             this.accordionControl.Elements.AddRange(new DevExpress.XtraBars.Navigation.AccordionControlElement[] {
             this.mainAccordionGroup});
             this.accordionControl.Location = new System.Drawing.Point(0, 0);
-            this.accordionControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.accordionControl.Name = "accordionControl";
-            this.accordionControl.Size = new System.Drawing.Size(188, 492);
+            this.accordionControl.Size = new System.Drawing.Size(191, 398);
             this.accordionControl.TabIndex = 0;
             this.accordionControl.Text = "accordionControl";
             this.accordionControl.SelectedElementChanged += new DevExpress.XtraBars.Navigation.SelectedElementChangedEventHandler(this.accordionControl_SelectedElementChanged);
@@ -385,21 +410,18 @@
             this.outputDockPanel.Controls.Add(this.dockPanel1_Container);
             this.outputDockPanel.Dock = DevExpress.XtraBars.Docking.DockingStyle.Bottom;
             this.outputDockPanel.ID = new System.Guid("67c69ba1-efec-48ba-b991-81224c9ff2b6");
-            this.outputDockPanel.Location = new System.Drawing.Point(200, 500);
-            this.outputDockPanel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.outputDockPanel.Location = new System.Drawing.Point(200, 368);
             this.outputDockPanel.Name = "outputDockPanel";
             this.outputDockPanel.OriginalSize = new System.Drawing.Size(200, 200);
-            this.outputDockPanel.SavedSizeFactor = 0D;
-            this.outputDockPanel.Size = new System.Drawing.Size(722, 200);
+            this.outputDockPanel.Size = new System.Drawing.Size(590, 200);
             this.outputDockPanel.Text = "Output";
             // 
             // dockPanel1_Container
             // 
             this.dockPanel1_Container.Controls.Add(this.rtbOutput);
-            this.dockPanel1_Container.Location = new System.Drawing.Point(5, 27);
-            this.dockPanel1_Container.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.dockPanel1_Container.Location = new System.Drawing.Point(4, 24);
             this.dockPanel1_Container.Name = "dockPanel1_Container";
-            this.dockPanel1_Container.Size = new System.Drawing.Size(712, 168);
+            this.dockPanel1_Container.Size = new System.Drawing.Size(582, 172);
             this.dockPanel1_Container.TabIndex = 0;
             // 
             // rtbOutput
@@ -407,16 +429,16 @@
             this.rtbOutput.AutoWordSelection = true;
             this.rtbOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbOutput.Location = new System.Drawing.Point(0, 0);
-            this.rtbOutput.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.rtbOutput.Name = "rtbOutput";
             this.rtbOutput.ReadOnly = true;
             this.rtbOutput.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtbOutput.Size = new System.Drawing.Size(712, 168);
+            this.rtbOutput.Size = new System.Drawing.Size(582, 172);
             this.rtbOutput.TabIndex = 0;
             this.rtbOutput.Text = "";
             // 
             // tabbedView
             // 
+            this.tabbedView.RootContainer.Element = null;
             this.tabbedView.DocumentClosed += new DevExpress.XtraBars.Docking2010.Views.DocumentEventHandler(this.tabbedView_DocumentClosed);
             // 
             // documentManager
@@ -427,47 +449,15 @@
             this.documentManager.ViewCollection.AddRange(new DevExpress.XtraBars.Docking2010.Views.BaseView[] {
             this.tabbedView});
             // 
-            // ribbonPage2
-            // 
-            this.ribbonPage2.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroup1});
-            this.ribbonPage2.Name = "ribbonPage2";
-            this.ribbonPage2.Text = "Calculation";
-            // 
-            // ribbonPageGroup1
-            // 
-            this.ribbonPageGroup1.ItemLinks.Add(this.barButtonItemCalculate);
-            this.ribbonPageGroup1.Name = "ribbonPageGroup1";
-            this.ribbonPageGroup1.Text = "ribbonPageGroup1";
-            // 
-            // barButtonItemCalculate
-            // 
-            this.barButtonItemCalculate.Caption = "Calculate";
-            this.barButtonItemCalculate.Id = 58;
-            this.barButtonItemCalculate.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemCalculate.ImageOptions.Image")));
-            this.barButtonItemCalculate.Name = "barButtonItemCalculate";
-            this.barButtonItemCalculate.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            this.barButtonItemCalculate.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemCalculate_ItemClick);
-            // 
-            // barButtonItemDelete
-            // 
-            this.barButtonItemDelete.Caption = "Delete";
-            this.barButtonItemDelete.Id = 59;
-            this.barButtonItemDelete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemDelete.ImageOptions.Image")));
-            this.barButtonItemDelete.Name = "barButtonItemDelete";
-            this.barButtonItemDelete.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            this.barButtonItemDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemDelete_ItemClick);
-            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(922, 737);
-            this.Controls.Add(this.outputDockPanel);
+            this.ClientSize = new System.Drawing.Size(790, 599);
             this.Controls.Add(this.dockPanel);
+            this.Controls.Add(this.outputDockPanel);
             this.Controls.Add(this.ribbonStatusBar);
             this.Controls.Add(this.ribbonControl);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MainForm";
             this.Ribbon = this.ribbonControl;
             this.StatusBar = this.ribbonStatusBar;

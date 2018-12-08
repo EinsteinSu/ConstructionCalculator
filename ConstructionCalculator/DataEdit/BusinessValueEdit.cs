@@ -43,6 +43,11 @@ namespace ConstructionCalculator.DataEdit
             return Context.BusinessValues.Local.ToList();
         }
 
+        protected override void AddItem(BusinessValue item)
+        {
+            Context.BusinessValues.Add(item);
+        }
+
 
         protected override ExcelDataImportBase GetImporter(string fileName)
         {

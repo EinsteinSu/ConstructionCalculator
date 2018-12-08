@@ -5,6 +5,7 @@ using ConstructionCalculator.Business;
 using ConstructionCalculator.DataAccess;
 using ConstructionCalculator.DataAccess.Interfaces;
 using DevExpress.XtraEditors;
+using Newtonsoft.Json;
 
 namespace ConstructionCalculator
 {
@@ -71,14 +72,8 @@ namespace ConstructionCalculator
             var error = Check();
             if (string.IsNullOrEmpty(error))
             {
-                Template = new CalculationTemplate
-                {
-                    BusinessFeature = GetTemplate(comboBoxEditBusinessFeature),
-                    ConstructionValue = GetTemplate(comboBoxEditConstructionValue),
-                    RiskLevel = GetTemplate(comboBoxEditRiskLevel),
-                    CellMapping = GetTemplate(comboBoxEditCellMapping)
-                };
-
+                SetTempate();
+                //todo: calc
                 DialogResult = DialogResult.OK;
             }
             else
@@ -87,11 +82,21 @@ namespace ConstructionCalculator
             }
         }
 
+        private void SetTempate()
+        {
+            Template = new CalculationTemplate
+            {
+                BusinessFeature = GetTemplate(comboBoxEditBusinessFeature),
+                ConstructionValue = GetTemplate(comboBoxEditConstructionValue),
+                RiskLevel = GetTemplate(comboBoxEditRiskLevel),
+                CellMapping = GetTemplate(comboBoxEditCellMapping),
+                Construction = GetTemplate(comboBoxEditConstruction)
+            };
+        }
+
         private Table GetTemplate(ComboBoxEdit comboBox)
         {
-            var templateTable = new Table();
-            var file = comboBox.SelectedItem as File;
-            if (file == null)
+            var templateTable = new Table(); if (!(comboBox.SelectedItem is File file))
                 throw new Exception("File was not found.");
             templateTable.Id = file.Id;
             templateTable.Name = file.FileName;
@@ -119,13 +124,38 @@ namespace ConstructionCalculator
             };
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
-                //todo: implement with Newtonsoft.Json
+                SetTempate(); System.IO.File.WriteAllText(saveDialog.FileName, JsonConvert.SerializeObject(Template));
             }
         }
 
         private void simpleButtonLoadTemplate_Click(object sender, EventArgs e)
         {
-            //todo: load a json file to this
+            var openDialog = new OpenFileDialog
+            {
+                DefaultExt = ".template",
+                Filter = @"Template Files (.template)|*.template"
+            };
+            if (openDialog.ShowDialog() == DialogResult.OK)
+            {
+                Template = JsonConvert.DeserializeObject<CalculationTemplate>(
+                    System.IO.File.ReadAllText(openDialog.FileName));
+                using (var context = new ConstructionDataContext())
+                {
+                    context.Database.Log = _print.PrintLog;
+                    comboBoxEditBusinessFeature.EditValue = FindFile(context, Template.BusinessFeature.Id);
+                    comboBoxEditConstructionValue.EditValue = FindFile(context, Template.ConstructionValue.Id);
+                    comboBoxEditRiskLevel.EditValue = FindFile(context, Template.RiskLevel.Id);
+                    comboBoxEditCellMapping.EditValue = FindFile(context, Template.CellMapping.Id);
+                    comboBoxEditConstruction.EditValue = FindFile(context, Template.Construction.Id);
+                }
+            }
+        }
+
+        private File FindFile(ConstructionDataContext context, int fileId)
+        {
+            var file = context.Files.FirstOrDefault(f => f.Id == fileId);
+            return file;
+
         }
     }
 }

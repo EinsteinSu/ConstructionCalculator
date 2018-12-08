@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConstructionCalculator.Business
+﻿namespace ConstructionCalculator.Business
 {
     public class CalculationTemplate
     {
@@ -15,6 +9,8 @@ namespace ConstructionCalculator.Business
         public Table RiskLevel { get; set; }
 
         public Table CellMapping { get; set; }
+
+        public Table Construction { get; set; }
     }
 
     public class Table

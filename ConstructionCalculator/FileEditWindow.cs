@@ -7,12 +7,24 @@ namespace ConstructionCalculator
 {
     public partial class FileEditWindow : XtraForm
     {
+        private bool _isSaveAs;
+
         public FileEditWindow()
         {
             InitializeComponent();
 
             comboBoxEditFileType.Properties.Items.Clear();
             foreach (var name in Enum.GetNames(typeof(FileType))) comboBoxEditFileType.Properties.Items.Add(name);
+        }
+
+        public bool IsSaveAs
+        {
+            get => _isSaveAs;
+            set
+            {
+                _isSaveAs = value;
+                comboBoxEditFileType.Visible = !value;
+            }
         }
 
         public FileType FileType
@@ -22,13 +34,19 @@ namespace ConstructionCalculator
                 Enum.TryParse<FileType>(comboBoxEditFileType.SelectedItem.ToString(), true, out var result);
                 return result;
             }
-            set => comboBoxEditFileType.SelectedText = value.ToString();
+            set => comboBoxEditFileType.EditValue = value.ToString();
         }
 
         public string FileName
         {
             get => textEditFileName.Text;
             set => textEditFileName.Text = value;
+        }
+
+        public string Description
+        {
+            get => memoEditDescription.Text;
+            set => memoEditDescription.Text = value;
         }
 
         private string Check()

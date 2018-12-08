@@ -8,6 +8,32 @@ namespace ConstructionCalculator.DataAccess.Utilities
 {
     public static class FileHelper
     {
+        //todo: to be tested
+        public static void SaveAs<T>(this IEnumerable<T> data, ConstructionDataContext context, string filename,
+           FileType type, string description, Action<T> add, ILogPrint print = null, IShowProgress showProgress = null) where T : class, IFile
+        {
+            var file = new File
+            {
+                FileName = filename,
+                Type = type,
+                Description = description
+            };
+            var id = file.Add(context);
+            print?.PrintLog("Start add item");
+            showProgress?.SetMaxValue(data.Count());
+            int step = 0;
+            foreach (var item in data)
+            {
+                item.FileId = id;
+                add.Invoke(item);
+                step++;
+                showProgress?.SetCurrentValue(step);
+            }
+
+            context.SaveChanges();
+            showProgress?.Done();
+        }
+
         public static bool SaveAs<T>(this IEnumerable<T> data, ConstructionDataContext context, string filename,
             out int existsFileId, string description, ILogPrint print = null, IShowProgress showProgress = null) where T : class, IFile
         {
@@ -130,7 +156,7 @@ namespace ConstructionCalculator.DataAccess.Utilities
             switch (file.Type)
             {
                 case FileType.BusinessValue:
-                    return context.BusinessValues.Where(w=>w.FileId == file.Id);
+                    return context.BusinessValues.Where(w => w.FileId == file.Id);
                 case FileType.BusinessFeature:
                     return context.BusinessFeatures.Where(w => w.FileId == file.Id);
                 case FileType.CellMapping:

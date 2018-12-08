@@ -50,5 +50,10 @@ namespace ConstructionCalculator.DataEdit
         {
             return Context.ConstructionValues.ToList();
         }
+
+        protected override void AddItem(ConstructionValue item)
+        {
+            Context.ConstructionValues.Add(item);
+        }
     }
 }

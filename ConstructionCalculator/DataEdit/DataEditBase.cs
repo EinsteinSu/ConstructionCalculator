@@ -15,20 +15,15 @@ namespace ConstructionCalculator.DataEdit
     {
         protected readonly int FileId;
         protected readonly ConstructionDataContext Context;
-        protected File File;
         public DataEditBase(int fileId, ConstructionDataContext context)
         {
             FileId = fileId;
             Context = context;
-            File = new FileMgr(context).GetItem(fileId);
-            if (File == null)
-            {
-                throw new FileNotFoundException();
-            }
         }
 
 
         public abstract void BindingData(GridControl control);
+        public File File => new FileMgr(Context).GetItem(FileId);
 
         protected abstract string EntityName { get; }
 
@@ -41,6 +36,8 @@ namespace ConstructionCalculator.DataEdit
         public abstract void Clean();
 
         protected abstract List<T> GetList();
+
+        protected abstract void AddItem(T item);
 
         //todo: don't save the changes untill the save button clicked      
         public void Import(string fileName, ILogPrint log, IShowProgress showProgress)
@@ -59,9 +56,9 @@ namespace ConstructionCalculator.DataEdit
             GetList().Export(fileName, EntityName, log, showProgress);
         }
 
-        public void SaveAs(string fileName, string description, out int existFileId, ILogPrint log, IShowProgress showProgress)
+        public void SaveAs(string fileName, FileType type, string description, ILogPrint log, IShowProgress showProgress)
         {
-            GetList().SaveAs(Context, fileName, out existFileId, description, log, showProgress);
+            GetList().SaveAs(Context, fileName, type, description, AddItem, log, showProgress);
         }
 
         public void Save(ILogPrint log)

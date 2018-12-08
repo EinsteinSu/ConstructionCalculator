@@ -51,5 +51,10 @@ namespace ConstructionCalculator.DataEdit
         {
             return Context.RiskLevels.Local.ToList();
         }
+
+        protected override void AddItem(RiskLevel item)
+        {
+            Context.RiskLevels.Add(item);
+        }
     }
 }

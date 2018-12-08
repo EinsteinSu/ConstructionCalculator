@@ -50,5 +50,10 @@ namespace ConstructionCalculator.DataEdit
         {
             return Context.CellMappings.Local.ToList();
         }
+
+        protected override void AddItem(CellMapping item)
+        {
+            Context.CellMappings.Add(item);
+        }
     }
 }

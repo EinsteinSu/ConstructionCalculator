@@ -83,18 +83,20 @@
             this.dataLayoutControl1.Controls.Add(this.comboBoxEditBusinessFeature);
             this.dataLayoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataLayoutControl1.Location = new System.Drawing.Point(0, 0);
+            this.dataLayoutControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataLayoutControl1.Name = "dataLayoutControl1";
             this.dataLayoutControl1.Root = this.layoutControlGroup1;
-            this.dataLayoutControl1.Size = new System.Drawing.Size(431, 424);
+            this.dataLayoutControl1.Size = new System.Drawing.Size(369, 344);
             this.dataLayoutControl1.TabIndex = 0;
             this.dataLayoutControl1.Text = "dataLayoutControl1";
             // 
             // simpleButtonLoadTemplate
             // 
             this.simpleButtonLoadTemplate.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButtonLoadTemplate.ImageOptions.Image")));
-            this.simpleButtonLoadTemplate.Location = new System.Drawing.Point(12, 142);
+            this.simpleButtonLoadTemplate.Location = new System.Drawing.Point(12, 132);
+            this.simpleButtonLoadTemplate.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButtonLoadTemplate.Name = "simpleButtonLoadTemplate";
-            this.simpleButtonLoadTemplate.Size = new System.Drawing.Size(407, 38);
+            this.simpleButtonLoadTemplate.Size = new System.Drawing.Size(345, 38);
             this.simpleButtonLoadTemplate.StyleController = this.dataLayoutControl1;
             this.simpleButtonLoadTemplate.TabIndex = 15;
             this.simpleButtonLoadTemplate.Text = "Load Template";
@@ -103,9 +105,10 @@
             // simpleButtonSaveAs
             // 
             this.simpleButtonSaveAs.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButtonSaveAs.ImageOptions.Image")));
-            this.simpleButtonSaveAs.Location = new System.Drawing.Point(12, 226);
+            this.simpleButtonSaveAs.Location = new System.Drawing.Point(12, 216);
+            this.simpleButtonSaveAs.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButtonSaveAs.Name = "simpleButtonSaveAs";
-            this.simpleButtonSaveAs.Size = new System.Drawing.Size(407, 38);
+            this.simpleButtonSaveAs.Size = new System.Drawing.Size(345, 38);
             this.simpleButtonSaveAs.StyleController = this.dataLayoutControl1;
             this.simpleButtonSaveAs.TabIndex = 14;
             this.simpleButtonSaveAs.Text = "Save Template As";
@@ -115,9 +118,10 @@
             // 
             this.simpleButtonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.simpleButtonCancel.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButtonCancel.ImageOptions.Image")));
-            this.simpleButtonCancel.Location = new System.Drawing.Point(12, 268);
+            this.simpleButtonCancel.Location = new System.Drawing.Point(12, 258);
+            this.simpleButtonCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButtonCancel.Name = "simpleButtonCancel";
-            this.simpleButtonCancel.Size = new System.Drawing.Size(407, 38);
+            this.simpleButtonCancel.Size = new System.Drawing.Size(345, 38);
             this.simpleButtonCancel.StyleController = this.dataLayoutControl1;
             this.simpleButtonCancel.TabIndex = 13;
             this.simpleButtonCancel.Text = "Cancel";
@@ -126,9 +130,10 @@
             // simpleButtonCalc
             // 
             this.simpleButtonCalc.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("simpleButtonCalc.ImageOptions.Image")));
-            this.simpleButtonCalc.Location = new System.Drawing.Point(12, 184);
+            this.simpleButtonCalc.Location = new System.Drawing.Point(12, 174);
+            this.simpleButtonCalc.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.simpleButtonCalc.Name = "simpleButtonCalc";
-            this.simpleButtonCalc.Size = new System.Drawing.Size(407, 38);
+            this.simpleButtonCalc.Size = new System.Drawing.Size(345, 38);
             this.simpleButtonCalc.StyleController = this.dataLayoutControl1;
             this.simpleButtonCalc.TabIndex = 12;
             this.simpleButtonCalc.Text = "Calculate";
@@ -136,51 +141,61 @@
             // 
             // comboBoxEditConstruction
             // 
-            this.comboBoxEditConstruction.Location = new System.Drawing.Point(122, 116);
+            this.comboBoxEditConstruction.Location = new System.Drawing.Point(105, 108);
+            this.comboBoxEditConstruction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxEditConstruction.Name = "comboBoxEditConstruction";
             this.comboBoxEditConstruction.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.comboBoxEditConstruction.Size = new System.Drawing.Size(297, 22);
+            this.comboBoxEditConstruction.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.comboBoxEditConstruction.Size = new System.Drawing.Size(252, 20);
             this.comboBoxEditConstruction.StyleController = this.dataLayoutControl1;
             this.comboBoxEditConstruction.TabIndex = 11;
             // 
             // comboBoxEditCellMapping
             // 
-            this.comboBoxEditCellMapping.Location = new System.Drawing.Point(122, 90);
+            this.comboBoxEditCellMapping.Location = new System.Drawing.Point(105, 84);
+            this.comboBoxEditCellMapping.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxEditCellMapping.Name = "comboBoxEditCellMapping";
             this.comboBoxEditCellMapping.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.comboBoxEditCellMapping.Size = new System.Drawing.Size(297, 22);
+            this.comboBoxEditCellMapping.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.comboBoxEditCellMapping.Size = new System.Drawing.Size(252, 20);
             this.comboBoxEditCellMapping.StyleController = this.dataLayoutControl1;
             this.comboBoxEditCellMapping.TabIndex = 10;
             // 
             // comboBoxEditRiskLevel
             // 
-            this.comboBoxEditRiskLevel.Location = new System.Drawing.Point(122, 64);
+            this.comboBoxEditRiskLevel.Location = new System.Drawing.Point(105, 60);
+            this.comboBoxEditRiskLevel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxEditRiskLevel.Name = "comboBoxEditRiskLevel";
             this.comboBoxEditRiskLevel.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.comboBoxEditRiskLevel.Size = new System.Drawing.Size(297, 22);
+            this.comboBoxEditRiskLevel.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.comboBoxEditRiskLevel.Size = new System.Drawing.Size(252, 20);
             this.comboBoxEditRiskLevel.StyleController = this.dataLayoutControl1;
             this.comboBoxEditRiskLevel.TabIndex = 9;
             // 
             // comboBoxEditConstructionValue
             // 
-            this.comboBoxEditConstructionValue.Location = new System.Drawing.Point(122, 38);
+            this.comboBoxEditConstructionValue.Location = new System.Drawing.Point(105, 36);
+            this.comboBoxEditConstructionValue.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxEditConstructionValue.Name = "comboBoxEditConstructionValue";
             this.comboBoxEditConstructionValue.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.comboBoxEditConstructionValue.Size = new System.Drawing.Size(297, 22);
+            this.comboBoxEditConstructionValue.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.comboBoxEditConstructionValue.Size = new System.Drawing.Size(252, 20);
             this.comboBoxEditConstructionValue.StyleController = this.dataLayoutControl1;
             this.comboBoxEditConstructionValue.TabIndex = 8;
             // 
             // comboBoxEditBusinessFeature
             // 
-            this.comboBoxEditBusinessFeature.Location = new System.Drawing.Point(122, 12);
+            this.comboBoxEditBusinessFeature.Location = new System.Drawing.Point(105, 12);
+            this.comboBoxEditBusinessFeature.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxEditBusinessFeature.Name = "comboBoxEditBusinessFeature";
             this.comboBoxEditBusinessFeature.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.comboBoxEditBusinessFeature.Size = new System.Drawing.Size(297, 22);
+            this.comboBoxEditBusinessFeature.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.comboBoxEditBusinessFeature.Size = new System.Drawing.Size(252, 20);
             this.comboBoxEditBusinessFeature.StyleController = this.dataLayoutControl1;
             this.comboBoxEditBusinessFeature.TabIndex = 6;
             // 
@@ -199,16 +214,17 @@
             this.layoutControlItem2,
             this.layoutControlItem3,
             this.layoutControlItem4});
+            this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(431, 424);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(369, 344);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // emptySpaceItem1
             // 
             this.emptySpaceItem1.AllowHotTrack = false;
-            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 298);
+            this.emptySpaceItem1.Location = new System.Drawing.Point(0, 288);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
-            this.emptySpaceItem1.Size = new System.Drawing.Size(411, 106);
+            this.emptySpaceItem1.Size = new System.Drawing.Size(349, 36);
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // layoutControlItemBusinessFeature
@@ -216,90 +232,91 @@
             this.layoutControlItemBusinessFeature.Control = this.comboBoxEditBusinessFeature;
             this.layoutControlItemBusinessFeature.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItemBusinessFeature.Name = "layoutControlItemBusinessFeature";
-            this.layoutControlItemBusinessFeature.Size = new System.Drawing.Size(411, 26);
+            this.layoutControlItemBusinessFeature.Size = new System.Drawing.Size(349, 24);
             this.layoutControlItemBusinessFeature.Text = "Business Feature";
-            this.layoutControlItemBusinessFeature.TextSize = new System.Drawing.Size(107, 16);
+            this.layoutControlItemBusinessFeature.TextSize = new System.Drawing.Size(90, 13);
             // 
             // layoutControlItemConstructionValue
             // 
             this.layoutControlItemConstructionValue.Control = this.comboBoxEditConstructionValue;
-            this.layoutControlItemConstructionValue.Location = new System.Drawing.Point(0, 26);
+            this.layoutControlItemConstructionValue.Location = new System.Drawing.Point(0, 24);
             this.layoutControlItemConstructionValue.Name = "layoutControlItemConstructionValue";
-            this.layoutControlItemConstructionValue.Size = new System.Drawing.Size(411, 26);
+            this.layoutControlItemConstructionValue.Size = new System.Drawing.Size(349, 24);
             this.layoutControlItemConstructionValue.Text = "Construction Value";
-            this.layoutControlItemConstructionValue.TextSize = new System.Drawing.Size(107, 16);
+            this.layoutControlItemConstructionValue.TextSize = new System.Drawing.Size(90, 13);
             // 
             // layoutControlItemRiskLevel
             // 
             this.layoutControlItemRiskLevel.Control = this.comboBoxEditRiskLevel;
-            this.layoutControlItemRiskLevel.Location = new System.Drawing.Point(0, 52);
+            this.layoutControlItemRiskLevel.Location = new System.Drawing.Point(0, 48);
             this.layoutControlItemRiskLevel.Name = "layoutControlItemRiskLevel";
-            this.layoutControlItemRiskLevel.Size = new System.Drawing.Size(411, 26);
+            this.layoutControlItemRiskLevel.Size = new System.Drawing.Size(349, 24);
             this.layoutControlItemRiskLevel.Text = "Risk Level";
-            this.layoutControlItemRiskLevel.TextSize = new System.Drawing.Size(107, 16);
+            this.layoutControlItemRiskLevel.TextSize = new System.Drawing.Size(90, 13);
             // 
             // layoutControlItemCellMapping
             // 
             this.layoutControlItemCellMapping.Control = this.comboBoxEditCellMapping;
-            this.layoutControlItemCellMapping.Location = new System.Drawing.Point(0, 78);
+            this.layoutControlItemCellMapping.Location = new System.Drawing.Point(0, 72);
             this.layoutControlItemCellMapping.Name = "layoutControlItemCellMapping";
-            this.layoutControlItemCellMapping.Size = new System.Drawing.Size(411, 26);
+            this.layoutControlItemCellMapping.Size = new System.Drawing.Size(349, 24);
             this.layoutControlItemCellMapping.Text = "Cell Mapping";
-            this.layoutControlItemCellMapping.TextSize = new System.Drawing.Size(107, 16);
+            this.layoutControlItemCellMapping.TextSize = new System.Drawing.Size(90, 13);
             // 
             // layoutControlItemConstruction
             // 
             this.layoutControlItemConstruction.Control = this.comboBoxEditConstruction;
-            this.layoutControlItemConstruction.Location = new System.Drawing.Point(0, 104);
+            this.layoutControlItemConstruction.Location = new System.Drawing.Point(0, 96);
             this.layoutControlItemConstruction.Name = "layoutControlItemConstruction";
-            this.layoutControlItemConstruction.Size = new System.Drawing.Size(411, 26);
+            this.layoutControlItemConstruction.Size = new System.Drawing.Size(349, 24);
             this.layoutControlItemConstruction.Text = "Construction";
-            this.layoutControlItemConstruction.TextSize = new System.Drawing.Size(107, 16);
+            this.layoutControlItemConstruction.TextSize = new System.Drawing.Size(90, 13);
             // 
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.simpleButtonCalc;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 172);
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 162);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(411, 42);
+            this.layoutControlItem1.Size = new System.Drawing.Size(349, 42);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
             // layoutControlItem2
             // 
             this.layoutControlItem2.Control = this.simpleButtonCancel;
-            this.layoutControlItem2.Location = new System.Drawing.Point(0, 256);
+            this.layoutControlItem2.Location = new System.Drawing.Point(0, 246);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(411, 42);
+            this.layoutControlItem2.Size = new System.Drawing.Size(349, 42);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 
             // layoutControlItem3
             // 
             this.layoutControlItem3.Control = this.simpleButtonSaveAs;
-            this.layoutControlItem3.Location = new System.Drawing.Point(0, 214);
+            this.layoutControlItem3.Location = new System.Drawing.Point(0, 204);
             this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(411, 42);
+            this.layoutControlItem3.Size = new System.Drawing.Size(349, 42);
             this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem4
             // 
             this.layoutControlItem4.Control = this.simpleButtonLoadTemplate;
-            this.layoutControlItem4.Location = new System.Drawing.Point(0, 130);
+            this.layoutControlItem4.Location = new System.Drawing.Point(0, 120);
             this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(411, 42);
+            this.layoutControlItem4.Size = new System.Drawing.Size(349, 42);
             this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem4.TextVisible = false;
             // 
             // CalculateTemplateWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.simpleButtonCancel;
-            this.ClientSize = new System.Drawing.Size(431, 424);
+            this.ClientSize = new System.Drawing.Size(369, 344);
             this.Controls.Add(this.dataLayoutControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "CalculateTemplateWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Calculation template selection";

@@ -5,67 +5,62 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using ConstructionCalculator.Business.Imports;
+using System.Net.Mime;
+using ConstructionCalculator.Business.Utilities;
 using ConstructionCalculator.DataAccess;
-using log4net;
+using ConstructionCalculator.DataAccess.Interfaces;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 
 namespace ConstructionCalculator.Business
 {
-    //to be tested using interface for mocking
-    public class CalculatorHelper
+    //todo: unit test is very important
+    public class Calculator
     {
-        private static readonly ILog Log = LogManager.GetLogger("CalculatorHelper");
+        public ILogPrint Print { get; set; }
 
-        public static void CalcAndExportExcel(string fileName)
+        public IShowProgress ShowProgress { get; set; }
+
+        protected string BaseDirectory => AppDomain.CurrentDomain.BaseDirectory;
+
+        private CalculationTemplate _template;
+        public string Calc(ConstructionDataContext context, CalculationTemplate template)
         {
-            var originalFileName = fileName;
-            var savingFileName = Path.Combine(Path.GetDirectoryName(fileName),
-                Path.GetFileName(fileName).Replace(".xlsx", "") + "_Processed.xlsx");
-
-            var importer = new ConstructionImport(originalFileName);
-            importer.Import();
-
-            using (var excel = new ExcelPackage(new FileInfo(originalFileName)))
+            _template = template;
+            context.Database.Log = Print.PrintLog;
+            var list = context.Constructions.Where(w => w.FileId == template.Construction.Id).ToList();
+            var fileName = Path.Combine(BaseDirectory, $"{Guid.NewGuid()}.xlsx");
+            var calculatedFileName = Path.Combine(BaseDirectory, $"{Guid.NewGuid()}.xlsx");
+            list.Export(fileName, $"{_template.Construction.Name} Calculated");
+            using (var excel = new ExcelPackage(new FileInfo(fileName)))
             {
-                ProcessInExcel(excel);
-                excel.SaveAs(new FileInfo(savingFileName));
+                ProcessInExcel(excel, context);
+                excel.SaveAs(new FileInfo(calculatedFileName));
             }
+
+            return calculatedFileName;
         }
 
-        public static void Calc(Stream stream, Action<ExcelPackage> assertAction)
+        private void ProcessInExcel(ExcelPackage excel, ConstructionDataContext context)
         {
-            var importer = new ConstructionImport(stream);
-            importer.Import();
+            var cellmappings =
+                context.CellMappings.Where(w => w.FileId == _template.CellMapping.Id).ToList();
+            var sheet = excel.Workbook.Worksheets[1];
+            var row = 2; //with header
+            SetHeader(sheet, 1, cellmappings);
+            ShowProgress?.SetMaxValue(context.Constructions.Count(c => c.FileId == _template.Construction.Id));
 
-            using (var excel = new ExcelPackage(stream))
+            foreach (var construction in context.Constructions.Where(w => w.FileId == _template.Construction.Id).Include(i => i.BusinessFeature)
+                .Include(i => i.ConstructionValue))
             {
-                ProcessInExcel(excel);
-                assertAction?.Invoke(excel);
+                SetFormular(context, sheet, row, cellmappings, construction);
+                row++;
+                ShowProgress?.SetCurrentValue(row - 2);
             }
+            ShowProgress?.Done();
         }
 
-        private static void ProcessInExcel(ExcelPackage excel)
-        {
-            using (var context = new ConstructionDataContext("Construction"))
-            {
-                var cellmappings = context.CellMappings.ToList();
-                var sheet = excel.Workbook.Worksheets[1];
-                var row = 2; //with header
-                SetHeader(sheet, 1, cellmappings);
-                foreach (var construction in context.Constructions.Include(i => i.BusinessFeature)
-                    .Include(i => i.ConstructionValue))
-                {
-                    SetFormular(context, sheet, row, cellmappings, construction);
-                    row++;
-                }
-
-                context.Database.ExecuteSqlCommand("Delete from Constructions");
-            }
-        }
-
-        public static void SetHeader(ExcelWorksheet sheet, int row, IList<CellMapping> mappings)
+        public void SetHeader(ExcelWorksheet sheet, int row, IList<CellMapping> mappings)
         {
             for (var i = 25; i < mappings.Count; i++)
             {
@@ -76,7 +71,7 @@ namespace ConstructionCalculator.Business
             }
         }
 
-        public static void SetFormular(ConstructionDataContext context, ExcelWorksheet sheet, int row,
+        public void SetFormular(ConstructionDataContext context, ExcelWorksheet sheet, int row,
             IList<CellMapping> mappings, Construction construction)
         {
             //load business value
@@ -90,16 +85,16 @@ namespace ConstructionCalculator.Business
                 cell.Style.Border.BorderAround(ExcelBorderStyle.Thin);
                 cell.Formula = formula;
                 cell.Style.Numberformat.Format = GetDigitalFormat(mapping.Digital);
-                Log.Info($"{mapping.ColumnExcelNumber}:{formula}");
+                Print?.PrintLog($"{mapping.ColumnExcelNumber}:{formula}");
                 cell.Calculate();
-                Log.Info($"Calculated, Result:{cell.Value}");
+                Print?.PrintLog($"Calculated, Result:{cell.Value}");
                 var value = cell.Value.ToString().ConvertData<double>();
-                if (mapping.Group == CalculatGroup.Result) SetResult(cell, value);
+                if (mapping.Group == CalculatGroup.Result) SetResult(context, cell, value);
                 if (mapping.Group == CalculatGroup.ParameterT) cell.Value = GetParamerT(value);
             }
         }
 
-        public static string GetDigitalFormat(int digital)
+        public string GetDigitalFormat(int digital)
         {
             var result = "0.";
             for (var i = 0; i < digital; i++) result += "0";
@@ -107,56 +102,59 @@ namespace ConstructionCalculator.Business
             return result;
         }
 
-        public static double GetParamerT(double value)
+        public double GetParamerT(double value)
         {
-            Log.InfoFormat($"Parameter T Value: {value}");
+            Print?.PrintLog($"Parameter T Value: {value}");
             if (value <= 0 || value >= 0.5)
                 return 0.5;
             return value;
         }
 
-        private static void SetResult(ExcelRange cell, double value)
+        private void SetResult(ConstructionDataContext context, ExcelRange cell, double value)
         {
-            Log.Info($"Value: {value}");
+            Print?.PrintLog($"Value: {value}");
             cell.Style.Fill.PatternType = ExcelFillStyle.Solid;
-            var item = GetRiskLevel(value);
+            var item = GetRiskLevel(context, value);
             if (item != null)
             {
-                Log.Info($"Color: {item.Color}");
+                Print?.PrintLog($"Color: {item.Color}");
                 cell.Style.Fill.BackgroundColor.SetColor(item.Color.ConvertToColor());
                 cell.Value = item.Description;
             }
             else
             {
-                Log.Warn("Can not found any risk level.");
+                Print?.PrintLog("Warning: Can not found any risk level.");
             }
         }
 
-        public static RiskLevel GetRiskLevel(double value)
+        public RiskLevel GetRiskLevel(ConstructionDataContext context, double value)
         {
-            using (var context = new ConstructionDataContext("Construction"))
-            {
-                return context.RiskLevels.FirstOrDefault(w => w.MinValue < value && w.MaxValue >= value);
-            }
+            return context.RiskLevels.FirstOrDefault(w =>
+                w.MinValue < value && w.MaxValue >= value && w.FileId == _template.RiskLevel.Id);
         }
 
-        public static Color GetRiskLevelColor(double value, ConstructionDataContext context)
+        public Color GetRiskLevelColor(double value, ConstructionDataContext context)
         {
-            var item = context.RiskLevels.FirstOrDefault(w => w.MinValue < value && w.MaxValue >= value);
+            var list = context.RiskLevels.Where(w => w.FileId == _template.RiskLevel.Id).ToList();
+
+
+            var item =
+                context.RiskLevels.FirstOrDefault(w => w.MinValue < value && w.MaxValue >= value
+                                                                          && w.FileId == _template.RiskLevel.Id);
             if (item == null)
                 return Color.Black;
             return item.Color.ConvertToColor();
         }
 
-        private static string Replace(string item, string source, string target)
+        private string Replace(string item, string source, string target)
         {
-            Log.Info($"Replace {source} to {target}");
+            Print?.PrintLog($"Replace {source} to {target}");
             return item.Replace(source, target);
         }
 
 
         //replace the data from parameter table by construction
-        public static string ParameterReplace(string formula, Construction construction)
+        public string ParameterReplace(string formula, Construction construction)
         {
             //business values
             formula = Replace(formula, "GDQI",
