@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstructionCalculator.DataAccess", "ConstructionCalculator.DataAccess\ConstructionCalculator.DataAccess.csproj", "{99565F1D-AB22-420A-A734-884F18679378}"
 EndProject
@@ -14,6 +14,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstructionCalculator.UI.Test", "ConstructionCalculator.UI.Test\ConstructionCalculator.UI.Test.csproj", "{CE07C672-0138-401F-8568-6043332EAD14}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstructionCalculator", "ConstructionCalculator\ConstructionCalculator.csproj", "{2E6ED05D-CD5D-4E1F-9285-2454FB175AC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstructionCalculator.UI", "ConstructionCalculator.UI\ConstructionCalculator.UI.csproj", "{CBD26A9C-84B3-458A-A3FA-614E7CABB798}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fluent UI", "Fluent UI", "{AE8CC302-25E7-4DC1-B8C3-BC024EA1340C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,9 +49,16 @@ Global
 		{2E6ED05D-CD5D-4E1F-9285-2454FB175AC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E6ED05D-CD5D-4E1F-9285-2454FB175AC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E6ED05D-CD5D-4E1F-9285-2454FB175AC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBD26A9C-84B3-458A-A3FA-614E7CABB798}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBD26A9C-84B3-458A-A3FA-614E7CABB798}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBD26A9C-84B3-458A-A3FA-614E7CABB798}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBD26A9C-84B3-458A-A3FA-614E7CABB798}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CBD26A9C-84B3-458A-A3FA-614E7CABB798} = {AE8CC302-25E7-4DC1-B8C3-BC024EA1340C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {ACD4E07D-9883-450A-ACCA-6A14CB6A472A}
