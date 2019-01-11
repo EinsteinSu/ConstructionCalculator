@@ -29,10 +29,6 @@ namespace ConstructionCalculator.DataAccess
 
         [Display(AutoGenerateField = false)] public virtual BusinessFeature BusinessFeature { get; set; }
 
-        [Display(Name = "业态特征编号")]
-        [ForeignKey("BusinessFeature")]
-        public int BusinessFeatureId { get; set; }
-
         [Display(Name = "总建筑面积m2")] public string Jzmj { get; set; }
 
         [Display(Name = "单元单层建筑面积m2")] public double Dydcjzmj { get; set; }
@@ -40,6 +36,10 @@ namespace ConstructionCalculator.DataAccess
         [Display(Name = "层数")] public int Cs { get; set; }
 
         [Display(Name = "高度m")] public double Gd { get; set; }
+
+        [Display(Name = "业态特征编号")]
+        [ForeignKey("BusinessFeature")]
+        public int BusinessFeatureId { get; set; }
 
         [Display(Name = "单元单层安全出口数量")] public int Aqcksl { get; set; }
 
@@ -86,11 +86,11 @@ namespace ConstructionCalculator.DataAccess
                 "建筑名称",
                 "单体编号",
                 "建筑结构编号",
-                "业态特征编号",
                 "总建筑面积m2",
                 "单元单层建筑面积m2",
                 "层数",
                 "高度m",
+                "业态特征编号",
                 "单元单层安全出口数量",
                 "单元单层安全出口宽度cm",
                 "总出口数量",
@@ -118,11 +118,11 @@ namespace ConstructionCalculator.DataAccess
                 Jzmc,
                 Dtbh,
                 ConstructionValueId,
-                BusinessFeatureId,
                 Jzmj,
                 Dydcjzmj,
                 Cs,
                 Gd,
+                BusinessFeatureId,
                 Aqcksl,
                 Aqckkd,
                 Zcksl,

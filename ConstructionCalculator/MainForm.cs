@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using ConstructionCalculator.Business;
 using ConstructionCalculator.DataAccess;
 using ConstructionCalculator.DataAccess.Interfaces;
 using ConstructionCalculator.DataEdit;
+using DevExpress.Utils.MVVM.Services;
 using DevExpress.XtraBars;
 using DevExpress.XtraBars.Docking2010.Views;
 using DevExpress.XtraBars.Navigation;
 using DevExpress.XtraBars.Ribbon;
 using log4net;
+using File = ConstructionCalculator.DataAccess.File;
 
 namespace ConstructionCalculator
 {
@@ -365,6 +368,25 @@ namespace ConstructionCalculator
                 }
         }
 
+        private void barButtonItemBatchImport_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var control = GetControl();
+            if (control == null) return;
+            var dialog = new FolderBrowserDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                using (var context = new ConstructionDataContext())
+                {
+                    foreach (var file in Directory.GetFiles(dialog.SelectedPath, "*.xlsx"))
+                    {
+                        var f = new File { FileName = Path.GetFileName(file), Type = control.DataEdit.File.Type, Description = "Imported" };
+                        f.Add(context);var editor = DataEditFactory.GetDataEdit(f, context);
+                        editor.Import(file, this, this);
+                    }
+                }
+            }
+        }
+
         private void barButtonItemExport_ItemClick(object sender, ItemClickEventArgs e)
         {
             var control = GetControl();
@@ -387,5 +409,7 @@ namespace ConstructionCalculator
         }
 
         #endregion
+
+
     }
 }

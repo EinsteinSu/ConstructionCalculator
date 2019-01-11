@@ -31,7 +31,7 @@ namespace ConstructionCalculator.DataEdit
 
         public override void Add()
         {
-            var item = new ConstructionValue();
+            var item = new ConstructionValue { FileId = FileId };
             Context.ConstructionValues.Add(item);
         }
 

@@ -32,7 +32,7 @@ namespace ConstructionCalculator.DataEdit
 
         public override void Add()
         {
-            var item = new RiskLevel();
+            var item = new RiskLevel { FileId = FileId };
             Context.RiskLevels.Add(item);
         }
 

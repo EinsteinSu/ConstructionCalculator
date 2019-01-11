@@ -70,6 +70,7 @@
             this.rtbOutput = new System.Windows.Forms.RichTextBox();
             this.tabbedView = new DevExpress.XtraBars.Docking2010.Views.Tabbed.TabbedView(this.components);
             this.documentManager = new DevExpress.XtraBars.Docking2010.DocumentManager(this.components);
+            this.barButtonItemBatchImport = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.progressBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
@@ -102,9 +103,10 @@
             this.barEditItemProgress,
             this.barStaticItemLog,
             this.barButtonItemCalculate,
-            this.barButtonItemDelete});
+            this.barButtonItemDelete,
+            this.barButtonItemBatchImport});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 60;
+            this.ribbonControl.MaxItemId = 61;
             this.ribbonControl.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Always;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
@@ -287,6 +289,7 @@
             // 
             this.excelGroup.ItemLinks.Add(this.barButtonItemImport);
             this.excelGroup.ItemLinks.Add(this.barButtonItemExport);
+            this.excelGroup.ItemLinks.Add(this.barButtonItemBatchImport);
             this.excelGroup.Name = "excelGroup";
             this.excelGroup.Text = "Excel";
             // 
@@ -449,13 +452,22 @@
             this.documentManager.ViewCollection.AddRange(new DevExpress.XtraBars.Docking2010.Views.BaseView[] {
             this.tabbedView});
             // 
+            // barButtonItemBatchImport
+            // 
+            this.barButtonItemBatchImport.Caption = "Batch Import";
+            this.barButtonItemBatchImport.Id = 60;
+            this.barButtonItemBatchImport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItemBatchImport.ImageOptions.Image")));
+            this.barButtonItemBatchImport.Name = "barButtonItemBatchImport";
+            this.barButtonItemBatchImport.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.barButtonItemBatchImport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItemBatchImport_ItemClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(790, 599);
-            this.Controls.Add(this.dockPanel);
             this.Controls.Add(this.outputDockPanel);
+            this.Controls.Add(this.dockPanel);
             this.Controls.Add(this.ribbonStatusBar);
             this.Controls.Add(this.ribbonControl);
             this.Name = "MainForm";
@@ -517,5 +529,6 @@
         private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPage2;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
         private DevExpress.XtraBars.BarButtonItem barButtonItemDelete;
+        private DevExpress.XtraBars.BarButtonItem barButtonItemBatchImport;
     }
 }

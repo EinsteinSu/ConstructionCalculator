@@ -31,7 +31,7 @@ namespace ConstructionCalculator.DataEdit
 
         public override void Add()
         {
-            var item = new CellMapping();
+            var item = new CellMapping { FileId = FileId };
             Context.CellMappings.Add(item);
         }
 

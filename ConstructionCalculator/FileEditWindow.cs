@@ -8,6 +8,7 @@ namespace ConstructionCalculator
     public partial class FileEditWindow : XtraForm
     {
         private bool _isSaveAs;
+        private bool _isSelectFileType;
 
         public FileEditWindow()
         {
@@ -24,6 +25,16 @@ namespace ConstructionCalculator
             {
                 _isSaveAs = value;
                 comboBoxEditFileType.Visible = !value;
+            }
+        }
+
+        public bool IsSelectFileType
+        {
+            get => _isSelectFileType;
+            set
+            {
+                _isSelectFileType = value;
+                textEditFileName.Visible = !value;
             }
         }
 

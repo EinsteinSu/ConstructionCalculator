@@ -30,7 +30,7 @@ namespace ConstructionCalculator.DataEdit
 
         public override void Add()
         {
-            var businessFeature = new BusinessFeature();
+            var businessFeature = new BusinessFeature {FileId = FileId};
             Context.BusinessFeatures.Add(businessFeature);
         }
 
