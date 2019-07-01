@@ -34,7 +34,6 @@
             this.simpleButtonSaveAs = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButtonCancel = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButtonCalc = new DevExpress.XtraEditors.SimpleButton();
-            this.comboBoxEditConstruction = new DevExpress.XtraEditors.ComboBoxEdit();
             this.comboBoxEditCellMapping = new DevExpress.XtraEditors.ComboBoxEdit();
             this.comboBoxEditRiskLevel = new DevExpress.XtraEditors.ComboBoxEdit();
             this.comboBoxEditConstructionValue = new DevExpress.XtraEditors.ComboBoxEdit();
@@ -45,14 +44,14 @@
             this.layoutControlItemConstructionValue = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItemRiskLevel = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItemCellMapping = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItemConstruction = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.cmbListConstructions = new DevExpress.XtraEditors.CheckedComboBoxEdit();
+            this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
             this.dataLayoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.comboBoxEditConstruction.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEditCellMapping.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEditRiskLevel.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEditConstructionValue.Properties)).BeginInit();
@@ -63,20 +62,21 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemConstructionValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemRiskLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemCellMapping)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemConstruction)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbListConstructions.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
             this.SuspendLayout();
             // 
             // dataLayoutControl1
             // 
+            this.dataLayoutControl1.Controls.Add(this.cmbListConstructions);
             this.dataLayoutControl1.Controls.Add(this.simpleButtonLoadTemplate);
             this.dataLayoutControl1.Controls.Add(this.simpleButtonSaveAs);
             this.dataLayoutControl1.Controls.Add(this.simpleButtonCancel);
             this.dataLayoutControl1.Controls.Add(this.simpleButtonCalc);
-            this.dataLayoutControl1.Controls.Add(this.comboBoxEditConstruction);
             this.dataLayoutControl1.Controls.Add(this.comboBoxEditCellMapping);
             this.dataLayoutControl1.Controls.Add(this.comboBoxEditRiskLevel);
             this.dataLayoutControl1.Controls.Add(this.comboBoxEditConstructionValue);
@@ -86,7 +86,7 @@
             this.dataLayoutControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataLayoutControl1.Name = "dataLayoutControl1";
             this.dataLayoutControl1.Root = this.layoutControlGroup1;
-            this.dataLayoutControl1.Size = new System.Drawing.Size(369, 344);
+            this.dataLayoutControl1.Size = new System.Drawing.Size(369, 356);
             this.dataLayoutControl1.TabIndex = 0;
             this.dataLayoutControl1.Text = "dataLayoutControl1";
             // 
@@ -138,18 +138,6 @@
             this.simpleButtonCalc.TabIndex = 12;
             this.simpleButtonCalc.Text = "Calculate";
             this.simpleButtonCalc.Click += new System.EventHandler(this.simpleButtonCalc_Click);
-            // 
-            // comboBoxEditConstruction
-            // 
-            this.comboBoxEditConstruction.Location = new System.Drawing.Point(105, 108);
-            this.comboBoxEditConstruction.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.comboBoxEditConstruction.Name = "comboBoxEditConstruction";
-            this.comboBoxEditConstruction.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.comboBoxEditConstruction.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.comboBoxEditConstruction.Size = new System.Drawing.Size(252, 20);
-            this.comboBoxEditConstruction.StyleController = this.dataLayoutControl1;
-            this.comboBoxEditConstruction.TabIndex = 11;
             // 
             // comboBoxEditCellMapping
             // 
@@ -209,14 +197,14 @@
             this.layoutControlItemConstructionValue,
             this.layoutControlItemRiskLevel,
             this.layoutControlItemCellMapping,
-            this.layoutControlItemConstruction,
             this.layoutControlItem1,
             this.layoutControlItem2,
             this.layoutControlItem3,
-            this.layoutControlItem4});
+            this.layoutControlItem4,
+            this.layoutControlItem5});
             this.layoutControlGroup1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(369, 344);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(369, 398);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // emptySpaceItem1
@@ -224,7 +212,7 @@
             this.emptySpaceItem1.AllowHotTrack = false;
             this.emptySpaceItem1.Location = new System.Drawing.Point(0, 288);
             this.emptySpaceItem1.Name = "emptySpaceItem1";
-            this.emptySpaceItem1.Size = new System.Drawing.Size(349, 36);
+            this.emptySpaceItem1.Size = new System.Drawing.Size(349, 90);
             this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
             // 
             // layoutControlItemBusinessFeature
@@ -263,15 +251,6 @@
             this.layoutControlItemCellMapping.Text = "Cell Mapping";
             this.layoutControlItemCellMapping.TextSize = new System.Drawing.Size(90, 13);
             // 
-            // layoutControlItemConstruction
-            // 
-            this.layoutControlItemConstruction.Control = this.comboBoxEditConstruction;
-            this.layoutControlItemConstruction.Location = new System.Drawing.Point(0, 96);
-            this.layoutControlItemConstruction.Name = "layoutControlItemConstruction";
-            this.layoutControlItemConstruction.Size = new System.Drawing.Size(349, 24);
-            this.layoutControlItemConstruction.Text = "Construction";
-            this.layoutControlItemConstruction.TextSize = new System.Drawing.Size(90, 13);
-            // 
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.simpleButtonCalc;
@@ -308,12 +287,31 @@
             this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem4.TextVisible = false;
             // 
+            // cmbListConstructions
+            // 
+            this.cmbListConstructions.Location = new System.Drawing.Point(105, 108);
+            this.cmbListConstructions.Name = "cmbListConstructions";
+            this.cmbListConstructions.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbListConstructions.Size = new System.Drawing.Size(252, 20);
+            this.cmbListConstructions.StyleController = this.dataLayoutControl1;
+            this.cmbListConstructions.TabIndex = 16;
+            // 
+            // layoutControlItem5
+            // 
+            this.layoutControlItem5.Control = this.cmbListConstructions;
+            this.layoutControlItem5.Location = new System.Drawing.Point(0, 96);
+            this.layoutControlItem5.Name = "layoutControlItem5";
+            this.layoutControlItem5.Size = new System.Drawing.Size(349, 24);
+            this.layoutControlItem5.Text = "Constructions";
+            this.layoutControlItem5.TextSize = new System.Drawing.Size(90, 13);
+            // 
             // CalculateTemplateWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.simpleButtonCancel;
-            this.ClientSize = new System.Drawing.Size(369, 344);
+            this.ClientSize = new System.Drawing.Size(369, 356);
             this.Controls.Add(this.dataLayoutControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -322,7 +320,6 @@
             this.Text = "Calculation template selection";
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
             this.dataLayoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.comboBoxEditConstruction.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEditCellMapping.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEditRiskLevel.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxEditConstructionValue.Properties)).EndInit();
@@ -333,11 +330,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemConstructionValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemRiskLevel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemCellMapping)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItemConstruction)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbListConstructions.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -349,14 +347,12 @@
         private DevExpress.XtraEditors.ComboBoxEdit comboBoxEditBusinessFeature;
         private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItemBusinessFeature;
-        private DevExpress.XtraEditors.ComboBoxEdit comboBoxEditConstruction;
         private DevExpress.XtraEditors.ComboBoxEdit comboBoxEditCellMapping;
         private DevExpress.XtraEditors.ComboBoxEdit comboBoxEditRiskLevel;
         private DevExpress.XtraEditors.ComboBoxEdit comboBoxEditConstructionValue;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItemConstructionValue;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItemRiskLevel;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItemCellMapping;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItemConstruction;
         private DevExpress.XtraEditors.SimpleButton simpleButtonCancel;
         private DevExpress.XtraEditors.SimpleButton simpleButtonCalc;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
@@ -365,5 +361,7 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraEditors.SimpleButton simpleButtonLoadTemplate;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
+        private DevExpress.XtraEditors.CheckedComboBoxEdit cmbListConstructions;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
     }
 }

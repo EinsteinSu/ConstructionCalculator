@@ -48,9 +48,6 @@ namespace ConstructionCalculator
             return null;
         }
 
-
-
-
         private void barButtonItemCalculate_ItemClick(object sender, ItemClickEventArgs e)
         {
             var dialog = new CalculateTemplateWindow(this);
@@ -58,10 +55,13 @@ namespace ConstructionCalculator
                 using (var context = new ConstructionDataContext())
                 {
                     var calc = new Calculator { Print = this, ShowProgress = this };
-                    var fileName = calc.Calc(context, dialog.Template);
-                    var form = new ExcelViewWindow();
-                    form.Show();
-                    form.LoadExcel(fileName);
+                    var fileNames = calc.Calc(context, dialog.Template);
+                    foreach (var fileName in fileNames)
+                    {
+                        var form = new ExcelViewWindow();
+                        form.Show();
+                        form.LoadExcel(fileName);
+                    }
                 }
         }
 
@@ -262,7 +262,7 @@ namespace ConstructionCalculator
             rtbOutput.AppendText(logging + Environment.NewLine);
             barStaticItemLog.Caption = logging;
             rtbOutput.ScrollToCaret();
-            Application.DoEvents();
+            //Application.DoEvents();
         }
 
         public void SetMaxValue(int maxValue)

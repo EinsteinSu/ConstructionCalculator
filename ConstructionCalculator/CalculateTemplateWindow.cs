@@ -4,8 +4,11 @@ using System.Windows.Forms;
 using ConstructionCalculator.Business;
 using ConstructionCalculator.DataAccess;
 using ConstructionCalculator.DataAccess.Interfaces;
+using DevExpress.Data.Helpers;
 using DevExpress.XtraEditors;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using DevExpress.XtraEditors.Controls;
 
 namespace ConstructionCalculator
 {
@@ -38,7 +41,11 @@ namespace ConstructionCalculator
                 AddListToComboBox(context, FileType.ConstructionValue, comboBoxEditConstructionValue);
                 AddListToComboBox(context, FileType.RiskLevel, comboBoxEditRiskLevel);
                 AddListToComboBox(context, FileType.CellMapping, comboBoxEditCellMapping);
-                AddListToComboBox(context, FileType.Construction, comboBoxEditConstruction);
+                cmbListConstructions.Properties.Items.Clear();
+                foreach (var file in context.Files.Where(w => w.Type == FileType.Construction))
+                {
+                    cmbListConstructions.Properties.Items.Add(file);
+                }
             }
         }
 
@@ -55,15 +62,18 @@ namespace ConstructionCalculator
             error += CheckComboBoxItem(comboBoxEditConstructionValue, "construction value");
             error += CheckComboBoxItem(comboBoxEditRiskLevel, "risk level");
             error += CheckComboBoxItem(comboBoxEditCellMapping, "cell mapping");
-            error += CheckComboBoxItem(comboBoxEditConstruction, "construction");
+            if (cmbListConstructions.Properties.Items.All(a => a.CheckState != CheckState.Checked))
+            {
+                error += "Please select a constructions.";
+            }
             return error;
         }
 
         private string CheckComboBoxItem(ComboBoxEdit comboBox, string name)
         {
             var error = string.Empty;
-            if (comboBox.SelectedItem == null || string.IsNullOrEmpty(comboBox.SelectedItem.ToString()))
-                error += $"Please select a {name}" + Environment.NewLine;
+            if (string.IsNullOrEmpty(comboBox.SelectedItem?.ToString()))
+                error += $"Please select a {name}." + Environment.NewLine;
             return error;
         }
 
@@ -90,8 +100,22 @@ namespace ConstructionCalculator
                 ConstructionValue = GetTemplate(comboBoxEditConstructionValue),
                 RiskLevel = GetTemplate(comboBoxEditRiskLevel),
                 CellMapping = GetTemplate(comboBoxEditCellMapping),
-                Construction = GetTemplate(comboBoxEditConstruction)
+                Constructions = new List<Table>()
             };
+            foreach (CheckedListBoxItem item in cmbListConstructions.Properties.Items)
+            {
+                if (item.CheckState == CheckState.Checked)
+                {
+                    if (item.Value is File file)
+                    {
+                        Template.Constructions.Add(new Table
+                        {
+                            Id = file.Id,
+                            Name = file.FileName
+                        });
+                    }
+                }
+            }
         }
 
         private Table GetTemplate(ComboBoxEdit comboBox)
@@ -124,7 +148,9 @@ namespace ConstructionCalculator
             };
             if (saveDialog.ShowDialog() == DialogResult.OK)
             {
-                SetTempate(); System.IO.File.WriteAllText(saveDialog.FileName, JsonConvert.SerializeObject(Template));
+
+                SetTempate();
+                System.IO.File.WriteAllText(saveDialog.FileName, JsonConvert.SerializeObject(Template));
             }
         }
 
@@ -146,7 +172,15 @@ namespace ConstructionCalculator
                     comboBoxEditConstructionValue.EditValue = FindFile(context, Template.ConstructionValue.Id);
                     comboBoxEditRiskLevel.EditValue = FindFile(context, Template.RiskLevel.Id);
                     comboBoxEditCellMapping.EditValue = FindFile(context, Template.CellMapping.Id);
-                    comboBoxEditConstruction.EditValue = FindFile(context, Template.Construction.Id);
+                    foreach (var construction in Template.Constructions)
+                    {
+                        var item = cmbListConstructions.Properties.Items
+                            .FirstOrDefault(w => ((File)w.Value).Id == construction.Id);
+                        if (item != null)
+                        {
+                            item.CheckState = CheckState.Checked;
+                        }
+                    }
                 }
             }
         }

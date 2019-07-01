@@ -21,36 +21,41 @@ namespace ConstructionCalculator.Business
 
         public IShowProgress ShowProgress { get; set; }
 
-        protected string BaseDirectory => AppDomain.CurrentDomain.BaseDirectory;
+        protected string BaseDirectory => Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Output");
 
         private CalculationTemplate _template;
-        public string Calc(ConstructionDataContext context, CalculationTemplate template)
+        public List<string> Calc(ConstructionDataContext context, CalculationTemplate template)
         {
             _template = template;
             context.Database.Log = Print.PrintLog;
-            var list = context.Constructions.Where(w => w.FileId == template.Construction.Id).ToList();
-            var fileName = Path.Combine(BaseDirectory, $"{Guid.NewGuid()}.xlsx");
-            var calculatedFileName = Path.Combine(BaseDirectory, $"{Guid.NewGuid()}.xlsx");
-            list.Export(fileName, $"{_template.Construction.Name} Calculated");
-            using (var excel = new ExcelPackage(new FileInfo(fileName)))
+            var fileList = new List<string>();
+            foreach (var construction in template.Constructions)
             {
-                ProcessInExcel(excel, context);
-                excel.SaveAs(new FileInfo(calculatedFileName));
+                var list = context.Constructions.Where(w => w.FileId == construction.Id).ToList();
+                var fileName = Path.Combine(BaseDirectory, $"{Guid.NewGuid()}.xlsx");
+                var calculatedFileName = Path.Combine(BaseDirectory, $"{Guid.NewGuid()}.xlsx");
+                list.Export(fileName, $"{construction.Name} Calculated");
+                using (var excel = new ExcelPackage(new FileInfo(fileName)))
+                {
+                    ProcessInExcel(excel, context, construction.Id);
+                    excel.SaveAs(new FileInfo(calculatedFileName));
+                    fileList.Add(calculatedFileName);
+                }
             }
 
-            return calculatedFileName;
+            return fileList;
         }
 
-        private void ProcessInExcel(ExcelPackage excel, ConstructionDataContext context)
+        private void ProcessInExcel(ExcelPackage excel, ConstructionDataContext context, int constructionId)
         {
             var cellmappings =
                 context.CellMappings.Where(w => w.FileId == _template.CellMapping.Id).ToList();
             var sheet = excel.Workbook.Worksheets[1];
             var row = 2; //with header
             SetHeader(sheet, 1, cellmappings);
-            ShowProgress?.SetMaxValue(context.Constructions.Count(c => c.FileId == _template.Construction.Id));
+            ShowProgress?.SetMaxValue(context.Constructions.Count(c => c.FileId == constructionId));
 
-            foreach (var construction in context.Constructions.Where(w => w.FileId == _template.Construction.Id).Include(i => i.BusinessFeature)
+            foreach (var construction in context.Constructions.Where(w => w.FileId == constructionId).Include(i => i.BusinessFeature)
                 .Include(i => i.ConstructionValue))
             {
                 SetFormular(context, sheet, row, cellmappings, construction);
@@ -135,9 +140,6 @@ namespace ConstructionCalculator.Business
 
         public Color GetRiskLevelColor(double value, ConstructionDataContext context)
         {
-            var list = context.RiskLevels.Where(w => w.FileId == _template.RiskLevel.Id).ToList();
-
-
             var item =
                 context.RiskLevels.FirstOrDefault(w => w.MinValue < value && w.MaxValue >= value
                                                                           && w.FileId == _template.RiskLevel.Id);

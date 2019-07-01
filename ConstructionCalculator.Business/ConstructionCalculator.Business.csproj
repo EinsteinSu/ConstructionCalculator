@@ -73,6 +73,7 @@
     <Compile Include="TypeConvertHelper.cs" />
     <Compile Include="Utilities\ExcelHelper.cs" />
     <Compile Include="Utilities\ExportHelper.cs" />
+    <Compile Include="Utilities\StringHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ConstructionCalculator.DataAccess\ConstructionCalculator.DataAccess.csproj">

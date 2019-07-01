@@ -454,13 +454,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(790, 599);
-            this.Controls.Add(this.dockPanel);
             this.Controls.Add(this.outputDockPanel);
+            this.Controls.Add(this.dockPanel);
             this.Controls.Add(this.ribbonStatusBar);
             this.Controls.Add(this.ribbonControl);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Ribbon = this.ribbonControl;
             this.StatusBar = this.ribbonStatusBar;
+            this.Text = "Construction Calculator";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.progressBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dockManager)).EndInit();
